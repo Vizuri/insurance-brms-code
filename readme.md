@@ -1,4 +1,1 @@
-Repository Init Content
-=======================
-
-Your project description here.
+Insurance Demo available at http://localhost:8080/insurance-web-app
