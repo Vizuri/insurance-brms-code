@@ -25,8 +25,8 @@ public class TransferWrapper {
 	@XmlElement
 	private Map<String,Question> applicantQuestMap = new HashMap();
 	
-	@XmlElement 
-	private Map<String,Question> propertyQuestMap = new HashMap();
+/*	@XmlElement 
+	private Map<String,Question> propertyQuestMap = new HashMap();*/
 	@XmlElement
 	private Property property;
 	
@@ -39,12 +39,12 @@ public class TransferWrapper {
 	public void setQuote(Quote quote) {
 		this.quote = quote;
 	}
-	public Map<String, Question> getPropertyQuestMap() {
+	/*public Map<String, Question> getPropertyQuestMap() {
 		return propertyQuestMap;
 	}
 	public void setPropertyQuestMap(Map<String, Question> propertyQuestMap) {
 		this.propertyQuestMap = propertyQuestMap;
-	}
+	}*/
 	public Map<String, Question> getApplicantQuestMap() {
 		return applicantQuestMap;
 	}

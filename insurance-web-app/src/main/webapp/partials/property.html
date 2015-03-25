@@ -33,7 +33,7 @@
 		</div>
 
 
-		<h5>Property Questions</h5>
+		
 
 
 		<div class="form-group" ng-show="qmap['p.policyBeginDate'].enabled == true">
@@ -94,6 +94,10 @@
 
 		</div>
 		<div class="form-group" ng-show="newProperty.previousClaims === true && qmap['p.previousClaims'].enabled == true && qmap['p.claimDate'].enabled == true && qmap['p.claimAmount'].enabled == true">
+			<div ng-show="showDeleteClaimAlert" class="alert alert-danger">
+       							<span class="close"  ng-click="hideClaimAlert()">X</span>
+        						<strong>Error! </strong>At least one claim information is needed.
+    		</div>
 			<table class="table" style="width:75%">
 			<tr>
 				<td>ClaimDate</td>
@@ -101,11 +105,12 @@
 				<td>Action</td>
 			</tr>
 			
+			
 			<tr ng-repeat="claim in newProperty.claims">
 		
-				<td><input type="date" name="claimDate-{{$index}}" ng-model="claim.claimDate" ng-required="qmap['p.claimDate'].required"></td>
+				<td><input ng-change="changeHandle('noserver-call')" type="date" name="claimDate-{{$index}}" ng-model="claim.claimDate" ng-required="newProperty.previousClaims == true"></td>
 				<td><input
-					type="number" name="claimAmount-{{$index}}" ng-model="claim.claimAmount" ng-required="qmap['p.claimAmount'].required"> 
+					type="number" ng-change="changeHandle('noserver-call')"  name="claimAmount-{{$index}}" ng-model="claim.claimAmount" ng-required="newProperty.previousClaims == true"> 
 					
 				</td>	
 				<td>
@@ -126,7 +131,10 @@
 
 		</div>
 		<div class="form-group" ng-show="newProperty.dogExists == true && qmap['p.dogExists'].enabled &&  qmap['p.dogs'].enabled">
-
+			<div ng-show="showDogDeleteAlert" class="alert alert-danger">
+       							<span class="close"  ng-click="hideDogAlert()">X</span>
+        						<strong>Error! </strong>At least One Dog is required.
+    		</div>
 			<table class="table" style="width: 75%">
 				<tr>
 					<td>Number</td>
@@ -135,20 +143,22 @@
 				</tr>
 
 				<tr ng-repeat="dog in dogList">
-					<td><input type="number" min="1" ng-required="qmap['p.dogs'].required"></td>
-					<td><select ng-model="dog.dogType" ng-required="qmap['p.dogs'].required" class="table-responsive">
+					<td><input ng-change="changeHandle('noserver-call')"  ng-model="dog.dogCount" type="number" min="1" ng-required="newProperty.dogExists == true"></td>
+					<td>
+						<select ng-change="changeHandle('noserver-call')"  ng-model="dog.dogType" ng-required="newProperty.dogExists == true" class="table-responsive">
 							<option label="" value="" />
 							<option label="BullDogs" value="BullDogs" />
 							<option label="Molossers" value="Molossers" />
 							<option label="Mountain dog" value="Mountain dog" />
-					</select></td>
+					</select>
+					</td>
 					<td>				
 					<button class="btn btn-primary btn-xs" ng-disabled="false == (dogList.length -1  == $index)" type="button" value="Add" ng-click="addDogs('add')">Add Dog</button>
 					<button class="btn btn-primary btn-xs" type="button" value="Remove" ng-click="removeDog($index)">Delete</button>
 					</td>
 				</tr>
 			</table>
-		</div>
+		</div> 
 
 		<div class="form-group" ng-show="qmap['p.childCareBusinessExists'].enabled == true">
 			<label class="col-sm-2 control-label" for="childCareBusinessExists">{{qmap['p.childCareBusinessExists'].description}}</label>
@@ -157,12 +167,6 @@
 			</div>
 		</div>
 
-		<div class="form-group" ng-show="newProperty.childCareBusinessExists == true && qmap['p.childCareLiabilityAlreadyExists'].enabled == true">
-			<label class="col-sm-2 control-label" for="childCareLiabilityAlreadyExists">{{qmap['p.childCareLiabilityAlreadyExists'].description}}</label>
-			<div class="col-sm-10">
-				<input ng-change="changeHandle()" type="checkbox" name="childCareLiabilityAlreadyExists" ng-model="newProperty.childCareLiabilityAlreadyExists" />
-			</div>
-		</div>
 
 		<div class="form-group" ng-show="newProperty.childCareBusinessExists == true && qmap['p.childCareLiabilityCoverageRequired'].enabled == true">
 			<label class="col-sm-2 control-label" for="childCareLiabilityCoverageRequired">{{qmap['p.childCareLiabilityCoverageRequired'].description}}</label>
@@ -170,7 +174,13 @@
 				<input ng-change="changeHandle()" type="checkbox" name="childCareLiabilityCoverageRequired" ng-model="newProperty.childCareLiabilityCoverageRequired" />
 			</div>
 		</div>
-
+		
+		<div class="form-group" ng-show="newProperty.childCareLiabilityCoverageRequired == true && qmap['p.childCareLiabilityCoverageRequired'].enabled == true">
+			<label class="col-sm-2 control-label" for="childCareLiabilityAlreadyExists">{{qmap['p.childCareLiabilityAlreadyExists'].description}}</label>
+			<div class="col-sm-10">
+				<input ng-change="changeHandle()" type="checkbox" name="childCareLiabilityAlreadyExists" ng-model="newProperty.childCareLiabilityAlreadyExists" />
+			</div>
+		</div>
 
 	</div>
 </div>

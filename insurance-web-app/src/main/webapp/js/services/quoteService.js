@@ -6,8 +6,15 @@ module.factory('QuoteWrapper', function($resource) {
 	
 	//return $resource("http://localhost:8080/insurance-web-app/rest/quoteService",{});
 
-	
-	var questRes = $resource("http://localhost:8080/insurance-web-app/rest/quoteService/:controller",
+
+
+	//during development using http server as front server for faster develpment speed
+	//doing this requires a actual rest server host, which is the jboss eap http location to be added
+	var resourceUri = "rest/quoteService/:controller";
+	if ( window.location.origin.match(/http\:\/\/insurance:8000/) ){
+		resourceUri = "http://localhost:8080/insurance-web-app/"+resourceUri;
+	}
+	var questRes = $resource(resourceUri,
 	{
 		controller : "@controller"
 	}, {

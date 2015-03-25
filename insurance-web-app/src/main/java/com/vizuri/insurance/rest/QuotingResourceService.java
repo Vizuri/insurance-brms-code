@@ -79,9 +79,7 @@ public class QuotingResourceService {
        Map<String, Question> applicantQuestMap = new HashMap<String,Question>();
        applicantQuestMap = buildQuestionByGroup(questionLst, null);
        
-       //Map<String, Question> propertyQuestMap = buildGroupMap(questionLst, "Property");
-       
-     //  wrap.setPropertyQuestMap(propertyQuestMap);
+      
        wrap.setApplicantQuestMap(applicantQuestMap);
        
        
@@ -198,26 +196,24 @@ public class QuotingResourceService {
 		
 	}
 	
-	public static void main(String[] args) {
-		List sendList = new ArrayList();
-		Property p = new Property();
-		p.setYearBuilt(1920);
-		p.setElectrictSystemRenovated(false);
 	
-		Applicant app = new Applicant();
-		app.setFraud(true);
-		sendList.add(p);
-		sendList.add(app);
+	@Path("/devSettings")
+	@GET
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getDevelopmentSettings(){
 		
-		RuleProcessor rp = new RuleProcessor();
-		Collection coll  =rp.fireRules(RuleProcessor.AGENDA_ELIGIBLITY, sendList.toArray());
-		
-		System.out.println("prop : "+p);
-		/*for (Object object : coll) {
-			DefaultFactHandle fact = (DefaultFactHandle)object;
-			System.out.println(fact.getObject());
-			
-		}*/
-		
+		String appEnvironment = System.getProperty("insurance.appEnvironment");
+		Map<String,String> devSettings = new HashMap<String, String>();
+		devSettings.put("appEnvironment", appEnvironment);
+		return Response
+	            .status(200)
+	            .header("Access-Control-Allow-Origin", "*")
+	            .header("Access-Control-Allow-Headers", "origin, content-type, accept, authorization")
+	            .header("Access-Control-Allow-Credentials", "true")
+	            .header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS, HEAD")
+	            .header("Access-Control-Max-Age", "1209601")
+	            .entity(devSettings)
+	            .build();
 	}
+	
 }
