@@ -1,15 +1,30 @@
 package com.vizuri.insurance.domain;
 
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+
+import com.vizuri.insurance.domain.xmladapter.BooleanXmlAdapter;
+
+
+@SuppressWarnings("restriction")
+@XmlRootElement
 
 public class Applicant {
+	@XmlElement(name="appId")
 	private Integer id;
 	private String firstName;
 	private String lastName;
-	private boolean fraud;
+	private Boolean fraud;
 	private String email;
 	private String phone;
-	private boolean anyPreviousInsuranceDenials;
-	private boolean filedForBankruptcy;
+	
+	@XmlJavaTypeAdapter(value = BooleanXmlAdapter.class)
+	private Boolean anyPreviousInsuranceDenials;
+	
+	@XmlJavaTypeAdapter(value = BooleanXmlAdapter.class)
+	private Boolean filedForBankruptcy;
+	
 	public Integer getId() {
 		return id;
 	}
@@ -28,10 +43,10 @@ public class Applicant {
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
 	}
-	public boolean isFraud() {
+	public Boolean getFraud() {
 		return fraud;
 	}
-	public void setFraud(boolean fraud) {
+	public void setFraud(Boolean fraud) {
 		this.fraud = fraud;
 	}
 	public String getEmail() {
@@ -46,16 +61,16 @@ public class Applicant {
 	public void setPhone(String phone) {
 		this.phone = phone;
 	}
-	public boolean isAnyPreviousInsuranceDenials() {
+	public Boolean getAnyPreviousInsuranceDenials() {
 		return anyPreviousInsuranceDenials;
 	}
-	public void setAnyPreviousInsuranceDenials(boolean anyPreviousInsuranceDenials) {
+	public void setAnyPreviousInsuranceDenials(Boolean anyPreviousInsuranceDenials) {
 		this.anyPreviousInsuranceDenials = anyPreviousInsuranceDenials;
 	}
-	public boolean isFiledForBankruptcy() {
+	public Boolean getFiledForBankruptcy() {
 		return filedForBankruptcy;
 	}
-	public void setFiledForBankruptcy(boolean filedForBankruptcy) {
+	public void setFiledForBankruptcy(Boolean filedForBankruptcy) {
 		this.filedForBankruptcy = filedForBankruptcy;
 	}
 	@Override
@@ -70,12 +85,18 @@ public class Applicant {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + (anyPreviousInsuranceDenials ? 1231 : 1237);
+		result = prime
+				* result
+				+ ((anyPreviousInsuranceDenials == null) ? 0
+						: anyPreviousInsuranceDenials.hashCode());
 		result = prime * result + ((email == null) ? 0 : email.hashCode());
-		result = prime * result + (filedForBankruptcy ? 1231 : 1237);
+		result = prime
+				* result
+				+ ((filedForBankruptcy == null) ? 0 : filedForBankruptcy
+						.hashCode());
 		result = prime * result
 				+ ((firstName == null) ? 0 : firstName.hashCode());
-		result = prime * result + (fraud ? 1231 : 1237);
+		result = prime * result + ((fraud == null) ? 0 : fraud.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result
 				+ ((lastName == null) ? 0 : lastName.hashCode());
@@ -91,21 +112,31 @@ public class Applicant {
 		if (getClass() != obj.getClass())
 			return false;
 		Applicant other = (Applicant) obj;
-		if (anyPreviousInsuranceDenials != other.anyPreviousInsuranceDenials)
+		if (anyPreviousInsuranceDenials == null) {
+			if (other.anyPreviousInsuranceDenials != null)
+				return false;
+		} else if (!anyPreviousInsuranceDenials
+				.equals(other.anyPreviousInsuranceDenials))
 			return false;
 		if (email == null) {
 			if (other.email != null)
 				return false;
 		} else if (!email.equals(other.email))
 			return false;
-		if (filedForBankruptcy != other.filedForBankruptcy)
+		if (filedForBankruptcy == null) {
+			if (other.filedForBankruptcy != null)
+				return false;
+		} else if (!filedForBankruptcy.equals(other.filedForBankruptcy))
 			return false;
 		if (firstName == null) {
 			if (other.firstName != null)
 				return false;
 		} else if (!firstName.equals(other.firstName))
 			return false;
-		if (fraud != other.fraud)
+		if (fraud == null) {
+			if (other.fraud != null)
+				return false;
+		} else if (!fraud.equals(other.fraud))
 			return false;
 		if (id == null) {
 			if (other.id != null)
@@ -124,6 +155,7 @@ public class Applicant {
 			return false;
 		return true;
 	}
+	
 	
 	
 

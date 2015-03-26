@@ -1,11 +1,21 @@
 package com.vizuri.insurance.domain;
 
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+
+import com.vizuri.insurance.domain.xmladapter.BooleanXmlAdapter;
+
+@SuppressWarnings("restriction")
+@XmlRootElement
 public class Address {
 	private String street;
 	private String city;
 	private String state;
 	private String zip;
-	private boolean verified;
+	
+	@XmlJavaTypeAdapter(value = BooleanXmlAdapter.class)
+	private Boolean verified;
+	
 	public String getStreet() {
 		return street;
 	}
@@ -30,10 +40,10 @@ public class Address {
 	public void setZip(String zip) {
 		this.zip = zip;
 	}
-	public boolean isVerified() {
+	public Boolean getVerified() {
 		return verified;
 	}
-	public void setVerified(boolean verified) {
+	public void setVerified(Boolean verified) {
 		this.verified = verified;
 	}
 

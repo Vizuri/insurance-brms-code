@@ -73,17 +73,25 @@ div[class="form-group"] {
 				<div class="panel-body">
 					<div class="form-group">
 						<div class="col-sm-10">
-							<input class="btn btn-lg btn-primary btn-block" type="button" name="eligibility" id="eligibility" ng-show="false != (quoteStatus == QuoteStatus.NEED_ELIGIBILITY_CHECK)"
+							<div  style="margin-bottom:5px;">
+								<input class="btn btn-lg btn-primary btn-block" type="button" value="Reset" ng-click="resetQuote()"/>
+							</div>
+							
+							<!-- <div>
+								quoteStatus ={{quoteStatus}}
+								<input class="btn btn-lg btn-primary btn-block" type="button" name="eligibility" id="eligibility"  ng-show="false != (quoteStatus == QuoteStatus.NEED_ELIGIBILITY_CHECK)"
 								ng-disabled="false == (quoteStatus == QuoteStatus.NEED_ELIGIBILITY_CHECK)" value="Check Eligibility" ng-click="getEligibility()" />
+							</div> -->
+							
 								
-							<div ng-show="false == (quoteStatus == QuoteStatus.NEED_ELIGIBILITY_CHECK)">
-								Required Field Value  needs to be filled.
+							<div ng-show="quoteStatus == QuoteStatus.FORM_INCOMPLETE">
+								Required Field Value are not present.
 							</div>	
 						</div>
 					</div>
 					<div class="form-group">
 						<div class="col-sm-10">
-							<input class="btn btn-lg btn-primary btn-block" type="button" id="quote" ng-show="QuoteStatus.ELIBIBILITY_COMPLETE == quoteStatus" value="Calculate Quote" ng-click="quoteCalculate()" />
+							<input class="btn btn-lg btn-primary btn-block" type="button" id="quote" ng-show="quoteStatus != QuoteStatus.FORM_INCOMPLETE" value="Calculate Quote" ng-click="quoteCalculate()" />
 						</div>
 
 

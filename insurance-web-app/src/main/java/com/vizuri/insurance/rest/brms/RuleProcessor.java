@@ -1,6 +1,5 @@
 package com.vizuri.insurance.rest.brms;
 
-import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -9,14 +8,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.ws.rs.core.Request;
-import javax.ws.rs.core.Response;
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.Unmarshaller;
-import javax.xml.transform.stream.StreamSource;
-
 import org.drools.core.common.DefaultFactHandle;
-import org.drools.core.util.StringUtils;
 import org.kie.api.KieServices;
 import org.kie.api.builder.KieScanner;
 import org.kie.api.builder.ReleaseId;
@@ -26,27 +18,36 @@ import org.kie.api.runtime.KieSession;
 import com.vizuri.insurance.domain.Question;
 
 public class RuleProcessor {
-	KieServices kServices = KieServices.Factory.get();
+	//private KieServices kServices = KieServices.Factory.get();
 	
-	KieContainer kContainer = kServices.getKieClasspathContainer();
+	private KieContainer kContainer = RuleProcessor.Factory.get();//kServices.getKieClasspathContainer();
 	
     private static class Factory {
     	private static KieContainer kContainer;
     	static{
-    		String M2_HOME="/Users/ashakya/insurance/m2repo";
-    		System.setProperty("M2_HOME", M2_HOME);
-	    	KieServices kServices = KieServices.Factory.get();
-	
-			ReleaseId releaseId = kServices.newReleaseId( "com.vizuri.insurance", "Insurance", "1.0-SNAPSHOT");
-	
-			kContainer = kServices.newKieContainer( releaseId );
-	
-			KieScanner kScanner = kServices.newKieScanner( kContainer );
-	
-	
-			// Start the KieScanner polling the maven repository every 10 seconds
-	
-			kScanner.start( 10000L );
+    		try {
+    			//kie.maven.settings.custom=/Users/ashakya/insurance/m2repo/mac-settings.xml
+    			
+				//String M2_HOME="/Users/ashakya/insurance/m2repo";
+				//System.setProperty("M2_HOME", M2_HOME);
+				//System.setProperty("kie.maven.settings.custom","/Users/ashakya/insurance/m2repo/mac-settings.xml");
+				//System.setProperty("org.guvnor.m2repo.dir","/Users/ashakya/insurance/jboss/jboss-eap-6.1/bin/repositories");
+				KieServices kServices = KieServices.Factory.get();
+
+				ReleaseId releaseId = kServices.newReleaseId( "com.vizuri", "Insurance", "1.0-SNAPSHOT");
+
+				kContainer = kServices.newKieContainer( releaseId );
+
+				KieScanner kScanner = kServices.newKieScanner( kContainer );
+
+
+				// Start the KieScanner polling the maven repository every 10 seconds
+
+				kScanner.start( 10000L );
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
     	}
 		public static KieContainer get() {
             return kContainer;

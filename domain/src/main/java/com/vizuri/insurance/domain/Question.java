@@ -8,8 +8,8 @@ public class Question {
     private String group;
     private String mappedObject;
     private String mappedProperty;
-    private boolean required;
-    private boolean enabled;
+    private Boolean required;
+    private Boolean enabled;
     private int parentId;
     
 	public String getDescription() {
@@ -31,10 +31,10 @@ public class Question {
 		this.group = group;
 	}
 	
-	public boolean isRequired() {
+	public Boolean getRequired() {
 		return required;
 	}
-	public void setRequired(boolean required) {
+	public void setRequired(Boolean required) {
 		this.required = required;
 	}
 	public String getMappedObject() {
@@ -55,10 +55,10 @@ public class Question {
 	public void setId(int id) {
 		this.id = id;
 	}
-	public boolean isEnabled() {
+	public Boolean getEnabled() {
 		return enabled;
 	}
-	public void setEnabled(boolean enabled) {
+	public void setEnabled(Boolean enabled) {
 		this.enabled = enabled;
 	}
 	public int getParentId() {
@@ -80,7 +80,7 @@ public class Question {
 				+ ((answerType == null) ? 0 : answerType.hashCode());
 		result = prime * result
 				+ ((description == null) ? 0 : description.hashCode());
-		result = prime * result + (enabled ? 1231 : 1237);
+		result = prime * result + ((enabled == null) ? 0 : enabled.hashCode());
 		result = prime * result + ((group == null) ? 0 : group.hashCode());
 		result = prime * result + id;
 		result = prime * result
@@ -88,7 +88,8 @@ public class Question {
 		result = prime * result
 				+ ((mappedProperty == null) ? 0 : mappedProperty.hashCode());
 		result = prime * result + parentId;
-		result = prime * result + (required ? 1231 : 1237);
+		result = prime * result
+				+ ((required == null) ? 0 : required.hashCode());
 		return result;
 	}
 	@Override
@@ -110,7 +111,10 @@ public class Question {
 				return false;
 		} else if (!description.equals(other.description))
 			return false;
-		if (enabled != other.enabled)
+		if (enabled == null) {
+			if (other.enabled != null)
+				return false;
+		} else if (!enabled.equals(other.enabled))
 			return false;
 		if (group == null) {
 			if (other.group != null)
@@ -131,7 +135,10 @@ public class Question {
 			return false;
 		if (parentId != other.parentId)
 			return false;
-		if (required != other.required)
+		if (required == null) {
+			if (other.required != null)
+				return false;
+		} else if (!required.equals(other.required))
 			return false;
 		return true;
 	}

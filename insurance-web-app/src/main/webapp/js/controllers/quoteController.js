@@ -19,8 +19,8 @@ IndividualEvents = {
 	},
 	"childCareBusinessExists" : function($scope){
 		if ( false == $scope.newProperty.childCareBusinessExists ){
-			$scope.newProperty.childCareLiabilityCoverageRequired = false;
-			$scope.newProperty.childCareLiabilityAlreadyExists = false;
+			$scope.newProperty.childCareLiabilityCoverageRequired = "false";
+			$scope.newProperty.childCareLiabilityAlreadyExists = "false";
 
 		}
 
@@ -28,7 +28,7 @@ IndividualEvents = {
 	"childCareLiabilityCoverageRequired" : function($scope){
 		if ( false == $scope.newProperty.childCareLiabilityCoverageRequired ){
 			
-			$scope.newProperty.childCareLiabilityAlreadyExists = false;
+			$scope.newProperty.childCareLiabilityAlreadyExists = "false";
 
 		}
 	},
@@ -37,14 +37,14 @@ IndividualEvents = {
 	},
 	"previousClaims" : function($scope){
 		$scope.showDeleteClaimAlert = false;
-		if($scope.newProperty.previousClaims == true ) {
+		if($scope.newProperty.previousClaims == "true" ) {
 			$scope.quoteStatus = QuoteStatus.FORM_INCOMPLETE;
 
 		}
 	},
 	"dogExists" : function ($scope){
 			$scope.showDogDeleteAlert = false;
-			if($scope.newProperty.dogExists == true ) {
+			if($scope.newProperty.dogExists == "true" ) {
 				$scope.quoteStatus = QuoteStatus.FORM_INCOMPLETE;
 			}
 	},
@@ -125,19 +125,53 @@ function copyQuoteDataToScope($scope, data) {
 		$scope.newProperty.purchaseDate =convertToDate($scope.newProperty.purchaseDate);
 	} );
 	
-	angular.forEach($scope.newProperty, function (val,key){
-	//	var it = iter;
-		//console.log('key,value',key+","+val);
-		
-		if("0" == val || 0 == val){
-			$scope.newProperty[key] = undefined;
+	//converting to correct date format
+	try{
+		for(var idx = 0 ;idx < $scope.newProperty.claims.length; idx++){
+			var cl = $scope.newProperty.claims[idx];
+			try{
+				cl.claimDate = convertToDate(cl.claimDate);
+			}catch(err){
+				console.error(err);
+			}
 			
-		}
+			
+		}		
+	}catch(err){
+		console.log("error date ",err);
+	}
+	
+	var f = function (map){
+		angular.forEach(map, function (val,key){
+			//	var it = iter;
+				//console.log('key,value',key+","+val);
+				
+				if("0" == val || 0 == val){
+					map[key] = undefined;
+					
+				}
+				
+				if(val != undefined){
+					   var str = val.toString();
+					   if("true" ==  str || "false" ==  str){
+						   map[key] = val.toString();
+					   }
+					   
+						
+				}
+				
+				
+			
+				
+				
+		});	
 		
-		//console.log('key,value',key+","+$scope.newProperty[key]);
-		
-		
-	});
+	};
+	
+	f($scope.newProperty);
+
+	f($scope.newApplicant);
+	
 
 }
 
@@ -169,6 +203,7 @@ quoteModdule.controller('QuoteEntryController',
 							$scope.changeHandle = function(serverCall) {
 								console.log('hello');
 								
+								
 								$scope.quoteStatus = QuoteStatus.FORM_INCOMPLETE;
 								
 								Try.these( function (){
@@ -177,7 +212,7 @@ quoteModdule.controller('QuoteEntryController',
 								});
 								
 								//empty value not calling server
-								try{
+								/*try{
 									if(window.event.srcElement != undefined){
 										var val = window.event.srcElement.value;
 										var strVal = val.toString();
@@ -188,7 +223,7 @@ quoteModdule.controller('QuoteEntryController',
 									}
 								}catch(err){
 									
-								}
+								}*/
 								
 								
 								console.log("event source : "+$scope.currentSource);
@@ -229,6 +264,14 @@ quoteModdule.controller('QuoteEntryController',
 								console.log('in change');
 							};
 
+							$scope.resetQuote = function (){
+								 $scope.mainForm.$setPristine();
+								 $scope.newApplicant = {};
+								 $scope.newProperty = {};
+								 IndividualEvents.updateQuoteStatus($scope);
+								
+							};
+							
 							$scope.goToPropery = function() {
 
 								// $location.path('/property');
@@ -287,7 +330,7 @@ quoteModdule.controller('QuoteEntryController',
 								
 								console.log('$scope.newProperty.claims',	$scope.newProperty.claims);
 
-								var claimRowRequired = $scope.newProperty.previousClaims === true
+								var claimRowRequired = $scope.newProperty.previousClaims == "true"
 										&& $scope.qmap['p.claimDate'].enabled === true
 										&& $scope.qmap['p.claimAmount'].enabled === true;
 								

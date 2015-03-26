@@ -7,6 +7,7 @@ import java.util.Map;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
+import com.vizuri.insurance.domain.xmladapter.BooleanXmlAdapter;
 import com.vizuri.insurance.domain.xmladapter.CalendarXmlAdapter;
 
 @SuppressWarnings("restriction")
@@ -25,16 +26,33 @@ public class Property {
 	private int yearBuilt;
 	private int livingArea;
 	private int ageOfRoof;
-	private boolean electrictSystemRenovated;
-	private boolean homeSafetyDeviceInstalled;
+	@XmlJavaTypeAdapter(value = BooleanXmlAdapter.class)
+	private Boolean electrictSystemRenovated;
+	
+	@XmlJavaTypeAdapter(value = BooleanXmlAdapter.class)
+	private Boolean homeSafetyDeviceInstalled;
+	
 	private List<String> homeSafetyDevices;
-	private boolean previousClaims;
+	
+	@XmlJavaTypeAdapter(value = BooleanXmlAdapter.class)
+	private Boolean previousClaims;
+	
 	private List<Claim> claims;
-	private boolean dogExists;
+	
+	@XmlJavaTypeAdapter(value = BooleanXmlAdapter.class)
+	private Boolean dogExists;
+	
 	private Map<Integer, String> dogs;
-	private boolean childCareBusinessExists;
-	private boolean childCareLiabilityCoverageRequired;
-	private boolean childCareLiabilityAlreadyExists;
+	
+	@XmlJavaTypeAdapter(value = BooleanXmlAdapter.class)
+	private Boolean childCareBusinessExists;
+	
+	@XmlJavaTypeAdapter(value = BooleanXmlAdapter.class)
+	private Boolean childCareLiabilityCoverageRequired;
+	
+	@XmlJavaTypeAdapter(value = BooleanXmlAdapter.class)
+	private Boolean childCareLiabilityAlreadyExists;
+	
 	private Integer applicantId;
 	private Integer policyId;
 	private Integer quoteId;
@@ -77,16 +95,16 @@ public class Property {
 	public void setAgeOfRoof(int ageOfRoof) {
 		this.ageOfRoof = ageOfRoof;
 	}
-	public boolean isElectrictSystemRenovated() {
+	public Boolean getElectrictSystemRenovated() {
 		return electrictSystemRenovated;
 	}
-	public void setElectrictSystemRenovated(boolean electrictSystemRenovated) {
+	public void setElectrictSystemRenovated(Boolean electrictSystemRenovated) {
 		this.electrictSystemRenovated = electrictSystemRenovated;
 	}
-	public boolean isHomeSafetyDeviceInstalled() {
+	public Boolean getHomeSafetyDeviceInstalled() {
 		return homeSafetyDeviceInstalled;
 	}
-	public void setHomeSafetyDeviceInstalled(boolean homeSafetyDeviceInstalled) {
+	public void setHomeSafetyDeviceInstalled(Boolean homeSafetyDeviceInstalled) {
 		this.homeSafetyDeviceInstalled = homeSafetyDeviceInstalled;
 	}
 	public List<String> getHomeSafetyDevices() {
@@ -95,10 +113,10 @@ public class Property {
 	public void setHomeSafetyDevices(List<String> homeSafetyDevices) {
 		this.homeSafetyDevices = homeSafetyDevices;
 	}
-	public boolean isPreviousClaims() {
+	public Boolean getPreviousClaims() {
 		return previousClaims;
 	}
-	public void setPreviousClaims(boolean previousClaims) {
+	public void setPreviousClaims(Boolean previousClaims) {
 		this.previousClaims = previousClaims;
 	}
 	public List<Claim> getClaims() {
@@ -107,10 +125,10 @@ public class Property {
 	public void setClaims(List<Claim> claims) {
 		this.claims = claims;
 	}
-	public boolean isDogExists() {
+	public Boolean getDogExists() {
 		return dogExists;
 	}
-	public void setDogExists(boolean dogExists) {
+	public void setDogExists(Boolean dogExists) {
 		this.dogExists = dogExists;
 	}
 	public Map<Integer, String> getDogs() {
@@ -119,24 +137,24 @@ public class Property {
 	public void setDogs(Map<Integer, String> dogs) {
 		this.dogs = dogs;
 	}
-	public boolean isChildCareBusinessExists() {
+	public Boolean getChildCareBusinessExists() {
 		return childCareBusinessExists;
 	}
-	public void setChildCareBusinessExists(boolean childCareBusinessExists) {
+	public void setChildCareBusinessExists(Boolean childCareBusinessExists) {
 		this.childCareBusinessExists = childCareBusinessExists;
 	}
-	public boolean isChildCareLiabilityCoverageRequired() {
+	public Boolean getChildCareLiabilityCoverageRequired() {
 		return childCareLiabilityCoverageRequired;
 	}
 	public void setChildCareLiabilityCoverageRequired(
-			boolean childCareLiabilityCoverageRequired) {
+			Boolean childCareLiabilityCoverageRequired) {
 		this.childCareLiabilityCoverageRequired = childCareLiabilityCoverageRequired;
 	}
-	public boolean isChildCareLiabilityAlreadyExists() {
+	public Boolean getChildCareLiabilityAlreadyExists() {
 		return childCareLiabilityAlreadyExists;
 	}
 	public void setChildCareLiabilityAlreadyExists(
-			boolean childCareLiabilityAlreadyExists) {
+			Boolean childCareLiabilityAlreadyExists) {
 		this.childCareLiabilityAlreadyExists = childCareLiabilityAlreadyExists;
 	}
 	public Integer getApplicantId() {

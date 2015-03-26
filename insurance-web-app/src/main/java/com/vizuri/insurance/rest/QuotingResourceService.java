@@ -174,6 +174,8 @@ public class QuotingResourceService {
 		sendList.add(wrapper.getProperty());
 		sendList.add(wrapper.getProperty().getAddress());
 		RuleProcessor rp = new RuleProcessor();
+		rp.fireRules(RuleProcessor.AGENDA_ELIGIBLITY, sendList.toArray());
+		
 		Collection coll  = rp.fireRules(RuleProcessor.AGENDA_CALCULATION ,sendList.toArray());
 		
 		for (Object object : coll) {
