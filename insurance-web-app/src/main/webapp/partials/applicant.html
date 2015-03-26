@@ -8,12 +8,14 @@
 		<label class="col-sm-2 control-label">{{qmap['a.firstName'].description}}</label>
 		<div class="col-sm-10  " >
 			<input placeholder="Enter First Name" name="firstName" ng-required="qmap['a.firstName'].required" type="text" ng-blur="changeHandle()" ng-model="newApplicant.firstName">
+			<span class="required" ng-show="mainForm.firstName.$error.required">**</span>
 		</div>
 	</div>
 	<div class="form-group" ng-show="qmap['a.lastName'].enabled">
 		<label class="col-sm-2 control-label">{{qmap['a.lastName'].description}}</label>
 		<div class="col-sm-10">
 			<input placeholder="Enter Last Name" name="lastName" ng-required="qmap['a.lastName'].required" type="text" ng-blur="changeHandle()" ng-model="newApplicant.lastName">
+			<span class="required" ng-show="mainForm.lastName.$error.required">**</span>
 		</div>
 	</div>
 
@@ -21,19 +23,26 @@
 		<label class="col-sm-2 control-label">{{qmap['a.email'].description}}</label>
 		<div class="col-sm-10">
 			<input placeholder="user@domain.com" name="email" ng-required="qmap['a.email'].required" type="email" ng-model="newApplicant.email" ng-blur="changeHandle()">
+			<span class="required" ng-show="mainForm.email.$error.required">**</span>
 		</div>
 	</div>
 	<div class="form-group" ng-show="qmap['a.phone'].enabled">
 		<label class="col-sm-2 control-label">{{qmap['a.phone'].description}}</label>
 		<div class="col-sm-10">
 			<input placeholder="123-123-1234" name="phone" ng-required="qmap['a.phone'].required" ng-pattern="/^\(?\d{3}\)?\s*\d{3}\s*-?\s*\d{4}$/" ng-blur="changeHandle()" type="text" ng-model="newApplicant.phone">
+			<span class="required" ng-show="mainForm.phone.$error.required">**</span>
 		</div>
 	</div>
 	<div class="form-group" ng-show="qmap['a.filedForBankruptcy'].enabled">
 
 		<label class="col-sm-2 control-label">{{qmap['a.filedForBankruptcy'].description}}</label>
 		<div class="col-sm-10">
-			<input name="filedForBankruptcy" ng-change="changeHandle()" type="checkbox" type="text" ng-model="newApplicant.filedForBankruptcy">
+			<!-- <input name="filedForBankruptcy" ng-change="changeHandle()" type="checkbox" type="text" ng-model="newApplicant.filedForBankruptcy"> -->
+			<select ng-model="filedForBankruptcy" name="filedForBankruptcy">
+				<option>
+				</option>
+			</select>
+			<span class="required"  ng-show="mainForm.filedForBankruptcy.$error.required">**</span>
 		</div>
 	</div>
 
@@ -41,6 +50,7 @@
 		<label class="col-sm-2 control-label">{{qmap['a.fraud'].description}}</label>
 		<div class="col-sm-10">
 			<input name="fraud" ng-change="changeHandle()" type="checkbox" ng-model="newApplicant.fraud">
+			<span class="required" ng-show="mainForm.fraud.$error.required">**</span>
 		</div>
 	</div>
 
@@ -48,6 +58,7 @@
 		<label class="col-sm-2 control-label">{{qmap['p.anyPreviousInsuranceDenials'].description}}</label>
 		<div class="col-sm-10">
 			<input name="anyPreviousInsuranceDenials" ng-change="changeHandle()" type="checkbox" ng-model="newApplicant.anyPreviousInsuranceDenials">
+			<span class="required" ng-show="mainForm.anyPreviousInsuranceDenials.$error.required">**</span>
 		</div>
 	</div>
 	</div>
