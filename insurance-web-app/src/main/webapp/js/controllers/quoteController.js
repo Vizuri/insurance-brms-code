@@ -355,7 +355,10 @@ quoteModdule.controller('QuoteEntryController',
 
 							$scope.dogList = [];
 							$scope.addDogs = function(source) {
-								if(!'dogExists' == $scope.currentSource  || !'add' == source){
+								console.log('in add dogs ');
+								console.log('$scope.currentSource : ',$scope.currentSource);
+								console.log('source: ',source);
+								if( false == ('dogExists' == $scope.currentSource  || 'add' == source )){
 									return;
 								}
 								if ($scope.qmap['p.dogs'].enabled === false) {
