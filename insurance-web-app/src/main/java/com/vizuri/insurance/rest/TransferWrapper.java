@@ -12,6 +12,7 @@ import com.vizuri.insurance.domain.Applicant;
 import com.vizuri.insurance.domain.Property;
 import com.vizuri.insurance.domain.Question;
 import com.vizuri.insurance.domain.Quote;
+import com.vizuri.insurance.domain.QuoteMessage;
 
 @XmlRootElement
 public class TransferWrapper {
@@ -25,8 +26,9 @@ public class TransferWrapper {
 	@XmlElement
 	private Map<String,Question> applicantQuestMap = new HashMap();
 	
-/*	@XmlElement 
-	private Map<String,Question> propertyQuestMap = new HashMap();*/
+	@XmlElement
+	private List<QuoteMessage> quoteMessages = new ArrayList<QuoteMessage>();
+	
 	@XmlElement
 	private Property property;
 	
@@ -72,10 +74,20 @@ public class TransferWrapper {
 		this.property = property;
 	}
 	
+	public List<QuoteMessage> getQuoteMessages() {
+		return quoteMessages;
+	}
+	public void setQuoteMessages(List<QuoteMessage> quoteMessages) {
+		this.quoteMessages = quoteMessages;
+	}
 	@Override
 	public String toString() {
-		return "TransferWrapper [applicant=" + applicant + ", questions=" + questions + ", property=" + property + "]";
+		return "TransferWrapper [applicant=" + applicant + ", questions="
+				+ questions + ", applicantQuestMap=" + applicantQuestMap
+				+ ", quoteMessages=" + quoteMessages + ", property=" + property
+				+ ", quote=" + quote + "]";
 	}
+	
 	
 	
 }

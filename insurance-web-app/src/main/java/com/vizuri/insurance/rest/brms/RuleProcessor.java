@@ -26,12 +26,13 @@ public class RuleProcessor {
     	private static KieContainer kContainer;
     	static{
     		try {
-    			//kie.maven.settings.custom=/Users/ashakya/insurance/m2repo/mac-settings.xml
     			
-				//String M2_HOME="/Users/ashakya/insurance/m2repo";
-				//System.setProperty("M2_HOME", M2_HOME);
-				//System.setProperty("kie.maven.settings.custom","/Users/ashakya/insurance/m2repo/mac-settings.xml");
-				//System.setProperty("org.guvnor.m2repo.dir","/Users/ashakya/insurance/jboss/jboss-eap-6.1/bin/repositories");
+    			
+    			//if the local maven repository is not in the default ${user.home}/.m2
+    			//need to provide the custom settings.xml 
+    			//pass property value 
+    			//-Dkie.maven.settings.custom={custom.settings.location.full.path}
+    			
 				KieServices kServices = KieServices.Factory.get();
 
 				ReleaseId releaseId = kServices.newReleaseId( "com.vizuri", "Insurance", "1.0-SNAPSHOT");
@@ -61,6 +62,7 @@ public class RuleProcessor {
 	public static final String  AGENDA_QUESTION_DISPLAY = "question-display";
 	public static final String AGENDA_ELIGIBLITY = "eligibility";
 	public static final String AGENDA_CALCULATION = "calculation";
+	public static final String AGENDA_QUOTE_ERROR_CHECK ="quote-error-check";
 	//public static final String  AGENDA_MAIN_GROUP = "question-group";
 	AgendaListener agendaListener  = new AgendaListener();
 	RuleListener ruleListener = new RuleListener();

@@ -86,7 +86,11 @@ div[class="form-group"] {
 								
 							<div ng-show="quoteStatus == QuoteStatus.FORM_INCOMPLETE">
 								Required Field Value are not present.
+							
 							</div>	
+							<div ng-repeat="msgs in $scope.wrapper.quoteMessages">
+								{{msgs}}
+							</div>
 						</div>
 					</div>
 					<div class="form-group">

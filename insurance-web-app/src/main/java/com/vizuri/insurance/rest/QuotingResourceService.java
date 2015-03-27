@@ -23,6 +23,7 @@ import com.vizuri.insurance.domain.Claim;
 import com.vizuri.insurance.domain.Property;
 import com.vizuri.insurance.domain.Question;
 import com.vizuri.insurance.domain.Quote;
+import com.vizuri.insurance.domain.QuoteMessage;
 import com.vizuri.insurance.rest.brms.RuleProcessor;
 
 
@@ -174,17 +175,40 @@ public class QuotingResourceService {
 		sendList.add(wrapper.getProperty());
 		sendList.add(wrapper.getProperty().getAddress());
 		RuleProcessor rp = new RuleProcessor();
-		rp.fireRules(RuleProcessor.AGENDA_ELIGIBLITY, sendList.toArray());
 		
-		Collection coll  = rp.fireRules(RuleProcessor.AGENDA_CALCULATION ,sendList.toArray());
+		wrapper.getQuoteMessages().clear();
+		Collection collError = rp.fireRules(RuleProcessor.AGENDA_QUOTE_ERROR_CHECK, sendList);
 		
-		for (Object object : coll) {
+		for (Object object : collError) {
 			DefaultFactHandle fact = (DefaultFactHandle ) object;
-			if(fact.getObject() instanceof Quote){
-				wrapper.setQuote((Quote) fact.getObject());
-				break;
+			
+			
+			if(fact.getObject() instanceof QuoteMessage){
+				QuoteMessage msg = (QuoteMessage) fact.getObject();
+				wrapper.getQuoteMessages().add(msg);
+			
 			}
 		}
+		if(wrapper.getQuoteMessages().isEmpty()){
+			rp.fireRules(RuleProcessor.AGENDA_ELIGIBLITY, sendList.toArray());
+			
+			Collection coll  = rp.fireRules(RuleProcessor.AGENDA_CALCULATION ,sendList.toArray());
+			
+			for (Object object : coll) {
+				DefaultFactHandle fact = (DefaultFactHandle ) object;
+				if(fact.getObject() instanceof Quote){
+					wrapper.setQuote((Quote) fact.getObject());
+					
+				}
+				
+				if(fact.getObject() instanceof QuoteMessage){
+					QuoteMessage msg = (QuoteMessage) fact.getObject();
+					wrapper.getQuoteMessages().add(msg);
+				
+				}
+			}			
+		}
+		
 		
 		return Response
 	            .status(200)

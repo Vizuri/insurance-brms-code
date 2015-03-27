@@ -1,5 +1,6 @@
 package com.vizuri.insurance.test.rules;
 
+import java.util.Calendar;
 import java.util.Collection;
 
 import org.junit.Test;
@@ -31,5 +32,10 @@ public class DogExists {
 			e.printStackTrace();
 		}
 		
+	}
+	
+	public static void main(String[] args) {
+		int year = Calendar.getInstance().get(Calendar.YEAR);
+		System.out.println("year : "+year);
 	}
 }

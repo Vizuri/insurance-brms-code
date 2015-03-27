@@ -13,6 +13,7 @@ import com.vizuri.insurance.domain.xmladapter.BooleanXmlAdapter;
 public class Applicant {
 	@XmlElement(name="appId")
 	private Integer id;
+	
 	private String firstName;
 	private String lastName;
 	private Boolean fraud;
