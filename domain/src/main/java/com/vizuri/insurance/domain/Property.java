@@ -58,6 +58,7 @@ public class Property {
 	private Integer quoteId;
 	private String status;
 	private int age;
+	private int riskRate;
 	
 	public Address getAddress() {
 		return address;
@@ -195,6 +196,15 @@ public class Property {
 	public void setAge(int age) {
 		this.age = age;
 	}
+	
+	
+	public int getRiskRate() {
+		return riskRate;
+	}
+	public void setRiskRate(int riskRate) {
+		this.riskRate = riskRate;
+	}
+	
 	@Override
 	public String toString() {
 		return "Property [address=" + address + ", policyBeginDate="
@@ -211,7 +221,7 @@ public class Property {
 				+ ", childCareLiabilityAlreadyExists="
 				+ childCareLiabilityAlreadyExists + ", applicantId="
 				+ applicantId + ", policyId=" + policyId + ", quoteId="
-				+ quoteId + ", status=" + status + ", age=" + age + "]";
+				+ quoteId + ", status=" + status + ", age=" + age + ", riskRate=" + riskRate +"]";
 	}
 	
 	
