@@ -93,6 +93,30 @@ function initScopeVars($scope) {
 	$scope.currentSource = undefined;
 	$scope.showDeleteClaimAlert = false;
 	$scope.showDogDeleteAlert = false;
+	$scope.errorQuoteMessages = [];
+	$scope.warningQuoteMessages = [];
+	$scope.infoQuoteMessages = [];
+}
+
+function doQuoteMessages($scope){
+	var messages = $scope.wrapper.quoteMessages;
+	$scope.errorQuoteMessages = [];
+	$scope.infoQuoteMessages = [];
+	$scope.warningQuoteMessages = [];
+	for(var i = 0;i< messages.length; i++){
+		var msg = messages[i];
+		if("ERROR" == msg.messageStatus){
+			$scope.errorQuoteMessages .push(msg);
+		}
+		if("INFO" == msg.messageStatus){
+			$scope.infoQuoteMessages .push(msg);
+		}
+		if("WARNING" == msg.messageStatus){
+			$scope.warningQuoteMessages .push(msg);
+		}
+		
+	}
+	
 }
 
 function convertToDate(obj){
@@ -109,6 +133,7 @@ function convertToDate(obj){
 function copyQuoteDataToScope($scope, data) {
 	console.log('inside copyQuoteDataToScope');
 	$scope.wrapper = data;
+	doQuoteMessages($scope);
 	$scope.newApplicant = data.applicant;
 	$scope.newProperty = data.property;
 	$scope.qmap = data.applicantQuestMap;
@@ -180,10 +205,11 @@ quoteModdule.controller('QuoteEntryController',
 						'$http',
 						'$location',
 						'QuoteWrapper',
-						'$filter',
-						function($scope, $http, $location, QuoteWrapper,$filter) {
-
+						'AnotherWrapper',
+						function($scope, $http, $location, QuoteWrapper,AnotherWrapper) {
+							
 							initScopeVars($scope);
+							$scope.stateList = AnotherWrapper.getStates();
 								
 							QuoteWrapper.query(function(data) {
 								console.log("data : ", data);
@@ -313,7 +339,7 @@ quoteModdule.controller('QuoteEntryController',
 												$scope.wrapper,
 												function(data) {
 													copyQuoteDataToScope($scope, data);
-													
+													console.log("wrapper : ",$scope.wrapper.quoteMessages);
 												},
 												function(result) {
 													if ((result.status == 409)
