@@ -18,10 +18,16 @@
 					ng-show="mainForm.city.$error.required">**</span>
 			</div>
 		</div>
+	
 		<div class="form-group" ng-if="qmap['p.state'].enabled == true">
 			<label class="col-sm-2 control-label" for="state">{{qmap['p.state'].description}}</label>
 			<div class="col-sm-10">
-				<input ng-blur="changeHandle()" ng-required="qmap['p.state'].required" type="text" name="state" id="state" ng-model="newProperty.address.state" placeholder="Enter state" /> <span class="required"
+<!-- 				<input ng-blur="changeHandle()" ng-required="qmap['p.state'].required" type="text" name="state" id="state" ng-model="newProperty.address.state" placeholder="Enter state" />  -->
+				<select ng-change="changeHandle()" ng-required="qmap['p.state'].required" type="text" name="state" id="state" ng-model="newProperty.address.state">
+					<option ng-repeat="state in stateList" value="{{state.abbreviation}}" ng-selected="{{state.abbreviation == newProperty.address.state}}">{{state.name}}
+					</option>
+				</select>
+				<span class="required"
 					ng-show="mainForm.state.$error.required">**</span>
 			</div>
 

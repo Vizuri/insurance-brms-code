@@ -114,6 +114,19 @@ public class QuotingResourceService {
 		sendList.add(wrapper.getProperty());
 		sendList.add(wrapper.getProperty().getAddress());
 		
+		wrapper.getQuoteMessages().clear();
+		Collection collError = rp.fireRules(RuleProcessor.AGENDA_QUOTE_ERROR_CHECK, sendList.toArray());
+		
+		for (Object object : collError) {
+			DefaultFactHandle fact = (DefaultFactHandle ) object;
+			
+			
+			if(fact.getObject() instanceof QuoteMessage){
+				QuoteMessage msg = (QuoteMessage) fact.getObject();
+				wrapper.getQuoteMessages().add(msg);
+			
+			}
+		}
 	
 		Map mp = rp.fireQuestionRule(RuleProcessor.AGENDA_QUESTION_DISPLAY, sendList);
 		
@@ -177,7 +190,7 @@ public class QuotingResourceService {
 		RuleProcessor rp = new RuleProcessor();
 		
 		wrapper.getQuoteMessages().clear();
-		Collection collError = rp.fireRules(RuleProcessor.AGENDA_QUOTE_ERROR_CHECK, sendList);
+		Collection collError = rp.fireRules(RuleProcessor.AGENDA_QUOTE_ERROR_CHECK, sendList.toArray());
 		
 		for (Object object : collError) {
 			DefaultFactHandle fact = (DefaultFactHandle ) object;
@@ -201,11 +214,7 @@ public class QuotingResourceService {
 					
 				}
 				
-				if(fact.getObject() instanceof QuoteMessage){
-					QuoteMessage msg = (QuoteMessage) fact.getObject();
-					wrapper.getQuoteMessages().add(msg);
-				
-				}
+			
 			}			
 		}
 		

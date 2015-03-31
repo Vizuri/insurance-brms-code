@@ -14,112 +14,134 @@ div[class="form-group"] {
 	margin-bottom: 5px;
 }
 
-
-.insurance-form .panel >.panel-heading{
+.insurance-form .panel-default>.panel-heading {
 	color: #fff;
 	background-color: #337ab7;
-
 }
-.firstRow{
+
+.firstRow {
 	height: 60px;
 	background-image: url('/gfx/vizuri-logo.png');
-  	background-size: contain;
-  	max-width: 144px;
-  	max-height: 60px;
-
+	background-size: contain;
+	max-width: 144px;
+	max-height: 60px;
 }
 
 .insurance-form .required {
-   color: red;
- }
-
- 
+	color: red;
+}
 </style>
 <form name="mainForm" class="form-horizontal insurance-form">
 
-<div class="row">
-	<div class="col-md-1">
+	<div class="row">
+		<div class="col-md-1"></div>
+		<div class="col-md-6">
+			<div class="firstRow"></div>
+		</div>
 
-		
+		<div class="col-md-1"></div>
 	</div>
-	<div class="col-md-6">
-	<div class="firstRow"></div>
-	</div>
+	<div class="row">
 
-	<div class="col-md-1"></div>
-</div>
-<div class="row">
-	
-	<div class="col-md-1"></div>
-	<div class="col-md-6">
-		
+		<div class="col-md-1"></div>
+		<div class="col-md-6">
 
-			
+
+
 			<ng-include src="templatesApplicant"></ng-include>
 			<ng-include src="templatesProperty"></ng-include>
 
 
 
-		
 
-	</div>
 
-	<div class="col-md-1">
+		</div>
 
-		<nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix">
-			<div class="panel panel-default">
-				<div class="panel-heading">Available Tasks</div>
+		<div class="col-md-1">
 
-				<div class="panel-body">
-					<div class="form-group">
-						<div class="col-sm-10">
-							<div  style="margin-bottom:5px;">
-								<input class="btn btn-lg btn-primary btn-block" type="button" value="Reset" ng-click="resetQuote()"/>
-							</div>
-							
-							<!-- <div>
+			<nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix">
+				<div class="panel panel-default">
+					<div class="panel-heading">Available Tasks</div>
+
+					<div class="panel-body">
+						<div class="form-group">
+							<div class="col-sm-10">
+								<div style="margin-bottom: 5px;">
+									<input class="btn btn-lg btn-primary btn-block" type="button" value="Reset" ng-click="resetQuote()" />
+								</div>
+
+								<!-- <div>
 								quoteStatus ={{quoteStatus}}
 								<input class="btn btn-lg btn-primary btn-block" type="button" name="eligibility" id="eligibility"  ng-show="false != (quoteStatus == QuoteStatus.NEED_ELIGIBILITY_CHECK)"
 								ng-disabled="false == (quoteStatus == QuoteStatus.NEED_ELIGIBILITY_CHECK)" value="Check Eligibility" ng-click="getEligibility()" />
 							</div> -->
-							
-								
-							<div ng-show="quoteStatus == QuoteStatus.FORM_INCOMPLETE">
-								Required Field Value are not present.
-							
-							</div>	
-							<div ng-repeat="msgs in $scope.wrapper.quoteMessages">
-								{{msgs}}
+
+
+								<div ng-show="quoteStatus == QuoteStatus.FORM_INCOMPLETE">Required Field Value are not present.</div>
+
+
 							</div>
 						</div>
-					</div>
-					<div class="form-group">
-						<div class="col-sm-10">
-							<input class="btn btn-lg btn-primary btn-block" type="button" id="quote" ng-show="quoteStatus != QuoteStatus.FORM_INCOMPLETE" value="Calculate Quote" ng-click="quoteCalculate()" />
+						<div class="form-group">
+							<div class="col-sm-10">
+								<input class="btn btn-lg btn-primary btn-block" type="button" id="quote" ng-show="quoteStatus != QuoteStatus.FORM_INCOMPLETE && wrapper.quoteMessages.length < 1" value="Calculate Quote"
+									ng-click="quoteCalculate()" />
+							</div>
+
+
 						</div>
-
-
 					</div>
 				</div>
-			</div>
-			<div class="panel panel-default">
-				<div class="panel-heading">Quote Messages</div>
+				<!-- 
+				$scope.errorQuoteMessages = [];
+	$scope.warningQuoteMessages = [];
+	$scope.infoQuoteMessages = [];
+				 -->
+				<div class="panel panel-default">
+					<div class="panel-heading">Quote Messages</div>
 
-				<div class="panel-body">
-					<div>Quote Status : {{newProperty.status}} </div>
-					<div ng-show="newProperty.status == undefined || newProperty.status.isEmpty() && wrapper.quote!= undefined && wrapper.quote.id != null && wrapper.quote.amount > 0 ">
-						Quote Amount : {{wrapper.quote.amount}} Quote Id : {{wrapper.quote.id}}
+
+
+					<div class="panel-body" ng-if="warningQuoteMessages > 0">
+						<div class="panel panel-danger">
+							<div class="panel-heading">Warning</div>
+							<ul class="list-group">
+								<li class="list-group-item" ng-repeat="qu in warningQuoteMessages ">{{qu.message}}</li>
+							</ul>
+						</div>
 					</div>
-				</div>
-			</div>
 
-		</nav>
+					<div class="panel-body" ng-if="infoQuoteMessages.length > 0">
+						<div class="panel panel-danger">
+							<div class="panel-heading">Information</div>
+							<ul class="list-group">
+								<li class="list-group-item" ng-repeat="qu in infoQuoteMessages ">{{qu.message}}</li>
+							</ul>
+						</div>
+					</div>
+					<div class="panel-body" ng-if="errorQuoteMessages.length > 0">
+						<div class="panel panel-danger">
+							<div class="panel-heading">Errors</div>
+							<ul class="list-group">
+								<li class="list-group-item" ng-repeat="qu in errorQuoteMessages ">{{qu.message}}</li>
+							</ul>
+						</div>
+					</div>
+
+					<div>Quote Status : {{newProperty.status}}</div>
+					<div ng-show="newProperty.status == undefined || newProperty.status.isEmpty() && wrapper.quote!= undefined && wrapper.quote.id != null && wrapper.quote.amount > 0 ">Quote Amount : {{wrapper.quote.amount}}
+						Quote Id : {{wrapper.quote.id}}</div>
+
+
+				</div>
+
+			</nav>
+
+		</div>
+
+		<div class="col-md-4"></div>
 
 	</div>
-
-	<div class="col-md-4"></div>
-
-</div>
 </form>
 
 
