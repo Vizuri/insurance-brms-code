@@ -21,25 +21,32 @@ div[class="form-group"] {
 
 .firstRow {
 	height: 60px;
-	background-image: url('/gfx/vizuri-logo.png');
-	background-size: contain;
-	max-width: 144px;
-	max-height: 60px;
+/* 	background-image: url('/gfx/vizuri-logo.png'); */
+/* 	background-size: contain; */
+/* 	max-width: 144px; */
+/* 	max-height: 60px; */
 }
 
 .insurance-form .required {
 	color: red;
 }
 </style>
+
 <form name="mainForm" class="form-horizontal insurance-form">
+	<div class="header">
+		<div class="row">
+			<div class="col-md-1"></div>
+			<div class="col-md-6">
+				<div class="firstRow">Insurance Demo</div>
+			</div>
 
-	<div class="row">
-		<div class="col-md-1"></div>
-		<div class="col-md-6">
-			<div class="firstRow"></div>
+			<div class="col-md-1">
+				<div class="logo">
+					<img src="gfx/logo.png">
+				</div>
+
+			</div>
 		</div>
-
-		<div class="col-md-1"></div>
 	</div>
 	<div class="row">
 
@@ -100,39 +107,53 @@ div[class="form-group"] {
 				<div class="panel panel-default">
 					<div class="panel-heading">Quote Messages</div>
 
+					<div class="panel-body">
 
+					
+							<div class="panel panel-danger" ng-if="warningQuoteMessages > 0">
+								<div class="panel-heading">Warning</div>
+								<div class="panel-body">
+									<ul class="list-group">
+										
+										<li class="list-group-item" ng-repeat="qu in warningQuoteMessages ">
+										{{qu.message}}
+									
+										</li>
+									</ul>
+								</div>
+							</div>
+						
 
-					<div class="panel-body" ng-if="warningQuoteMessages > 0">
-						<div class="panel panel-danger">
-							<div class="panel-heading">Warning</div>
-							<ul class="list-group">
-								<li class="list-group-item" ng-repeat="qu in warningQuoteMessages ">{{qu.message}}</li>
-							</ul>
-						</div>
+					
+							<div class="panel panel-danger"  ng-if="infoQuoteMessages.length > 0">
+								<div class="panel-heading">Information</div>
+								<div class="panel-body">
+									<ul class="list-group">
+										<li class="list-group-item" ng-repeat="qu in infoQuoteMessages ">{{qu.message}}
+											<span style="display:none">{{qu}}</span>
+										</li>
+									</ul>
+								</div>
+							</div>
+						
+						
+							<div class="panel panel-danger" ng-if="errorQuoteMessages.length > 0">
+								<div class="panel-heading">Errors</div>
+								<div class="panel-body">
+									<ul class="list-group">
+										<li class="list-group-item" ng-repeat="qu in errorQuoteMessages ">{{qu.message}}
+											<span style="display:none">{{qu}}</span>
+										</li>
+									</ul>
+								</div>
+							</div>
+						
+
+						<div>Quote Status : {{newProperty.status}}</div>
+						<div ng-show="newProperty.status == undefined || newProperty.status.isEmpty() && wrapper.quote!= undefined && wrapper.quote.id != null && wrapper.quote.amount > 0 ">Quote Amount : {{wrapper.quote.amount}}
+							Quote Id : {{wrapper.quote.id}}</div>
+
 					</div>
-
-					<div class="panel-body" ng-if="infoQuoteMessages.length > 0">
-						<div class="panel panel-danger">
-							<div class="panel-heading">Information</div>
-							<ul class="list-group">
-								<li class="list-group-item" ng-repeat="qu in infoQuoteMessages ">{{qu.message}}</li>
-							</ul>
-						</div>
-					</div>
-					<div class="panel-body" ng-if="errorQuoteMessages.length > 0">
-						<div class="panel panel-danger">
-							<div class="panel-heading">Errors</div>
-							<ul class="list-group">
-								<li class="list-group-item" ng-repeat="qu in errorQuoteMessages ">{{qu.message}}</li>
-							</ul>
-						</div>
-					</div>
-
-					<div>Quote Status : {{newProperty.status}}</div>
-					<div ng-show="newProperty.status == undefined || newProperty.status.isEmpty() && wrapper.quote!= undefined && wrapper.quote.id != null && wrapper.quote.amount > 0 ">Quote Amount : {{wrapper.quote.amount}}
-						Quote Id : {{wrapper.quote.id}}</div>
-
-
 				</div>
 
 			</nav>

@@ -15,6 +15,39 @@
  * limitations under the License.
  */
 /* Core styles for the page */
+
+div.form-group>label.control-label {
+	width: 300px;
+	text-align: left;
+	font-size: 11px;
+	font-weight: bold;
+}
+
+div.form-group>div {
+	width: 400px;
+}
+
+div[class="form-group"] {
+	margin-bottom: 5px;
+}
+
+.insurance-form .panel-default>.panel-heading {
+	color: #fff;
+	background-color: #337ab7;
+}
+
+.firstRow {
+	height: 60px;
+/* 	background-image: url('/gfx/vizuri-logo.png'); */
+/* 	background-size: contain; */
+/* 	max-width: 144px; */
+/* 	max-height: 60px; */
+}
+
+.insurance-form .required {
+	color: red;
+}
+
 body {
   margin: 0;
   padding: 0;
