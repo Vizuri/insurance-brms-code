@@ -82,7 +82,11 @@ public class Property {
 		return yearBuilt;
 	}
 	public void setYearBuilt(int yearBuilt) {
-		this.yearBuilt = yearBuilt;
+		if(this.yearBuilt != yearBuilt){
+			this.yearBuilt = yearBuilt;
+			setRiskRate(0);
+		}
+		
 	}
 	public int getLivingArea() {
 		return livingArea;
