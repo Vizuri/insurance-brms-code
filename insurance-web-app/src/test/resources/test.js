@@ -3,13 +3,46 @@
 		"id" : null,
 		"firstName" : "Arun",
 		"lastName" : "Shakya",
-		"fraud" : false,
+		"fraud" : "false",
 		"email" : "ashakya@gmail.com",
 		"phone" : "7033626250",
-		"anyPreviousInsuranceDenials" : false,
-		"filedForBankruptcy" : true
+		"anyPreviousInsuranceDenials" : null,
+		"filedForBankruptcy" : "false"
 	},
 	"questions" : [
+			{
+				"id" : 17,
+				"description" : "Have you been convicted of arson, fraud, or other insurance related offenses?",
+				"answerType" : "Boolean",
+				"group" : "Applicant",
+				"mappedObject" : "Applicant",
+				"mappedProperty" : "fraud",
+				"required" : true,
+				"enabled" : true,
+				"parentId" : 0
+			},
+			{
+				"id" : 12,
+				"description" : "Year Built",
+				"answerType" : "Integer",
+				"group" : "Property",
+				"mappedObject" : "Property",
+				"mappedProperty" : "yearBuilt",
+				"required" : true,
+				"enabled" : true,
+				"parentId" : 0
+			},
+			{
+				"id" : 19,
+				"description" : "Do you have any previous claims?",
+				"answerType" : "Boolean",
+				"group" : "Property",
+				"mappedObject" : "Property",
+				"mappedProperty" : "previousClaims",
+				"required" : true,
+				"enabled" : true,
+				"parentId" : 0
+			},
 			{
 				"id" : 3,
 				"description" : "Email",
@@ -22,37 +55,26 @@
 				"parentId" : 0
 			},
 			{
-				"id" : 20,
-				"description" : "Claim Date",
+				"id" : 10,
+				"description" : "When would you like your home policy to begin? ",
 				"answerType" : "Date",
 				"group" : "Property",
-				"mappedObject" : "Claim",
-				"mappedProperty" : "claimDate",
-				"required" : false,
-				"enabled" : false,
-				"parentId" : 19
-			},
-			{
-				"id" : 27,
-				"description" : "Does any other applicant have child care liability coverage provided by another company?",
-				"answerType" : "Boolean",
-				"group" : "Property",
 				"mappedObject" : "Property",
-				"mappedProperty" : "childCareLiabilityAlreadyExists",
-				"required" : false,
-				"enabled" : false,
-				"parentId" : 26
+				"mappedProperty" : "policyBeginDate",
+				"required" : true,
+				"enabled" : true,
+				"parentId" : 0
 			},
 			{
-				"id" : 21,
-				"description" : "Claim Amount",
-				"answerType" : "Double",
+				"id" : 7,
+				"description" : "City",
+				"answerType" : "String",
 				"group" : "Property",
-				"mappedObject" : "Claim",
-				"mappedProperty" : "claimAmount",
-				"required" : false,
-				"enabled" : false,
-				"parentId" : 19
+				"mappedObject" : "Address",
+				"mappedProperty" : "city",
+				"required" : true,
+				"enabled" : true,
+				"parentId" : 0
 			},
 			{
 				"id" : 26,
@@ -66,23 +88,34 @@
 				"parentId" : 25
 			},
 			{
-				"id" : 9,
-				"description" : "Zip Code",
-				"answerType" : "Integer",
+				"id" : 20,
+				"description" : "Claim Date",
+				"answerType" : "Date",
 				"group" : "Property",
-				"mappedObject" : "Address",
-				"mappedProperty" : "zip",
+				"mappedObject" : "Claim",
+				"mappedProperty" : "claimDate",
+				"required" : false,
+				"enabled" : false,
+				"parentId" : 19
+			},
+			{
+				"id" : 2,
+				"description" : "Last Name",
+				"answerType" : "String",
+				"group" : "Applicant",
+				"mappedObject" : "Applicant",
+				"mappedProperty" : "lastName",
 				"required" : true,
 				"enabled" : true,
 				"parentId" : 0
 			},
 			{
-				"id" : 8,
-				"description" : "State",
+				"id" : 4,
+				"description" : "Phone",
 				"answerType" : "String",
-				"group" : "Property",
-				"mappedObject" : "Address",
-				"mappedProperty" : "state",
+				"group" : "Applicant",
+				"mappedObject" : "Applicant",
+				"mappedProperty" : "phone",
 				"required" : true,
 				"enabled" : true,
 				"parentId" : 0
@@ -99,56 +132,23 @@
 				"parentId" : 22
 			},
 			{
-				"id" : 18,
-				"description" : "Has any insurer or agency canceled or refused to issue or renew similar insurance to the named applicant or any household member within the past 3 years?",
-				"answerType" : "Boolean",
-				"group" : "Property",
-				"mappedObject" : "Applicant",
-				"mappedProperty" : "anyPreviousInsuranceDenials",
-				"required" : true,
-				"enabled" : false,
-				"parentId" : 17
-			},
-			{
-				"id" : 10,
-				"description" : "When would you like your home policy to begin? ",
-				"answerType" : "Date",
-				"group" : "Property",
-				"mappedObject" : "Property",
-				"mappedProperty" : "policyBeginDate",
-				"required" : true,
-				"enabled" : true,
-				"parentId" : 0
-			},
-			{
-				"id" : 5,
-				"description" : "Have you filed for bankruptcy in the last 1 year?",
-				"answerType" : "Boolean",
+				"id" : 1,
+				"description" : "First Name",
+				"answerType" : "String",
 				"group" : "Applicant",
 				"mappedObject" : "Applicant",
-				"mappedProperty" : "filedForBankruptcy",
-				"required" : false,
-				"enabled" : false,
-				"parentId" : 1
-			},
-			{
-				"id" : 15,
-				"description" : "Has the Electric System completely renovated?",
-				"answerType" : "Boolean",
-				"group" : "Property",
-				"mappedObject" : "Property",
-				"mappedProperty" : "electrictSystemRenovated",
+				"mappedProperty" : "firstName",
 				"required" : true,
 				"enabled" : true,
 				"parentId" : 0
 			},
 			{
-				"id" : 12,
-				"description" : "Year Built",
+				"id" : 14,
+				"description" : "Approximate age of roof",
 				"answerType" : "Integer",
 				"group" : "Property",
 				"mappedObject" : "Property",
-				"mappedProperty" : "yearBuilt",
+				"mappedProperty" : "ageOfRoof",
 				"required" : true,
 				"enabled" : true,
 				"parentId" : 0
@@ -176,6 +176,17 @@
 				"parentId" : 0
 			},
 			{
+				"id" : 21,
+				"description" : "Claim Amount",
+				"answerType" : "Double",
+				"group" : "Property",
+				"mappedObject" : "Claim",
+				"mappedProperty" : "claimAmount",
+				"required" : false,
+				"enabled" : false,
+				"parentId" : 19
+			},
+			{
 				"id" : 24,
 				"description" : "Dog type",
 				"answerType" : "String",
@@ -187,12 +198,34 @@
 				"parentId" : 22
 			},
 			{
+				"id" : 15,
+				"description" : "Has the Electric System completely renovated?",
+				"answerType" : "Boolean",
+				"group" : "Property",
+				"mappedObject" : "Property",
+				"mappedProperty" : "electrictSystemRenovated",
+				"required" : true,
+				"enabled" : true,
+				"parentId" : 0
+			},
+			{
 				"id" : 11,
 				"description" : "What is the home puchase date?",
 				"answerType" : "Date",
 				"group" : "Property",
 				"mappedObject" : "Property",
 				"mappedProperty" : "purchaseDate",
+				"required" : true,
+				"enabled" : true,
+				"parentId" : 0
+			},
+			{
+				"id" : 8,
+				"description" : "State",
+				"answerType" : "String",
+				"group" : "Property",
+				"mappedObject" : "Address",
+				"mappedProperty" : "state",
 				"required" : true,
 				"enabled" : true,
 				"parentId" : 0
@@ -209,57 +242,50 @@
 				"parentId" : 0
 			},
 			{
-				"id" : 14,
-				"description" : "Approximate age of roof",
-				"answerType" : "Integer",
+				"id" : 16,
+				"description" : "Are there any home safety devices?",
+				"answerType" : "Boolean",
 				"group" : "Property",
 				"mappedObject" : "Property",
-				"mappedProperty" : "ageOfRoof",
+				"mappedProperty" : "homeSafetyDeviceInstalled",
 				"required" : true,
 				"enabled" : true,
 				"parentId" : 0
 			},
 			{
-				"id" : 17,
-				"description" : "Have you been convicted of arson, fraud, or other insurance related offenses?",
+				"id" : 27,
+				"description" : "Does any other applicant have child care liability coverage provided by another company?",
+				"answerType" : "Boolean",
+				"group" : "Property",
+				"mappedObject" : "Property",
+				"mappedProperty" : "childCareLiabilityAlreadyExists",
+				"required" : false,
+				"enabled" : false,
+				"parentId" : 26
+			},
+			{
+				"id" : 5,
+				"description" : "Have you filed for bankruptcy in the last 1 year?",
 				"answerType" : "Boolean",
 				"group" : "Applicant",
 				"mappedObject" : "Applicant",
-				"mappedProperty" : "fraud",
+				"mappedProperty" : "filedForBankruptcy",
 				"required" : true,
 				"enabled" : true,
 				"parentId" : 0
-			}, {
-				"id" : 2,
-				"description" : "Last Name",
-				"answerType" : "String",
-				"group" : "Applicant",
-				"mappedObject" : "Applicant",
-				"mappedProperty" : "lastName",
+			},
+			{
+				"id" : 9,
+				"description" : "Zip Code",
+				"answerType" : "Integer",
+				"group" : "Property",
+				"mappedObject" : "Address",
+				"mappedProperty" : "zip",
 				"required" : true,
 				"enabled" : true,
 				"parentId" : 0
-			}, {
-				"id" : 1,
-				"description" : "First Name",
-				"answerType" : "String",
-				"group" : "Applicant",
-				"mappedObject" : "Applicant",
-				"mappedProperty" : "firstName",
-				"required" : true,
-				"enabled" : true,
-				"parentId" : 0
-			}, {
-				"id" : 4,
-				"description" : "Phone",
-				"answerType" : "String",
-				"group" : "Applicant",
-				"mappedObject" : "Applicant",
-				"mappedProperty" : "phone",
-				"required" : true,
-				"enabled" : true,
-				"parentId" : 0
-			}, {
+			},
+			{
 				"id" : 22,
 				"description" : "Are there any dogs?",
 				"answerType" : "Boolean",
@@ -269,36 +295,17 @@
 				"required" : true,
 				"enabled" : true,
 				"parentId" : 0
-			}, {
-				"id" : 19,
-				"description" : "Do you have any previous claims?",
+			},
+			{
+				"id" : 18,
+				"description" : "Has any insurer or agency canceled or refused to issue or renew similar insurance to the named applicant or any household member within the past 3 years?",
 				"answerType" : "Boolean",
 				"group" : "Property",
-				"mappedObject" : "Property",
-				"mappedProperty" : "previousClaims",
+				"mappedObject" : "Applicant",
+				"mappedProperty" : "anyPreviousInsuranceDenials",
 				"required" : true,
-				"enabled" : true,
-				"parentId" : 0
-			}, {
-				"id" : 16,
-				"description" : "Are there any home safety devices",
-				"answerType" : "Boolean",
-				"group" : "Property",
-				"mappedObject" : "Property",
-				"mappedProperty" : "homeSafetyDeviceInstalled",
-				"required" : true,
-				"enabled" : true,
-				"parentId" : 0
-			}, {
-				"id" : 7,
-				"description" : "City",
-				"answerType" : "String",
-				"group" : "Property",
-				"mappedObject" : "Address",
-				"mappedProperty" : "city",
-				"required" : true,
-				"enabled" : true,
-				"parentId" : 0
+				"enabled" : false,
+				"parentId" : 17
 			} ],
 	"applicantQuestMap" : {
 		"p.street" : {
@@ -517,9 +524,9 @@
 			"group" : "Applicant",
 			"mappedObject" : "Applicant",
 			"mappedProperty" : "filedForBankruptcy",
-			"required" : false,
-			"enabled" : false,
-			"parentId" : 1
+			"required" : true,
+			"enabled" : true,
+			"parentId" : 0
 		},
 		"p.claimDate" : {
 			"id" : 20,
@@ -567,7 +574,7 @@
 		},
 		"p.homeSafetyDeviceInstalled" : {
 			"id" : 16,
-			"description" : "Are there any home safety devices",
+			"description" : "Are there any home safety devices?",
 			"answerType" : "Boolean",
 			"group" : "Property",
 			"mappedObject" : "Property",
@@ -588,35 +595,39 @@
 			"parentId" : 0
 		}
 	},
-	"propertyQuestMap" : {},
+	"quoteMessages" : [],
 	"property" : {
 		"address" : {
 			"street" : "5159 WOODFIELD DR",
 			"city" : "CENTREVILLE",
-			"state" : "VA - Virginia",
+			"state" : "VA",
 			"zip" : "201204124",
-			"verified" : false
+			"verified" : null
 		},
-		//"policyBeginDate" : "03/22/2015",
-		//"purchaseDate" : "03/22/2015",
-		"yearBuilt" : 2012,
-		"livingArea" : 0,
-		"ageOfRoof" : 0,
-		"electrictSystemRenovated" : false,
-		"homeSafetyDeviceInstalled" : false,
+		"policyBeginDate" : "2015-04-03T04:00:00.000Z",
+		"purchaseDate" : "2015-04-03T04:00:00.000Z",
+		"yearBuilt" : 1971,
+		"livingArea" : 2000,
+		"ageOfRoof" : 24,
+		"electrictSystemRenovated" : "false",
+		"homeSafetyDeviceInstalled" : "false",
 		"homeSafetyDevices" : null,
-		"previousClaims" : false,
-		"claims" : [],
-		"dogExists" : false,
+		"previousClaims" : "false",
+		"claims" : null,
+		"dogExists" : "false",
 		"dogs" : null,
-		"childCareBusinessExists" : false,
-		"childCareLiabilityCoverageRequired" : false,
-		"childCareLiabilityAlreadyExists" : false,
+		"childCareBusinessExists" : "false",
+		"childCareLiabilityCoverageRequired" : null,
+		"childCareLiabilityAlreadyExists" : null,
 		"applicantId" : null,
 		"policyId" : null,
 		"quoteId" : null,
-		"status" : "",
-		"age" : 3
+		"status" : null,
+		"age" : 44,
+		"riskRate" : 10
 	},
-	"quote" : null
+	"quote" : {
+		"id" : 1001,
+		"amount" : 419.95
+	}
 }

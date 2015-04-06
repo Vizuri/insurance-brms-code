@@ -32,7 +32,7 @@ public class RoofAgeTest {
 		JsonReader reader = new JsonReader(fread);
 		
 		Gson gson = new Gson();
-		TransferWrapper wrapper = gson.fromJson(reader, TransferWrapper.class);
+		TransferWrapper wrapper = (TransferWrapper) TestUtils.fromJson("test.js", TransferWrapper.class);//gson.fromJson(reader, TransferWrapper.class);
 		Property prop = new Property();
 		prop.setAgeOfRoof(100);
 		

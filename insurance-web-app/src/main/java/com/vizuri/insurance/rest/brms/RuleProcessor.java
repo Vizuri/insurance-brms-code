@@ -63,6 +63,7 @@ public class RuleProcessor {
 	public static final String AGENDA_ELIGIBLITY = "eligibility";
 	public static final String AGENDA_CALCULATION = "calculation";
 	public static final String AGENDA_QUOTE_ERROR_CHECK ="quote-error-check";
+	public static final String AGENDA_RISK_RULE_GROUP = "riskRuleGroup";
 	//public static final String  AGENDA_MAIN_GROUP = "question-group";
 	AgendaListener agendaListener  = new AgendaListener();
 	RuleListener ruleListener = new RuleListener();

@@ -203,6 +203,9 @@ public class QuotingResourceService {
 			}
 		}
 		if(wrapper.getQuoteMessages().isEmpty()){
+			wrapper.getProperty().setRiskRate(0);
+			rp.fireRules(RuleProcessor.AGENDA_RISK_RULE_GROUP, sendList.toArray());
+			
 			rp.fireRules(RuleProcessor.AGENDA_ELIGIBLITY, sendList.toArray());
 			
 			Collection coll  = rp.fireRules(RuleProcessor.AGENDA_CALCULATION ,sendList.toArray());
