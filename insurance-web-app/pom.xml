@@ -38,6 +38,7 @@
     </pluginRepositories>
 
     <properties>
+         <skipTests>true</skipTests>
         <!-- Explicitly declaring the source encoding eliminates the following message: -->
         <!-- [WARNING] Using platform encoding (UTF-8 actually) to copy filtered 
              resources, i.e. build is platform dependent! -->
@@ -256,7 +257,11 @@
                     <plugin>
                         <artifactId>maven-surefire-plugin</artifactId>
                         <version>${version.surefire.plugin}</version>
+ 		        <configuration>
+		        	<skip>${skipTests}</skip>
+		        </configuration>                         
                     </plugin>
+                  
                 </plugins>
             </build>
         </profile>
