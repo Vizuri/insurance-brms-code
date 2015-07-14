@@ -1,0 +1,8 @@
+target
+.project
+.settings
+.classpath
+test-output
+**/doc
+**/reports
+.pmd
