@@ -3,3 +3,4 @@ target
 .settings
 .classpath
 test-output
+domain/doc
