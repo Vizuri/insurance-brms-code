@@ -23,10 +23,10 @@ Code and installer Documentation for BRMS Insurance demonstration
 	
 	* Add application user 
 		*	run EAP_HOME/bin/add-user.sh or EAP_HOME/bin/add-user.bat
-		* 	create a Application User  called rulesuser with the role admin
+		* 	Create a Application User  called rulesuser with the role admin
 
 	* Start EAP 
-		*  run EAP_HOME/bin/standalone.sh or EAP_HOME/standalone.bat
+		*  run EAP_HOME/bin/standalone.sh or EAP_HOME/bin/standalone.bat
 	
 	* Navigate to http://localhost:8080/business-central
 	* Login with the above created user	
