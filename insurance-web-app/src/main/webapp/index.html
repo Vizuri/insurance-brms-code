@@ -1,45 +1,38 @@
 <!DOCTYPE html>
 
 <html lang="en" ng-app="insurance-demo">
-<head>
-    <title>insurance-demo</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <head>
+        <title>insurance-demo</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 
-    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css">
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/quote.css">
-    
-</head>
-<body>
-    <aside id="container">
- 
-        <div id="content" ng-view>
-            <!-- This div will be templated by AngularJS -->
-            [Template content will be inserted here]
-        </div>
-        
-    </aside>
-    
-    <!--  loading all the angular api components -->
-    <script src="bower_components/jquery/dist/jquery.min.js"></script>
-    <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
-    <script src="js/util.js"></script>
-    <!-- Load angularjs -->
-    <script src="bower_components/angular/angular.js"></script>
-    <!-- Load angularjs-route, which allows us to use multiple views displayed through application routes -->
-    <script src="bower_components/angular-route/angular-route.js"></script>
-    <!-- Load angularjs-resource, which allows us to interact with REST resources as high level services -->
-    <script src="bower_components/angular-resource/angular-resource.js"></script>
-    <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
-    <script src="bower_components/angular-local-storage/dist/angular-local-storage.js"></script>
-    <script src="js/app.js"></script>
-    
-    
-    <!-- Load the controllers for our app -->
-   <!--  <script src="js/controllers.js"></script> -->
-     <script src="js/controllers/quoteController.js"></script>
-     <script src="js/services/quoteService.js"></script>  
+        <link rel="stylesheet" href="client/bower_components/bootstrap/dist/css/bootstrap.css">
+        <link rel="stylesheet" href="client/app/assets/css/common.css">
+        <link rel="stylesheet" href="client/app/assets/css/quote.css">
 
-    
-</body>
+    </head>
+    <body>
+        <div id="content" ng-view></div>
+
+        <!--  loading all the angular api components -->
+        <script src="client/bower_components/jquery/dist/jquery.min.js"></script>
+        <script src="client/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+
+        <!-- Load angularjs -->
+        <script src="client/bower_components/angular/angular.js"></script>
+        <!-- Load angularjs-route, which allows us to use multiple views displayed through application routes -->
+        <script src="client/bower_components/angular-route/angular-route.js"></script>
+        <!-- Load angularjs-resource, which allows us to interact with REST resources as high level services -->
+        <script src="client/bower_components/angular-resource/angular-resource.js"></script>
+        <script src="client/bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+        <script src="client/bower_components/angular-local-storage/dist/angular-local-storage.js"></script>
+        <script src="client/app/app-routes.js"></script>
+        <script src="client/app/common/util.js"></script>
+
+
+        <!-- Load the controllers for our app -->
+         <script src="client/app/components/quote/controller/quote_controller.js"></script>
+         <script src="client/app/components/quote/service/quote_service.js"></script>
+
+
+    </body>
 </html>

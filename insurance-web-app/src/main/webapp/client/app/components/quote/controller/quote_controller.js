@@ -95,8 +95,8 @@ angular.module('quoteController', ['quoteService'])
             $scope.templates = 'partials/applicant.html';
             // $scope.propertyMap = {};
             $scope.newProperty = {};
-            $scope.templatesApplicant = 'partials/applicant.html';
-            $scope.templatesProperty = 'partials/property.html';
+            $scope.templatesApplicant = 'client/app/components/old/applicant.html';
+            $scope.templatesProperty = 'client/app/components/old/property.html';
             $scope.quoteStatus = $scope.QuoteStatus.FORM_INCOMPLETE;
             // html input elements that fired
             $scope.currentSource = undefined;
