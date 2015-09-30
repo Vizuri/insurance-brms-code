@@ -8,12 +8,12 @@ now="$(date +'%d-%m-%Y-%H-%M-%S')"
 DIRNAME=`dirname "$0"`
 PROGNAME=`basename "$0"`
 #JBOSS_HOME=/Users/ashakya/Documents/magnaworkspace/jboss-eap-6.2-brms-GA-delivery/jboss-eap-6.2-brms
-echo "jboss home :  ${JBOSS_HOME}"
+#echo "jboss home :  ${JBOSS_HOME}"
 localrepo=vizuribrms-insurance-rules
 remotreponame=vizuri_brms-insurance-rules
 function checkEnviroment(){
       #echo "Please provide the username for local git repo"
-      read -p "Please provide the username for local git repo: " repousername
+      read -p "Please provide the username for local brms git repo: " repousername
 	if [ "x$repousername" = "x" ]; then
 	
             echo "local git username is not set exiting"
