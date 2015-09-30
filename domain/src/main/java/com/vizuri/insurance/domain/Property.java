@@ -29,7 +29,7 @@ import com.vizuri.insurance.domain.xmladapter.CalendarXmlAdapter;
 @XmlRootElement
 public class Property {
 
-	private Address address;
+  private Address address;
 
 	// @XmlJavaTypeAdapter(value = CalendarXmlAdapter.class)
 	private Date policyBeginDate;
@@ -37,232 +37,232 @@ public class Property {
 	// @XmlJavaTypeAdapter(value = CalendarXmlAdapter.class)
 	private Date purchaseDate;
 
-	private int yearBuilt;
-	private int livingArea;
-	private int ageOfRoof;
-	@XmlJavaTypeAdapter(value = BooleanXmlAdapter.class)
-	private Boolean electrictSystemRenovated;
+  private int yearBuilt;
+  private int livingArea;
+  private int ageOfRoof;
+  @XmlJavaTypeAdapter(value = BooleanXmlAdapter.class)
+  private Boolean electrictSystemRenovated;
 
-	@XmlJavaTypeAdapter(value = BooleanXmlAdapter.class)
-	private Boolean homeSafetyDeviceInstalled;
+  @XmlJavaTypeAdapter(value = BooleanXmlAdapter.class)
+  private Boolean homeSafetyDeviceInstalled;
 
-	private List<String> homeSafetyDevices;
+  private List<String> homeSafetyDevices;
 
-	@XmlJavaTypeAdapter(value = BooleanXmlAdapter.class)
-	private Boolean previousClaims;
+  @XmlJavaTypeAdapter(value = BooleanXmlAdapter.class)
+  private Boolean previousClaims;
 
-	private List<Claim> claims;
+  private List<Claim> claims;
 
-	@XmlJavaTypeAdapter(value = BooleanXmlAdapter.class)
-	private Boolean dogExists;
+  @XmlJavaTypeAdapter(value = BooleanXmlAdapter.class)
+  private Boolean dogExists;
 
-	private Map<Integer, String> dogs;
+  private Map<Integer, String> dogs;
 
-	@XmlJavaTypeAdapter(value = BooleanXmlAdapter.class)
-	private Boolean childCareBusinessExists;
+  @XmlJavaTypeAdapter(value = BooleanXmlAdapter.class)
+  private Boolean childCareBusinessExists;
 
-	@XmlJavaTypeAdapter(value = BooleanXmlAdapter.class)
-	private Boolean childCareLiabilityCoverageRequired;
+  @XmlJavaTypeAdapter(value = BooleanXmlAdapter.class)
+  private Boolean childCareLiabilityCoverageRequired;
 
-	@XmlJavaTypeAdapter(value = BooleanXmlAdapter.class)
-	private Boolean childCareLiabilityAlreadyExists;
+  @XmlJavaTypeAdapter(value = BooleanXmlAdapter.class)
+  private Boolean childCareLiabilityAlreadyExists;
 
-	private Integer applicantId;
-	private Integer policyId;
-	private Integer quoteId;
-	private String status;
-	private int age;
-	private int riskRate;
+  private Integer applicantId;
+  private Integer policyId;
+  private Integer quoteId;
+  private String status;
+  private double age;
+  private double riskRate;
 
-	public Address getAddress() {
-		return address;
-	}
+  public Address getAddress() {
+    return address;
+  }
 
-	public void setAddress(Address address) {
-		this.address = address;
-	}
+  public void setAddress(Address address) {
+    this.address = address;
+  }
 
 	public Date getPolicyBeginDate() {
-		return policyBeginDate;
-	}
+    return policyBeginDate;
+  }
 
 	public void setPolicyBeginDate(Date policyBeginDate) {
-		this.policyBeginDate = policyBeginDate;
-	}
+    this.policyBeginDate = policyBeginDate;
+  }
 
 	public Date getPurchaseDate() {
-		return purchaseDate;
-	}
+    return purchaseDate;
+  }
 
 	public void setPurchaseDate(Date purchaseDate) {
-		this.purchaseDate = purchaseDate;
-	}
+    this.purchaseDate = purchaseDate;
+  }
 
-	public int getYearBuilt() {
-		return yearBuilt;
-	}
+  public int getYearBuilt() {
+    return yearBuilt;
+  }
 
-	public void setYearBuilt(int yearBuilt) {
-		if (this.yearBuilt != yearBuilt) {
-			this.yearBuilt = yearBuilt;
-			setRiskRate(0);
-		}
+  public void setYearBuilt(int yearBuilt) {
+    if (this.yearBuilt != yearBuilt) {
+      this.yearBuilt = yearBuilt;
+      setRiskRate(0);
+    }
 
-	}
+  }
 
-	public int getLivingArea() {
-		return livingArea;
-	}
+  public int getLivingArea() {
+    return livingArea;
+  }
 
-	public void setLivingArea(int livingArea) {
-		this.livingArea = livingArea;
-	}
+  public void setLivingArea(int livingArea) {
+    this.livingArea = livingArea;
+  }
 
-	public int getAgeOfRoof() {
-		return ageOfRoof;
-	}
+  public int getAgeOfRoof() {
+    return ageOfRoof;
+  }
 
-	public void setAgeOfRoof(int ageOfRoof) {
-		this.ageOfRoof = ageOfRoof;
-	}
+  public void setAgeOfRoof(int ageOfRoof) {
+    this.ageOfRoof = ageOfRoof;
+  }
 
-	public Boolean getElectrictSystemRenovated() {
-		return electrictSystemRenovated;
-	}
+  public Boolean getElectrictSystemRenovated() {
+    return electrictSystemRenovated;
+  }
 
-	public void setElectrictSystemRenovated(Boolean electrictSystemRenovated) {
-		this.electrictSystemRenovated = electrictSystemRenovated;
-	}
+  public void setElectrictSystemRenovated(Boolean electrictSystemRenovated) {
+    this.electrictSystemRenovated = electrictSystemRenovated;
+  }
 
-	public Boolean getHomeSafetyDeviceInstalled() {
-		return homeSafetyDeviceInstalled;
-	}
+  public Boolean getHomeSafetyDeviceInstalled() {
+    return homeSafetyDeviceInstalled;
+  }
 
-	public void setHomeSafetyDeviceInstalled(Boolean homeSafetyDeviceInstalled) {
-		this.homeSafetyDeviceInstalled = homeSafetyDeviceInstalled;
-	}
+  public void setHomeSafetyDeviceInstalled(Boolean homeSafetyDeviceInstalled) {
+    this.homeSafetyDeviceInstalled = homeSafetyDeviceInstalled;
+  }
 
-	public List<String> getHomeSafetyDevices() {
-		return homeSafetyDevices;
-	}
+  public List<String> getHomeSafetyDevices() {
+    return homeSafetyDevices;
+  }
 
-	public void setHomeSafetyDevices(List<String> homeSafetyDevices) {
-		this.homeSafetyDevices = homeSafetyDevices;
-	}
+  public void setHomeSafetyDevices(List<String> homeSafetyDevices) {
+    this.homeSafetyDevices = homeSafetyDevices;
+  }
 
-	public Boolean getPreviousClaims() {
-		return previousClaims;
-	}
+  public Boolean getPreviousClaims() {
+    return previousClaims;
+  }
 
-	public void setPreviousClaims(Boolean previousClaims) {
-		this.previousClaims = previousClaims;
-	}
+  public void setPreviousClaims(Boolean previousClaims) {
+    this.previousClaims = previousClaims;
+  }
 
-	public List<Claim> getClaims() {
-		return claims;
-	}
+  public List<Claim> getClaims() {
+    return claims;
+  }
 
-	public void setClaims(List<Claim> claims) {
-		this.claims = claims;
-	}
+  public void setClaims(List<Claim> claims) {
+    this.claims = claims;
+  }
 
-	public Boolean getDogExists() {
-		return dogExists;
-	}
+  public Boolean getDogExists() {
+    return dogExists;
+  }
 
-	public void setDogExists(Boolean dogExists) {
-		this.dogExists = dogExists;
-	}
+  public void setDogExists(Boolean dogExists) {
+    this.dogExists = dogExists;
+  }
 
-	public Map<Integer, String> getDogs() {
-		return dogs;
-	}
+  public Map<Integer, String> getDogs() {
+    return dogs;
+  }
 
-	public void setDogs(Map<Integer, String> dogs) {
-		this.dogs = dogs;
-	}
+  public void setDogs(Map<Integer, String> dogs) {
+    this.dogs = dogs;
+  }
 
-	public Boolean getChildCareBusinessExists() {
-		return childCareBusinessExists;
-	}
+  public Boolean getChildCareBusinessExists() {
+    return childCareBusinessExists;
+  }
 
-	public void setChildCareBusinessExists(Boolean childCareBusinessExists) {
-		this.childCareBusinessExists = childCareBusinessExists;
-	}
+  public void setChildCareBusinessExists(Boolean childCareBusinessExists) {
+    this.childCareBusinessExists = childCareBusinessExists;
+  }
 
-	public Boolean getChildCareLiabilityCoverageRequired() {
-		return childCareLiabilityCoverageRequired;
-	}
+  public Boolean getChildCareLiabilityCoverageRequired() {
+    return childCareLiabilityCoverageRequired;
+  }
 
 	public void setChildCareLiabilityCoverageRequired(
 			Boolean childCareLiabilityCoverageRequired) {
-		this.childCareLiabilityCoverageRequired = childCareLiabilityCoverageRequired;
-	}
+    this.childCareLiabilityCoverageRequired = childCareLiabilityCoverageRequired;
+  }
 
-	public Boolean getChildCareLiabilityAlreadyExists() {
-		return childCareLiabilityAlreadyExists;
-	}
+  public Boolean getChildCareLiabilityAlreadyExists() {
+    return childCareLiabilityAlreadyExists;
+  }
 
 	public void setChildCareLiabilityAlreadyExists(
 			Boolean childCareLiabilityAlreadyExists) {
-		this.childCareLiabilityAlreadyExists = childCareLiabilityAlreadyExists;
-	}
+    this.childCareLiabilityAlreadyExists = childCareLiabilityAlreadyExists;
+  }
 
-	public Integer getApplicantId() {
-		return applicantId;
-	}
+  public Integer getApplicantId() {
+    return applicantId;
+  }
 
-	public void setApplicantId(Integer applicantId) {
-		this.applicantId = applicantId;
-	}
+  public void setApplicantId(Integer applicantId) {
+    this.applicantId = applicantId;
+  }
 
-	public Integer getPolicyId() {
-		return policyId;
-	}
+  public Integer getPolicyId() {
+    return policyId;
+  }
 
-	public void setPolicyId(Integer policyId) {
-		this.policyId = policyId;
-	}
+  public void setPolicyId(Integer policyId) {
+    this.policyId = policyId;
+  }
 
-	public Integer getQuoteId() {
-		return quoteId;
-	}
+  public Integer getQuoteId() {
+    return quoteId;
+  }
 
-	public void setQuoteId(Integer quoteId) {
-		this.quoteId = quoteId;
-	}
+  public void setQuoteId(Integer quoteId) {
+    this.quoteId = quoteId;
+  }
 
-	public String getStatus() {
-		return status;
-	}
+  public String getStatus() {
+    return status;
+  }
 
-	public void setStatus(String status) {
-		this.status = status;
-	}
+  public void setStatus(String status) {
+    this.status = status;
+  }
 
-	public int getAge() {
-		if (getYearBuilt() != 0) {
-			Calendar calendar = Calendar.getInstance();
-			age = calendar.get(Calendar.YEAR) - getYearBuilt();
-			return age;
-		}
-		return 0;
-	}
+  public double getAge() {
+    if (getYearBuilt() != 0) {
+      Calendar calendar = Calendar.getInstance();
+      age = calendar.get(Calendar.YEAR) - getYearBuilt();
+      return age;
+    }
+    return 0;
+  }
 
-	public void setAge(int age) {
-		this.age = age;
-	}
+  public void setAge(double age) {
+    this.age = age;
+  }
 
-	public int getRiskRate() {
-		return riskRate;
-	}
+  public double getRiskRate() {
+    return riskRate;
+  }
 
-	public void setRiskRate(int riskRate) {
-		this.riskRate = riskRate;
-	}
+  public void setRiskRate(double riskRate) {
+    this.riskRate = riskRate;
+  }
 
-	@Override
-	public String toString() {
+  @Override
+  public String toString() {
 		return "Property [address=" + address + ", policyBeginDate="
 				+ policyBeginDate + ", purchaseDate=" + purchaseDate
 				+ ", yearBuilt=" + yearBuilt + ", livingArea=" + livingArea
@@ -279,6 +279,6 @@ public class Property {
 				+ applicantId + ", policyId=" + policyId + ", quoteId="
 				+ quoteId + ", status=" + status + ", age=" + age
 				+ ", riskRate=" + riskRate + "]";
-	}
+  }
 
 }

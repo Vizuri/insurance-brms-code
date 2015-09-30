@@ -29,7 +29,7 @@ public class RuleListener implements RuleRuntimeEventListener {
   @Override
   public void objectInserted(ObjectInsertedEvent event) {
     log.info("objectInserted");
-    log.info("objectInserted");
+  
     Object factObject = event.getObject();
    
    
@@ -39,7 +39,7 @@ public class RuleListener implements RuleRuntimeEventListener {
   @Override
   public void objectUpdated(ObjectUpdatedEvent event) {
     log.info("objectUpdated");
-    log.info("objectUpdated");
+
     Object factObject = event.getObject();
    
     log.info("updated Object : " + factObject);
@@ -49,8 +49,11 @@ public class RuleListener implements RuleRuntimeEventListener {
 
   @Override
   public void objectDeleted(ObjectDeletedEvent event) {
+    log.info("objectDeleted");
     
-
+    Object factObject = event.getOldObject();
+    
+    log.info("deleted Object : " + factObject);
   }
 
 
