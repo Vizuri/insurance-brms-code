@@ -71,8 +71,8 @@ public class Property {
   private Integer policyId;
   private Integer quoteId;
   private String status;
-  private int age;
-  private int riskRate;
+  private double age;
+  private double riskRate;
 
   public Address getAddress() {
     return address;
@@ -238,7 +238,7 @@ public class Property {
     this.status = status;
   }
 
-  public int getAge() {
+  public double getAge() {
     if (getYearBuilt() != 0) {
       Calendar calendar = Calendar.getInstance();
       age = calendar.get(Calendar.YEAR) - getYearBuilt();
@@ -247,16 +247,16 @@ public class Property {
     return 0;
   }
 
-  public void setAge(int age) {
+  public void setAge(double age) {
     this.age = age;
   }
 
 
-  public int getRiskRate() {
+  public double getRiskRate() {
     return riskRate;
   }
 
-  public void setRiskRate(int riskRate) {
+  public void setRiskRate(double riskRate) {
     this.riskRate = riskRate;
   }
 

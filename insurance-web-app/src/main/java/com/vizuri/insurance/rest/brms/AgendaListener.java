@@ -38,6 +38,10 @@ public class AgendaListener implements AgendaEventListener {
     // if (log.isInfoEnabled()) {
 
     log.info("matchCreated : " + event.getMatch().getRule());
+    for(Object obj: event.getMatch().getObjects()){
+    	log.info(obj);
+    }
+    log.info("matchCreated end:");
     // }
 
   }

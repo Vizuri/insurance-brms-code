@@ -97,7 +97,8 @@ public class RuleProcessor {
     KieSession kieSession = null;
     try {
       kieSession = kContainer.newKieSession();
-
+      kieSession.addEventListener(agendaListener);
+      kieSession.addEventListener(ruleListener);
       if (object != null) {
         for (Object obj : object) {
           kieSession.insert(obj);
@@ -107,8 +108,7 @@ public class RuleProcessor {
       if (agendaGroup != null) {
         kieSession.getAgenda().getAgendaGroup(agendaGroup).setFocus();
       }
-      kieSession.addEventListener(agendaListener);
-      kieSession.addEventListener(ruleListener);
+
 
       kieSession.fireAllRules();
       Collection coll = kieSession.getFactHandles();

@@ -8,36 +8,42 @@ now="$(date +'%d-%m-%Y-%H-%M-%S')"
 DIRNAME=`dirname "$0"`
 PROGNAME=`basename "$0"`
 #JBOSS_HOME=/Users/ashakya/Documents/magnaworkspace/jboss-eap-6.2-brms-GA-delivery/jboss-eap-6.2-brms
-echo "jboss home :  ${JBOSS_HOME}"
-insurancrepo=InsuranceRepo
+#echo "jboss home :  ${JBOSS_HOME}"
+localrepo=vizuribrms-insurance-rules
+remotreponame=vizuri_brms-insurance-rules
 function checkEnviroment(){
-	if [ "x$JBOSS_HOME" = "x" ]; then
-		echo "JBOSS_HOME is not set"
-    	exit -1;
+      #echo "Please provide the username for local git repo"
+      read -p "Please provide the username for local brms git repo: " repousername
+	if [ "x$repousername" = "x" ]; then
+	
+            echo "local git username is not set exiting"
+            exit -1;
 	fi
+        
+     
 }
 
 function gitConfig(){
-	git config user.email "ashakya@vizuri.com"
-	git config user.name  "ashakya"
+	git config user.email "repousername@domain"
+	git config user.name  "repousername"
 }
 
 function stageLocal(){
 	cd $BASEDIR
 	#mv HomeownerRepo HomeownerRepo$now
-	mv InsuranceRepo InsuranceRepo$now
+	mv $localrepo $localrepo$now
 	gitConfig
 	echo "****Please enter business-central password when prompted***"
-	git clone ssh://bpmsAdmin@localhost:8001/$insurancrepo
+	git clone ssh://$repousername@localhost:8001/$localrepo
 	
   	
 	#read -p "Enter Jboss Directory : " confirm_value
 	#git clone $JBOSS_HOME/.niogit/HomeownerRepo.git
 	
-	cd $insurancrepo
+	cd $localrepo
 	
 	echo "****Now adding unfuddled remote use unfuddled credentials ***"
-	git remote add unfuddle https://vizuri.unfuddle.com/git/vizuri_brms-insurance-rules
+	git remote add unfuddle https://vizuri.unfuddle.com/git/$remotreponame/
 	git fetch unfuddle
 	git checkout -b unfuddlemaster unfuddle/master
 	git pull unfuddle master
@@ -58,8 +64,8 @@ function stageLocal(){
 
 function deleteGitStage(){
 	cd $curdir
-	rm -rf Home*
-	rm -rf MagnaRulerRepo*
+	#rm -rf Home*
+	rm -rf $localrepo*
 	
 }
 checkEnviroment
