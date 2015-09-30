@@ -24,14 +24,14 @@ function checkEnviroment(){
 }
 
 function gitConfig(){
-	git config user.email "jbrms-test@mcarta.com"
-	git config user.name  "jbrms-test"
+	git config user.email "repousername@domain"
+	git config user.name  "repousername"
 }
 
 function stageLocal(){
 	cd $BASEDIR
 	#mv HomeownerRepo HomeownerRepo$now
-	mv $localrepo $MagnaRuleRepo$now
+	mv $localrepo $localrepo$now
 	gitConfig
 	echo "****Please enter business-central password when prompted***"
 	git clone ssh://$repousername@localhost:8001/$localrepo
@@ -64,7 +64,7 @@ function stageLocal(){
 
 function deleteGitStage(){
 	cd $curdir
-	rm -rf Home*
+	#rm -rf Home*
 	rm -rf $localrepo*
 	
 }
