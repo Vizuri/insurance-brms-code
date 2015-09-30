@@ -1,0 +1,131 @@
+<div class="insurance_demo">
+<div class="header">
+    <div class="row">
+        <div class="col-md-1"></div>
+        <div class="col-md-6">
+            <div class="firstRow">Insurance Demo</div>
+        </div>
+
+        <div class="col-md-1">
+            <div class="logo">
+                <img src="gfx/logo.png">
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<form name="mainForm" class="body form-horizontal insurance-form">
+
+    <div class="row">
+
+        <div class="col-md-1"></div>
+        <div class="col-md-6">
+            <div class="well" data-ng-include="'partials/applicant2.html'"></div>
+            <div class="well" data-ng-include="'partials/property2.html'"></div>
+
+        </div>
+
+        <div class="col-md-3">
+
+            <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix">
+                <div class="well">
+                    <div class="row group-heading"><div class="col-md-12">Available Tasks</div></div>
+
+                    <div class="row group-body">
+
+                        <div class="col-md-6">
+
+                            <div style="margin-bottom: 5px;width: 80px;">
+                                <input class="btn btn-primary" type="button" value="Clear"
+                                       ng-click="resetQuote()"/>
+                            </div>
+
+                        </div>
+
+                        <div class="col-md-6">
+
+                            <input type="button" id="quote" class="btn btn-success"
+                                   ng-show="quoteStatus != QuoteStatus.FORM_INCOMPLETE && wrapper.quoteMessages.length < 1"
+                                   value="Calculate Quote"
+                                   ng-click="quoteCalculate()"/>
+
+
+                        </div>
+                    </div>
+                    <div class="row">
+
+                        <div class="col-md-12">
+
+                            <div ng-show="quoteStatus == QuoteStatus.FORM_INCOMPLETE">
+                                <p class="text-danger text-left" style="width: 380px;">
+                                    Some fields are still required.<br>
+                                    Please complete all required fields to complete the quote.
+                                </p>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="panel panel-default">
+                    <div class="panel-heading">Quote Messages</div>
+
+                    <div class="panel-body">
+
+
+                        <div class="panel panel-danger" ng-if="warningQuoteMessages > 0">
+                            <div class="group-heading">Warning</div>
+                            <div class="group-body">
+                                <ul class="list-group">
+
+                                    <li class="list-group-item" ng-repeat="qu in warningQuoteMessages ">
+                                        {{qu.message}}
+
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+
+
+                        <div class="panel panel-danger" ng-if="infoQuoteMessages.length > 0">
+                            <div class="group-heading">Information</div>
+                            <div class="group-body">
+                                <ul class="list-group">
+                                    <li class="list-group-item" ng-repeat="qu in infoQuoteMessages ">{{qu.message}}
+                                        <span style="display:none">{{qu}}</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+
+
+                        <div class="row" ng-if="errorQuoteMessages.length > 0">
+                            <div class="group-heading">Errors</div>
+                            <div class="group-body">
+                                <ul class="list-group">
+                                    <li class="list-group-item" ng-repeat="qu in errorQuoteMessages | orderBy:'-message' ">{{qu.message}}
+                                        <span style="display:none">{{qu}}</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+
+
+                        <div>Quote Status : {{newProperty.status}}</div>
+                        <div ng-show="newProperty.status == undefined || newProperty.status.isEmpty() && wrapper.quote!= undefined && wrapper.quote.id != null && wrapper.quote.amount > 0 ">
+                            Quote Amount : {{wrapper.quote.amount}}
+                            Quote Id : {{wrapper.quote.id}}
+                        </div>
+
+                    </div>
+                </div>
+
+            </nav>
+
+        </div>
+
+    </div>
+</form>
+
+</div>

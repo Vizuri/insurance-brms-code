@@ -1,0 +1,429 @@
+<div class="panel panel-default">
+    <div class="panel-heading">Property</div>
+
+    <div class="panel-body">
+        <div class="row" ng-if="qmap['p.street'].enabled == true">
+            <label class="col-md-3 control-label" for="street">{{qmap['p.street'].description}}</label>
+
+            <div class="col-md-6">
+                <input ng-required="qmap['p.street'].required" ng-blur="changeHandle()" type="text" name="street"
+                       id="street" class="form-control"
+                       ng-model="newProperty.address.street" placeholder="Enter street"/>
+
+            </div>
+            <div class="col-md-1">
+                <span class="required" ng-show="mainForm.street.$error.required">**</span>
+            </div>
+
+        </div>
+
+        <div class="row" ng-if="qmap['p.city'].enabled == true">
+            <label class="col-md-3 control-label" for="city">{{qmap['p.city'].description}}</label>
+
+            <div class="col-md-6">
+                <input ng-blur="changeHandle()" ng-pattern="/^\w/" ng-required="qmap['p.city'].required"
+                       class="form-control"
+                       type="text" name="city" id="city" ng-model="newProperty.address.city" placeholder="Enter city"/>
+            </div>
+            <div class="col-md-1">
+                <span class="required" ng-show="mainForm.city.$error.required">**</span>
+            </div>
+        </div>
+
+        <div class="row" ng-if="qmap['p.state'].enabled == true">
+            <label class="col-md-3 control-label" for="state">{{qmap['p.state'].description}}</label>
+
+            <div class="col-md-6">
+
+                <select ng-change="changeHandle()" ng-required="qmap['p.state'].required" type="text" name="state" class="form-control"
+                        id="state" ng-model="newProperty.address.state">
+                    <option ng-repeat="state in stateList" value="{{state.abbreviation}}"
+                            ng-selected="{{state.abbreviation == newProperty.address.state}}">{{state.name}}
+                    </option>
+                </select>
+
+            </div>
+            <div class="col-md-1">
+                <span class="required" ng-show="mainForm.state.$error.required">**</span>
+            </div>
+
+        </div>
+
+        <div class="row" ng-if="qmap['p.zip'].enabled == true">
+            <label class="col-md-3 control-label" for="zip">{{qmap['p.zip'].description}}</label>
+
+            <div class="col-md-4">
+                <input ng-blur="changeHandle()" ng-pattern="/^\d+$/" ng-required="qmap['p.zip'].required" type="text"
+                       class="form-control"
+                       name="zip" id="zip" ng-model="newProperty.address.zip" placeholder="Enter Zip Code"/>
+            </div>
+            <div class="col-md-1">
+                <span class="required" ng-show="mainForm.zip.$error.required">**</span>
+            </div>
+
+        </div>
+        <hr>
+
+        <div class="row" ng-if="qmap['p.policyBeginDate'].enabled == true">
+
+            <label class="col-md-6 control-label" for="policyBeginDate">{{qmap['p.policyBeginDate'].description}}</label>
+
+            <div class="col-md-4">
+                <input ng-blur="changeHandle()" ng-required="qmap['p.policyBeginDate'].required" type="date"
+                       name="policyBeginDate" id="policyBeginDate" ng-model="newProperty.policyBeginDate"
+                       placeholder="Enter policyBeginDate" class="form-control"/>
+            </div>
+            <div class="col-md-1">
+                <span class="required" ng-show="mainForm.policyBeginDate.$error.required">**</span>
+            </div>
+
+<!--  min="'2000-06-22'" max="'2018-06-22'"
+ date-disabled="disabled(date, mode)"
+ datepicker-options="dateOptions"
+ is-open="opened"
+
+ ng-controller="PolicyBeginDatePickerCtrl"
+ -->
+
+            <!--<div class="col-md-5" >-->
+
+                <!--<div class="input-group">-->
+                    <!--<input name="policyBeginDate" id="policyBeginDate" class="form-control input-sm" type="text"-->
+                           <!--ng-model="newProperty.policyBeginDate"-->
+                           <!--datepicker-popup="MM/dd/yyyy"-->
+                           <!--is-open="opened"-->
+                           <!--/>-->
+
+                    <!--<span class="input-group-btn">-->
+                        <!--<button class="btn btn-sm btn-default" ng-click="open()"><i class="glyphicon glyphicon-calendar"></i></button>-->
+                        <!--<button class="btn btn-sm btn-info" ng-click="today(newProperty)">Today</button>-->
+                        <!--<button class="btn btn-sm btn-danger" ng-click="clear(newProperty)">Clear</button>-->
+                    <!--</span>-->
+                <!--</div>-->
+
+            <!--</div>-->
+
+
+        </div>
+
+        <div class="row" ng-if="qmap['p.purchaseDate'].enabled == true">
+            <label class="col-md-6 control-label" for="purchaseDate">{{qmap['p.purchaseDate'].description}}</label>
+
+            <div class="col-md-4">
+                <input ng-blur="changeHandle()" ng-required="qmap['p.purchaseDate'].required" type="date"
+                       name="purchaseDate" id="purchaseDate" ng-model="newProperty.purchaseDate"
+                       placeholder="Enter purchaseDate" class="form-control"/>
+            </div>
+            <div class="col-md-1">
+                <span class="required" ng-show="mainForm.purchaseDate.$error.required">**</span>
+            </div>
+
+        </div>
+
+        <hr>
+        <div class="row" ng-if="qmap['p.livingArea'].enabled == true">
+            <label class="col-md-4 control-label" for="livingArea">{{qmap['p.livingArea'].description}}</label>
+
+            <div class="col-md-3">
+                <input placeholder="{{qmap['p.livingArea'].required == true ? 'Enter livingArea'  : ''}}"
+                       ng-blur="changeHandle()" ng-pattern="/^\d*$/" ng-required="qmap['p.livingArea'].required"
+                       type="text" name="livingArea" id="livingArea" class="form-control"
+                       ng-model="newProperty.livingArea"/>
+            </div>
+            <div class="col-md-1">
+                <span class="required" ng-show="mainForm.livingArea.$error.required">**</span>
+            </div>
+        </div>
+
+        <div class="row" ng-if="qmap['p.ageOfRoof'].enabled == true">
+            <label class="col-md-4 control-label" for="ageOfRoof">{{qmap['p.ageOfRoof'].description}}</label>
+
+            <div class="col-md-3">
+                <input ng-blur="changeHandle()" ng-pattern="/^\d*$/" ng-required="qmap['p.ageOfRoof'].required"
+                       type="text" name="ageOfRoof" id="ageOfRoof" ng-model="newProperty.ageOfRoof" class="form-control"
+                       placeholder="{{qmap['p.ageOfRoof'].required == true ? 'Enter ageOfRoof'  : ''}}"/>
+            </div>
+            <div class="col-md-1">
+                <span class="required" ng-show="mainForm.ageOfRoof.$error.required">**</span>
+            </div>
+
+        </div>
+
+        <div class="row" ng-if="qmap['p.yearBuilt'].enabled == true">
+            <label class="col-md-4 control-label" for="yearBuilt">{{qmap['p.yearBuilt'].description}}</label>
+
+            <div class="col-md-3">
+                <input placeholder="Enter 4 digit  year" min="1920" ng-blur="changeHandle()" ng-pattern="/^\d{4}$/"
+                       ng-required="qmap['p.yearBuilt'].required" type="number" name="yearBuilt" id="yearBuilt"
+                       ng-model="newProperty.yearBuilt"
+                       placeholder="Enter yearBuilt" class="form-control"/>
+
+            </div>
+            <div class="col-md-1">
+                <span class="required" ng-show="mainForm.yearBuilt.$error.required">**</span>
+                <span class="required" ng-show="!mainForm.yearBuilt.$valid"></span>
+            </div>
+        </div>
+
+        <hr>
+        <div class="row" ng-if="qmap['p.electrictSystemRenovated'].enabled == true">
+
+            <label class="col-md-6 control-label" for="electrictSystemRenovated">{{qmap['p.electrictSystemRenovated'].description}}</label>
+
+            <div class="col-md-2">
+
+                <select ng-change="changeHandle()" name="electrictSystemRenovated" id="electrictSystemRenovated" class="form-control"
+                        ng-required="qmap['p.electrictSystemRenovated'].required"
+                        ng-model="newProperty.electrictSystemRenovated">
+
+                    <!--<option value="">Select One</option>-->
+                    <option value="true">Yes</option>
+                    <option value="false">No</option>
+                </select>
+            </div>
+            <div class="col-md-1">
+
+                <span class="required" ng-show="mainForm.electrictSystemRenovated.$error.required">**</span>
+            </div>
+        </div>
+
+        <div class="row" ng-if="qmap['p.homeSafetyDeviceInstalled'].enabled == true">
+            <label class="col-md-6 control-label" for="homeSafetyDeviceInstalled">{{qmap['p.homeSafetyDeviceInstalled'].description}}</label>
+
+            <div class="col-md-2">
+                <select ng-change="changeHandle()" name="homeSafetyDeviceInstalled" id="homeSafetyDeviceInstalled" class="form-control"
+                        ng-model="newProperty.homeSafetyDeviceInstalled"
+                        ng-required="qmap['p.homeSafetyDeviceInstalled'].required ">
+
+                    <option value="true">Yes</option>
+                    <option value="false">No</option>
+                </select>
+
+            </div>
+            <div class="col-md-1">
+                <span class="required" ng-show="mainForm.homeSafetyDeviceInstalled.$error.required">**</span>
+            </div>
+        </div>
+
+        <div class="row" ng-if="qmap['p.previousClaims'].enabled == true">
+            <label class="col-md-6 control-label" for="previousClaims">{{qmap['p.previousClaims'].description}}</label>
+
+            <div class="col-md-2">
+                <select ng-change="changeHandle()" name="previousClaims" id="previousClaims" ng-model="newProperty.previousClaims"
+                        ng-required="qmap['p.previousClaims'].required" class="form-control">
+
+                    <option value="true">Yes</option>
+                    <option value="false">No</option>
+                </select>
+
+            </div>
+            <div class="col-md-1">
+                <span class="required" ng-show="mainForm.previousClaims.$error.required">**</span>
+            </div>
+
+
+        </div>
+        <div class="row" ng-show="newProperty.previousClaims === 'true' && qmap['p.previousClaims'].enabled == true && qmap['p.claimDate'].enabled == true && qmap['p.claimAmount'].enabled == true">
+
+            <div ng-show="showDeleteClaimAlert" class="col-md-2 alert alert-danger">
+                <span class="close" ng-click="hideClaimAlert()">X</span> <strong>Error! </strong>At least one claim
+                information is needed.
+            </div>
+
+            <div class="well col-md-10">
+                <table class="table table-condensed table-striped table-hover" >
+                <tr>
+                    <td width="10%"><label class="control-label">ClaimDate</label></td>
+                    <td width="5%"></td>
+                    <td width="10%"><label class="control-label">ClaimAmount</label></td>
+                    <td width="5%"></td>
+                    <td><label class="control-label">Remove</label></td>
+                </tr>
+
+                <tr ng-repeat="claim in newProperty.claims" ng-form="claimForm">
+
+                    <td>
+                        <input ng-change="changeHandle('noserver-call')" type="date" name="claimDate" class="form-control"
+                               ng-model="claim.claimDate" ng-required="newProperty.previousClaims == 'true'">
+
+                    </td>
+                    <td>
+                        <span class="required" ng-show="claimForm.claimDate.$error.required">**</span>
+                    </td>
+                    <td>
+                        <input type="number" ng-change="changeHandle('noserver-call')" name="claimAmount" class="form-control"
+                               ng-model="claim.claimAmount" ng-required="newProperty.previousClaims == 'true'">
+                    </td>
+                    <td>
+                        <span class="required" ng-show="claimForm.claimAmount.$error.required">**</span>
+                    </td>
+                    <td>
+
+                        <button type="button" class="btn btn-xs"
+                                ng-click="deleteClaimRow($index)">
+                            <i class="glyphicon glyphicon-remove-sign"></i> Remove
+                        </button>
+                    </td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td>
+
+                        <button type="button" class="btn btn-xs" ng-click="addClaimRow('add')">
+                            <i class="glyphicon glyphicon-plus-sign"></i>Add another Claim
+                        </button>
+                    </td>
+                </tr>
+
+            </table>
+            </div>
+        </div>
+
+        <div class="row" ng-if="qmap['p.dogExists'].enabled == true">
+            <label class="col-md-6 control-label" for="dogExists">{{qmap['p.dogExists'].description}}</label>
+
+            <div class="col-md-2">
+                <!-- <input ng-required="qmap['p.dogExists'].required" ng-change="changeHandle()" id="dogExists" type="checkbox" name="dogExists" ng-model="newProperty.dogExists" />  -->
+                <select ng-required="qmap['p.dogExists'].required" ng-change="changeHandle()" id="dogExists"
+                        type="checkbox" name="dogExists" ng-model="newProperty.dogExists" class="form-control">
+                    <option label="" value=""/>
+                    <option value="true">Yes</option>
+                    <option value="false">No</option>
+
+                </select>
+
+            </div>
+            <div class="col-md-1">
+                <span class="required" ng-show="mainForm.dogExists.$error.required">**</span>
+            </div>
+
+        </div>
+        <div class="row" ng-show="newProperty.dogExists == 'true' && qmap['p.dogExists'].enabled &&  qmap['p.dogs'].enabled">
+            <div ng-show="showDogDeleteAlert" class="col-md-2 alert alert-danger">
+                <span class="close" ng-click="hideDogAlert()">X</span> <strong>Error! </strong>At least One Dog is
+                required.
+            </div>
+            <div class="well col-md-10">
+
+                <table class="table table-condensed table-striped table-hover">
+                <tr>
+                    <td width="10%"><label class="control-label">Number</label></td>
+                    <td width="5%"></td>
+                    <td><label class="control-label">Type of Dog</label></td>
+                    <td width="5%"></td>
+                    <td>Remove</td>
+                </tr>
+
+                <tr ng-repeat="dog in dogList">
+                    <td>
+
+                        <input ng-change="changeHandle('noserver-call')" ng-model="dog.dogCount"
+                               name="{{'dogCount'+$index}}" type="number" min="1" class="form-control"
+                               ng-required="newProperty.dogExists == 'true'">
+
+                    </td>
+                    <td><span class="required" ng-show="mainForm.{{'dogCount'+$index}}.$error.required">**</span></td>
+                    <td>
+                        <select ng-change="changeHandle('noserver-call')" name="{{'dogType'+$index}}"
+                                ng-model="dog.dogType" ng-required="newProperty.dogExists == 'true'" class="form-control"
+                                class="table-responsive">
+                            <option label="" value=""/>
+                            <option label="BullDogs" value="BullDogs"/>
+                            <option label="Molossers" value="Molossers"/>
+                            <option label="Mountain dog" value="Mountain dog"/>
+                        </select>
+
+                    </td>
+                    <td><span class="required" ng-show="mainForm.{{'dogType'+$index}}.$error.required">**</span></td>
+                    <td>
+
+                        <button type="button" class="btn btn-xs"
+                                ng-click="removeDog($index)">
+                            <i class="glyphicon glyphicon-remove-sign"></i> Remove
+                        </button>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td>
+                        <button type="button" class="btn btn-xs" ng-click="addDogs('add')">
+                            <i class="glyphicon glyphicon-plus-sign"></i>Add another Dog
+                        </button>
+                    </td>
+                </tr>
+            </table>
+            </div>
+        </div>
+
+        <hr>
+        <div class="row" ng-if="qmap['p.childCareBusinessExists'].enabled == true">
+            <label class="col-md-6 control-label" for="childCareBusinessExists">{{qmap['p.childCareBusinessExists'].description}}</label>
+
+            <div class="col-md-2 checkbox">
+
+                <select ng-change="changeHandle()" ng-required="qmap['p.childCareBusinessExists'].required"
+                        name="childCareBusinessExists" id="childCareBusinessExists"
+                        ng-model="newProperty.childCareBusinessExists" class="form-control">
+
+                    <option value="true">Yes</option>
+                    <option value="false">No</option>
+                </select>
+
+            </div>
+            <div class="col-md-1">
+                <span class="required" ng-show="mainForm.childCareBusinessExists.$error.required">**</span>
+            </div>
+        </div>
+
+
+        <div class="row"
+             ng-if="newProperty.childCareBusinessExists == 'true' && qmap['p.childCareLiabilityCoverageRequired'].enabled == true">
+            <label class="col-md-6 control-label" for="childCareLiabilityCoverageRequired">{{qmap['p.childCareLiabilityCoverageRequired'].description}}</label>
+
+            <div class="col-md-2">
+                <!-- <input ng-change="changeHandle()" ng-required="qmap['p.childCareLiabilityCoverageRequired'].required" type="checkbox" name="childCareLiabilityCoverageRequired"
+                    ng-model="newProperty.childCareLiabilityCoverageRequired" />  -->
+                <select ng-change="changeHandle()" ng-required="qmap['p.childCareLiabilityCoverageRequired'].required"
+                        name="childCareLiabilityCoverageRequired" class="form-control"
+                        ng-model="newProperty.childCareLiabilityCoverageRequired">
+
+                    <option value="true">Yes</option>
+                    <option value="false">No</option>
+                </select>
+
+            </div>
+            <div class="col-md-1">
+                <span class="required" ng-show="mainForm.childCareLiabilityCoverageRequired.$error.required">**</span>
+            </div>
+        </div>
+
+        <div class="row"
+             ng-if="newProperty.childCareLiabilityCoverageRequired == 'true' && qmap['p.childCareLiabilityCoverageRequired'].enabled == true">
+            <label class="col-md-6 control-label" for="childCareLiabilityAlreadyExists">{{qmap['p.childCareLiabilityAlreadyExists'].description}}</label>
+
+            <div class="col-md-2">
+                <select ng-change="changeHandle()" ng-required="qmap['p.childCareLiabilityAlreadyExists'].required"
+                        name="childCareLiabilityAlreadyExists" class="form-control"
+                        ng-model="newProperty.childCareLiabilityAlreadyExists">
+
+                    <option value="true">Yes</option>
+                    <option value="false">No</option>
+                </select>
+
+            </div>
+            <div class="col-md-1">
+                <span class="required" ng-show="mainForm.childCareLiabilityAlreadyExists.$error.required">**</span>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+

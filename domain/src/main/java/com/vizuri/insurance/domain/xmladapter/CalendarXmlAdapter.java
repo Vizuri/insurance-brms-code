@@ -28,6 +28,7 @@ public class CalendarXmlAdapter extends XmlAdapter<String, Calendar> {
  
   @Override
   public Calendar unmarshal(String v) throws Exception {
+	  System.out.println("Inside Calendar unmarshal, date: " + v);
     if (v == null || v.trim().isEmpty()) {
       return null;
     }

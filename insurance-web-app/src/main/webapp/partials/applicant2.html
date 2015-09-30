@@ -1,0 +1,108 @@
+
+<div class="panel panel-default">
+	<div class="panel-heading" >Applicant</div>
+
+	<div class="panel-body">
+	
+	<div class="row" ng-if="qmap['a.firstName'].enabled">
+		<label class="col-md-2 control-label">{{qmap['a.firstName'].description}}</label>
+		<div class="col-md-6" >
+			<input placeholder="Enter First Name" name="firstName" ng-required="qmap['a.firstName'].required" type="text" ng-blur="changeHandle()" ng-model="newApplicant.firstName" class="form-control">
+
+		</div>
+        <div class="col-md-1">
+            <span class="required" ng-show="mainForm.firstName.$error.required">**</span>
+        </div>
+	</div>
+	 <div class="row" ng-if="qmap['a.lastName'].enabled">
+		<label class="col-md-2 control-label">{{qmap['a.lastName'].description}}</label>
+		<div class="col-md-6">
+			<input placeholder="Enter Last Name" name="lastName" ng-required="qmap['a.lastName'].required" type="text" ng-blur="changeHandle()" ng-model="newApplicant.lastName" class="form-control">
+
+		</div>
+         <div class="col-md-1">
+             <span class="required" ng-show="mainForm.lastName.$error.required">**</span>
+         </div>
+	</div>
+	
+	<div class="row" ng-if="qmap['a.email'].enabled">
+		<label class="col-md-2 control-label">{{qmap['a.email'].description}}</label>
+		<div class="col-md-6">
+			<input placeholder="user@domain.com" name="email" ng-required="qmap['a.email'].required" type="email" ng-model="newApplicant.email" ng-blur="changeHandle()" class="form-control">
+
+		</div>
+        <div class="col-md-1">
+            <span class="required" ng-show="mainForm.email.$error.required">**</span>
+        </div>
+	</div>
+	
+	<div class="row" ng-if="qmap['a.phone'].enabled">
+		<label class="col-md-2 control-label">{{qmap['a.phone'].description}}</label>
+		<div class="col-md-6">
+			<input placeholder="123-123-1234" name="phone" ng-required="qmap['a.phone'].required" ng-pattern="/^\(?\d{3}\)?\s*\d{3}\s*-?\s*\d{4}$/" ng-blur="changeHandle()" type="text" ng-model="newApplicant.phone" class="form-control">
+
+		</div>
+        <div class="col-md-1">
+            <span class="required" ng-show="mainForm.phone.$error.required">**</span>
+        </div>
+	</div>
+    <hr>
+	<div class="row" ng-if="qmap['a.filedForBankruptcy'].enabled">
+
+		<label class="col-md-6 control-label">{{qmap['a.filedForBankruptcy'].description}}</label>
+		<div class="col-md-2">
+
+            <select name="filedForBankruptcy"   ng-change="changeHandle()" type="checkbox" class="form-control"
+                    ng-model="newApplicant.filedForBankruptcy" ng-required="qmap['a.filedForBankruptcy'].required">
+                <option value=""></option>
+                <option  value="true">Yes</option>
+                <option  value="false">No</option>
+            </select>
+
+		</div>
+        <div class="col-md-1">
+            <span class="required"  ng-show="mainForm.filedForBankruptcy.$error.required">**</span>
+        </div>
+	</div>
+
+	<div class="row" ng-if="qmap['a.fraud'].enabled">
+		<label class="col-md-6 control-label">{{qmap['a.fraud'].description}}</label>
+		<div class="col-md-2">
+			
+		<select name="fraud" ng-change="changeHandle()" type="checkbox" class="form-control"
+                ng-model="newApplicant.fraud" ng-required="qmap['a.fraud'].required">
+			<option value=""></option>
+			<option  value=true>Yes</option>
+			<option  value=false>No</option>
+		</select>
+
+		</div>
+        <div class="col-md-1">
+            <span class="required" ng-show="mainForm.fraud.$error.required">**</span>
+        </div>
+	</div>
+
+	<div class="row" ng-if="qmap['p.anyPreviousInsuranceDenials'].enabled" >
+		<label class="col-md-6 control-label">{{qmap['p.anyPreviousInsuranceDenials'].description}}</label>
+		<div class="col-md-2">
+			
+			<select name="anyPreviousInsuranceDenials" ng-change="changeHandle()" type="checkbox" class="form-control"
+                    ng-model="newApplicant.anyPreviousInsuranceDenials" ng-required="qmap['a.anyPreviousInsuranceDenials'].required">
+			<option value=""></option>
+			<option  value="true">Yes</option>
+			<option  value="false">No</option>
+			</select>			
+
+		</div>
+        <div class="col-md-1">
+            <span class="required" ng-show="mainForm.anyPreviousInsuranceDenials.$error.required">**</span>
+        </div>
+	</div> 
+	</div>
+</div>
+
+
+
+
+
+

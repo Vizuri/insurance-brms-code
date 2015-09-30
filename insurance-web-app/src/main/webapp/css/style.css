@@ -59,22 +59,27 @@ body{
 background-color:#f2f2f2;
 }
 
-.insurance-form .panel >.panel-heading {
-	background-color:#f2f2f2!important;
-	color:#435159!important;
+.insurance-form .panel-heading {
+	background-color:#f2f2f2;
+	color:#435159;
 	text-transform:uppercase;
-	}
+}
 	
-	.panel-heading{
-		font-size: 18px!important;
-		  padding: 10px 15px;
-  		  border-bottom: 2px solid #cb2026!important;
-		  letter-spacing: 2px;
-		  border-top:none!important;
-		  border-left:none!important;
-		  border-right:none!important;
-		}
-	
+.panel-heading{
+    font-size: 18px!important;
+      padding: 10px 15px;
+      border-bottom: 2px solid #cb2026!important;
+      letter-spacing: 2px;
+      border-top:none!important;
+      border-left:none!important;
+      border-right:none!important;
+    }
+
+.panel-body{
+    background-color:#f2f2f2;
+
+}
+
 .btn-primary{
 	background-color:#a20c11;
 	border-color:#84070b;
@@ -82,7 +87,3 @@ background-color:#f2f2f2;
 		.panel-default{
 		border:none!important;}
 	
-	.panel-body{
-		background-color:#f2f2f2!important;
-		
-		}

@@ -1,6 +1,7 @@
 target
 .project
 .settings
+.metadata
 .classpath
 test-output
 **/doc
