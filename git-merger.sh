@@ -12,10 +12,15 @@ echo "jboss home :  ${JBOSS_HOME}"
 localrepo=vizuribrms-insurance-rules
 remotreponame=vizuri_brms-insurance-rules
 function checkEnviroment(){
-	if [ "x$JBOSS_HOME" = "x" ]; then
-		echo "JBOSS_HOME is not set"
-    	exit -1;
+      #echo "Please provide the username for local git repo"
+      read -p "Please provide the username for local git repo: " repousername
+	if [ "x$repousername" = "x" ]; then
+	
+            echo "local git username is not set exiting"
+            exit -1;
 	fi
+        
+     
 }
 
 function gitConfig(){
@@ -29,7 +34,7 @@ function stageLocal(){
 	mv $localrepo $MagnaRuleRepo$now
 	gitConfig
 	echo "****Please enter business-central password when prompted***"
-	git clone ssh://rulesuser@localhost:8001/$localrepo
+	git clone ssh://$repousername@localhost:8001/$localrepo
 	
   	
 	#read -p "Enter Jboss Directory : " confirm_value
@@ -63,7 +68,7 @@ function deleteGitStage(){
 	rm -rf $localrepo*
 	
 }
-#checkEnviroment
+checkEnviroment
 stageLocal
 #sleep 3
 deleteGitStage
