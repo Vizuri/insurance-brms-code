@@ -1,7 +1,6 @@
 angular.module('quoteController', ['quoteService'])
 .controller('QuoteEntryController',
-    ['$scope', '$http', '$location', 'QuoteWrapper', 'AnotherWrapper',
-    function ($scope, $http, $location, QuoteWrapper, AnotherWrapper){
+    function ($scope, $http, $location, QuoteWrapper, QuoteCalculate, AnotherWrapper){
 
         console.log("Inside QuoteEntryController");
 
@@ -54,12 +53,12 @@ angular.module('quoteController', ['quoteService'])
 
                     }
                 },
-                "dogExists": function ($scope){
-                    $scope.showDogDeleteAlert = false;
-                    if ($scope.newProperty.dogExists == "true") {
-                        $scope.quoteStatus = $scope.QuoteStatus.FORM_INCOMPLETE;
-                    }
-                },
+                //"dogExists": function ($scope){
+                //    $scope.showDogDeleteAlert = false;
+                //    if ($scope.newProperty.dogExists == "true") {
+                //        $scope.quoteStatus = $scope.QuoteStatus.FORM_INCOMPLETE;
+                //    }
+                //},
                 "handleEvent": function ($scope){
                     console.log("Inside IndividualEvents handleEvent");
                     try {
@@ -143,6 +142,7 @@ angular.module('quoteController', ['quoteService'])
 
         function doQuoteMessages ($scope){
 
+            var haveErrors = false;
             var messages = $scope.wrapper.quoteMessages;
             $scope.errorQuoteMessages = [];
             $scope.infoQuoteMessages = [];
@@ -151,6 +151,7 @@ angular.module('quoteController', ['quoteService'])
                 var msg = messages[i];
                 if ("ERROR" == msg.messageStatus) {
                     $scope.errorQuoteMessages.push(msg);
+                    haveErrors = true;
                 }
                 if ("INFO" == msg.messageStatus) {
                     $scope.infoQuoteMessages.push(msg);
@@ -160,6 +161,8 @@ angular.module('quoteController', ['quoteService'])
                 }
 
             }
+
+            return haveErrors;
 
         }
 
@@ -182,9 +185,18 @@ angular.module('quoteController', ['quoteService'])
 
             console.log('inside copyQuoteDataToScope', data.applicantQuestMap);
             $scope.wrapper = data;
-            doQuoteMessages($scope);
+
+            // check to see if we got any error messages back
+            var haveErrors = doQuoteMessages($scope);
+
+            if (haveErrors){
+                console.log("got some errors back after validation");
+                $scope.QuoteStatus.FORM_INCOMPLETE;
+            }
+
             $scope.newApplicant = data.applicant;
             $scope.newProperty = data.property;
+            $scope.newQuote = data.quote;
             $scope.qmap = data.applicantQuestMap;
             // $scope.propertyMap = data.propertyQuestMap;
             console.log('newApplicant: ', $scope.newApplicant);
@@ -274,7 +286,7 @@ angular.module('quoteController', ['quoteService'])
             $scope.changeHandle = function (serverCall){
                 console.log('Inside changeHandle');
 
-                $scope.quoteStatus = $scope.QuoteStatus.FORM_INCOMPLETE;
+                //$scope.quoteStatus = $scope.QuoteStatus.FORM_INCOMPLETE;
 
                 Try.these(function (){
                     $scope.currentSource = window.event.srcElement.id;
@@ -316,8 +328,9 @@ angular.module('quoteController', ['quoteService'])
                         console.log('newProperty', $scope.newProperty);
                         console.log('qmap', $scope.qmap);
 
-                        $scope.wrapper.property.status = "";
+
                         $scope.wrapper.quote = {};
+                        $scope.wrapper.quote.status = "";
 
                         console.log("add dummy claim and dummy dog");
                         $scope.addClaimRow();
@@ -362,13 +375,14 @@ angular.module('quoteController', ['quoteService'])
             $scope.getEligibility = function (){
                 console.log("Inside getEligibility");
 
-                $scope.wrapper.property.status = "";
+                //$scope.wrapper.quote.status = "";
                 QuoteWrapper
                     .checkEligibility($scope.wrapper,
                     function (data){
                         copyQuoteDataToScope($scope, data);
-                        $scope.newProperty.status = $scope.newProperty.status == undefined ? "" : $scope.newProperty.status;
-                        if ($scope.mainForm.$valid && $scope.newProperty.status.isEmpty()) {
+
+                        console.log("Quote status[" + $scope.newQuote.status + "]");
+                        if ($scope.mainForm.$valid && $scope.newQuote.status.isEmpty()) {
                             $scope.quoteStatus = $scope.QuoteStatus.ELIBIBILITY_COMPLETE;
                         }
                     },
@@ -384,20 +398,22 @@ angular.module('quoteController', ['quoteService'])
                     });
             };
 
-            // questRes
-            // quoteCalculate
+
             $scope.quoteCalculate = function (){
-                QuoteWrapper
-                    .quoteCalculate(
-                    $scope.wrapper,
-                    function (data){
-                        copyQuoteDataToScope($scope, data);
-                        console.log("wrapper : ", $scope.wrapper.quoteMessages);
+
+                console.log("Inside quoteCalculate");
+
+                QuoteCalculate.save($scope.wrapper,
+                    function (success){
+
+                        copyQuoteDataToScope($scope, success);
+                        console.log("Calculated Quote: ", $scope.wrapper.quote);
                     },
-                    function (result){
-                        if ((result.status == 409)
-                            || (result.status == 400)) {
-                            $scope.errors = result.data;
+                    function (error){
+
+                        console.log("Error calling QuoteCalculate, err: ", error);
+                        if ((error.status == 409) || (error.status == 400)) {
+                            $scope.errors = error.data;
                         }
                         else {
                             $scope.errorMessages = ['Unknown  server error'];
@@ -405,6 +421,7 @@ angular.module('quoteController', ['quoteService'])
                     });
 
             };
+
             // qmap['p.previousClaims'].enabled == true
             $scope.addClaimRow = function (source){
 
@@ -437,7 +454,7 @@ angular.module('quoteController', ['quoteService'])
                             "claimDate": "",
                             "claimAmount": ""
                         });
-                        $scope.quoteStatus = $scope.QuoteStatus.FORM_INCOMPLETE;
+                        //$scope.quoteStatus = $scope.QuoteStatus.FORM_INCOMPLETE;
                     }
 
                 }
@@ -519,4 +536,4 @@ angular.module('quoteController', ['quoteService'])
 
             };
 
-        }]);
+    });

@@ -30,165 +30,180 @@ import org.kie.api.builder.KieScanner;
 import org.kie.api.builder.ReleaseId;
 import org.kie.api.runtime.KieContainer;
 import org.kie.api.runtime.KieSession;
+import org.kie.api.runtime.rule.FactHandle;
 
 import com.vizuri.insurance.domain.Question;
 
 public class RuleProcessor {
- 
-
-  private KieContainer kContainer = RuleProcessor.Factory.get();// kServices.getKieClasspathContainer();
-  private static final Logger logger =Logger.getLogger(RuleProcessor.class);
-  private static class Factory {
-    private static KieContainer kContainer;
-    static {
-      try {
 
 
-        // if the local maven repository is not in the default ${user.home}/.m2
-        // need to provide the custom settings.xml
-        // pass property value
-        // -Dkie.maven.settings.custom={custom.settings.location.full.path}
-
-        KieServices kServices = KieServices.Factory.get();
-
-        ReleaseId releaseId = kServices.newReleaseId("com.vizuri", "Insurance", "1.0-SNAPSHOT");
-
-        kContainer = kServices.newKieContainer(releaseId);
-
-        KieScanner kScanner = kServices.newKieScanner(kContainer);
+	private KieContainer kContainer = RuleProcessor.Factory.get();// kServices.getKieClasspathContainer();
+	private static final Logger logger =Logger.getLogger(RuleProcessor.class);
+	private static class Factory {
+		private static KieContainer kContainer;
+		static {
+			try {
 
 
-        // Start the KieScanner polling the maven repository every 10 seconds
+				// if the local maven repository is not in the default ${user.home}/.m2
+				// need to provide the custom settings.xml
+				// pass property value
+				// -Dkie.maven.settings.custom={custom.settings.location.full.path}
 
-        kScanner.start(10000L);
-      } catch (Exception e) {
-        
-        logger.error("",e);
-      }
-    }
+				KieServices kServices = KieServices.Factory.get();
 
-    public static KieContainer get() {
-      return kContainer;
-    }
-  }
+				ReleaseId releaseId = kServices.newReleaseId("com.vizuri.insurance", "rules", "1.0-SNAPSHOT");
 
-  public RuleProcessor() {
+				//kContainer = kServices.newKieContainer(releaseId, Factory.class.getClassLoader());
+				
+				kContainer = kServices.newKieContainer(releaseId);
 
-  }
-
-  public static final String AGENDA_QUESTION_GROUP = "question-group";
-  public static final String AGENDA_QUESTION_DISPLAY = "question-display";
-  public static final String AGENDA_ELIGIBLITY = "eligibility";
-  public static final String AGENDA_CALCULATION = "calculation";
-  public static final String AGENDA_QUOTE_ERROR_CHECK = "quote-error-check";
-  public static final String AGENDA_RISK_RULE_GROUP = "riskRuleGroup";
-  // public static final String AGENDA_MAIN_GROUP = "question-group";
-  AgendaListener agendaListener = new AgendaListener();
-  RuleListener ruleListener = new RuleListener();
-
-  /**
-   * 
-   * @param agendaGroup can be null,
-   * @param object
-   * @return
-   */
-  public Collection fireRules(String agendaGroup, Object... object) {
-
-    KieSession kieSession = null;
-    try {
-      kieSession = kContainer.newKieSession();
-      kieSession.addEventListener(agendaListener);
-      kieSession.addEventListener(ruleListener);
-      if (object != null) {
-        for (Object obj : object) {
-          kieSession.insert(obj);
-        }
-      }
-
-      if (agendaGroup != null) {
-        kieSession.getAgenda().getAgendaGroup(agendaGroup).setFocus();
-      }
+				KieScanner kScanner = kServices.newKieScanner(kContainer);
 
 
-      kieSession.fireAllRules();
-      Collection coll = kieSession.getFactHandles();
+				// Start the KieScanner polling the maven repository every 10 seconds
 
-      if (true) {
-        return coll;
-      }
+				kScanner.start(100000L);
+			} catch (Exception e) {
 
-    } catch (Exception e) {
-      logger.error("",e);
-    } finally {
-      try {
-        kieSession.dispose();
-      } catch (Exception e) {
-        logger.error("",e);
-      }
-    }
+				logger.error("",e);
+			}
+		}
 
-    return null;
-  }
+		public static KieContainer get() {
+			return kContainer;
+		}
+	}
 
-  public List<Question> getAllQuestions() {
+	public RuleProcessor() {
 
-    Collection coll = fireRules(AGENDA_QUESTION_GROUP);
+	}
 
-    List<Question> quests = new ArrayList<Question>();
-    Collections.sort(quests, new Comparator<Question>() {
+	public static final String AGENDA_QUESTION_GROUP = "question-group";
+	public static final String AGENDA_QUESTION_DISPLAY = "question-display";
+	public static final String AGENDA_ELIGIBLITY = "eligibility";
+	public static final String AGENDA_CALCULATION = "calculation";
+	public static final String AGENDA_QUOTE_ERROR_CHECK = "quote-error-check";
+	public static final String AGENDA_RISK_RULE_GROUP = "riskRuleGroup";
+	public static final String AGENDA_MAIN = "MAIN";
+	// public static final String AGENDA_MAIN_GROUP = "question-group";
+	AgendaListener agendaListener = new AgendaListener();
+	RuleListener ruleListener = new RuleListener();
 
-      @Override
-      public int compare(Question o1, Question o2) {
+	public KieSession createNewQuoteSession(boolean addListeners){		
+		KieSession quoteSession = kContainer.newKieSession();
+		
+		if (addListeners){
+			quoteSession.addEventListener(agendaListener);
+			quoteSession.addEventListener(ruleListener);
+		}
+		
+		return quoteSession;
+	}
+	
+	/**
+	 * 
+	 * @param agendaGroup can be null,
+	 * @param object
+	 * @return
+	 */
+	public Collection<FactHandle> fireRules(String agendaGroup, Object... object) {
 
-        return Integer.valueOf(o1.getId()).compareTo(Integer.valueOf(o2.getId()));
-      }
-    });
+		KieSession kieSession = null;
+		try {
+			kieSession = kContainer.newKieSession();
+			kieSession.addEventListener(agendaListener);
+			kieSession.addEventListener(ruleListener);
+			if (object != null) {
+				for (Object obj : object) {
+					kieSession.insert(obj);
+				}
+			}
 
-    for (Object object : coll) {
-      DefaultFactHandle fact = (DefaultFactHandle) object;
-      if (false == (fact.getObject() instanceof Question)) {
-        continue;
-      }
+			if (agendaGroup != null) {
+				logger.info("Fire agenda group:" + agendaGroup);
+				kieSession.getAgenda().getAgendaGroup(agendaGroup).setFocus();
+			}
 
-      Question q = (Question) fact.getObject();
-      quests.add(q);
+			kieSession.fireAllRules();
+			Collection<FactHandle> coll = kieSession.getFactHandles();
 
-    }
-    return quests;
+			if (true) {
+				return coll;
+			}
 
-  }
+		} catch (Exception e) {
+			logger.error("",e);
+		} finally {
+			try {
+				kieSession.dispose();
+			} catch (Exception e) {
+				logger.error("",e);
+			}
+		}
+
+		return null;
+	}
+
+	public List<Question> getAllQuestions() {
+
+		Collection<FactHandle> coll = fireRules(AGENDA_QUESTION_GROUP);
+
+		List<Question> questions = new ArrayList<Question>();
+		Collections.sort(questions, new Comparator<Question>() {
+
+			@Override
+			public int compare(Question o1, Question o2) {
+
+				return Integer.valueOf(o1.getId()).compareTo(Integer.valueOf(o2.getId()));
+			}
+		});
+
+		for (FactHandle object : coll) {
+			DefaultFactHandle fact = (DefaultFactHandle) object;
+			if (false == (fact.getObject() instanceof Question)) {
+				continue;
+			}
+
+			Question q = (Question) fact.getObject();
+			questions.add(q);
+
+		}
+		return questions;
+
+	}
 
 
 
-  @SuppressWarnings({"rawtypes", "unchecked"})
-  public Map fireQuestionRule(String agenda, List objLst) {
+	@SuppressWarnings({"rawtypes", "unchecked"})
+	public Map fireQuestionRule(String agenda, List objLst) {
 
 
-    Map m = new HashMap();
+		Map m = new HashMap();
 
-    Collection coll = fireRules(agenda, objLst.toArray());
-    Map questTrack = new HashMap<Integer, Question>();
-    for (Object object : coll) {
-      DefaultFactHandle fact = (DefaultFactHandle) object;
-      if (false == (fact.getObject() instanceof Question)) {
-        continue;
-      }
+		Collection coll = fireRules(agenda, objLst.toArray());
+		Map questTrack = new HashMap<Integer, Question>();
+		for (Object object : coll) {
+			DefaultFactHandle fact = (DefaultFactHandle) object;
+			if (false == (fact.getObject() instanceof Question)) {
+				continue;
+			}
 
-      Question q = (Question) fact.getObject();
+			Question q = (Question) fact.getObject();
 
-      questTrack.put(q.getId(), q);
-
-
-    }
-
-    List<Question> questionRetList = new ArrayList<Question>();
-    questionRetList.addAll(questTrack.values());
+			questTrack.put(q.getId(), q);
 
 
-    m.put("questions", questionRetList);
-    return m;
-  }
+		}
 
- 
+		List<Question> questionRetList = new ArrayList<Question>();
+		questionRetList.addAll(questTrack.values());
+
+
+		m.put("questions", questionRetList);
+		return m;
+	}
+
+
 
 }

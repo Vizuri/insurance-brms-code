@@ -29,88 +29,81 @@ import com.vizuri.insurance.domain.Question;
 import com.vizuri.insurance.domain.Quote;
 import com.vizuri.insurance.domain.QuoteMessage;
 
-@XmlRootElement
+
 public class TransferWrapper {
-  @XmlElement
-  private Applicant applicant;
 
-  @XmlElement
-  private List<Question> questions = new ArrayList<Question>();
+	private Applicant applicant;
 
+	private List<Question> questions = new ArrayList<Question>();
 
-  @XmlElement
-  private Map<String, Question> applicantQuestMap = new HashMap();
+	private Map<String, Question> applicantQuestMap = new HashMap();
 
-  @XmlElement
-  private List<QuoteMessage> quoteMessages = new ArrayList<QuoteMessage>();
+	private List<QuoteMessage> quoteMessages = new ArrayList<QuoteMessage>();
 
-  @XmlElement
-  private Property property;
+	private Property property;
 
-  @XmlElement
-  private Quote quote;
+	private Quote quote;
 
-  public Quote getQuote() {
-    return quote;
-  }
+	public Quote getQuote() {
+		return quote;
+	}
 
-  public void setQuote(Quote quote) {
-    this.quote = quote;
-  }
+	public void setQuote(Quote quote) {
+		this.quote = quote;
+	}
 
-  /*
-   * public Map<String, Question> getPropertyQuestMap() { return propertyQuestMap; } public void
-   * setPropertyQuestMap(Map<String, Question> propertyQuestMap) { this.propertyQuestMap =
-   * propertyQuestMap; }
-   */
-  public Map<String, Question> getApplicantQuestMap() {
-    return applicantQuestMap;
-  }
+	/*
+	 * public Map<String, Question> getPropertyQuestMap() { return propertyQuestMap; } public void
+	 * setPropertyQuestMap(Map<String, Question> propertyQuestMap) { this.propertyQuestMap =
+	 * propertyQuestMap; }
+	 */
+	public Map<String, Question> getApplicantQuestMap() {
+		return applicantQuestMap;
+	}
 
-  public void setApplicantQuestMap(Map<String, Question> applicantQuestMap) {
-    this.applicantQuestMap = applicantQuestMap;
-  }
+	public void setApplicantQuestMap(Map<String, Question> applicantQuestMap) {
+		this.applicantQuestMap = applicantQuestMap;
+	}
 
 
-  public Applicant getApplicant() {
-    return applicant;
-  }
+	public Applicant getApplicant() {
+		return applicant;
+	}
 
-  public void setApplicant(Applicant applicant) {
-    this.applicant = applicant;
-  }
+	public void setApplicant(Applicant applicant) {
+		this.applicant = applicant;
+	}
 
-  public List<Question> getQuestions() {
-    return questions;
-  }
+	public List<Question> getQuestions() {
+		return questions;
+	}
 
-  public void setQuestions(List<Question> questions) {
-    this.questions = questions;
-  }
+	public void setQuestions(List<Question> questions) {
+		this.questions = questions;
+	}
 
-  public Property getProperty() {
-    return property;
-  }
+	public Property getProperty() {
+		return property;
+	}
 
-  public void setProperty(Property property) {
-    this.property = property;
-  }
+	public void setProperty(Property property) {
+		this.property = property;
+	}
 
-  public List<QuoteMessage> getQuoteMessages() {
-    return quoteMessages;
-  }
+	public List<QuoteMessage> getQuoteMessages() {
+		return quoteMessages;
+	}
 
-  public void setQuoteMessages(List<QuoteMessage> quoteMessages) {
-    this.quoteMessages = quoteMessages;
-  }
+	public void setQuoteMessages(List<QuoteMessage> quoteMessages) {
+		this.quoteMessages = quoteMessages;
+	}
 
-  @Override
-  public String toString() {
-    return "TransferWrapper [applicant=" + applicant + ", questions=" + questions
-        + ", applicantQuestMap=" + applicantQuestMap + ", quoteMessages=" + quoteMessages
-        + ", property=" + property + ", quote=" + quote + "]";
-  }
-
-
+	@Override
+	public String toString() {
+		return "TransferWrapper [applicant=" + applicant + ", questions="
+				+ questions + ", applicantQuestMap=" + applicantQuestMap
+				+ ", quoteMessages=" + quoteMessages + ", property=" + property
+				+ ", quote=" + quote + "]";
+	}
 
 }

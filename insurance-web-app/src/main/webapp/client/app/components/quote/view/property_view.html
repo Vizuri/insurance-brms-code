@@ -259,7 +259,7 @@
                     </td>
                     <td>
 
-                        <button type="button" class="btn btn-xs"
+                        <button type="button" class="btn btn-xs" tooltip="Remove the Claim"
                                 ng-click="deleteClaimRow($index)">
                             <i class="glyphicon glyphicon-remove-sign"></i> Remove
                         </button>
@@ -272,7 +272,7 @@
                     <td></td>
                     <td>
 
-                        <button type="button" class="btn btn-xs" ng-click="addClaimRow('add')">
+                        <button type="button" class="btn btn-xs" ng-click="addClaimRow('add')" tooltip="Add a Claim">
                             <i class="glyphicon glyphicon-plus-sign"></i>Add another Claim
                         </button>
                     </td>
@@ -330,7 +330,8 @@
                         <select ng-change="changeHandle('noserver-call')" name="{{'dogType'+$index}}"
                                 ng-model="dog.dogType" ng-required="newProperty.dogExists == 'true'" class="form-control"
                                 class="table-responsive">
-                            <option label="" value=""/>
+                            <option label="Pit Bull Terrier" value="Pitbull"/>
+                            <option label="Rottweiler" value="rottweiler"/>
                             <option label="BullDogs" value="BullDogs"/>
                             <option label="Molossers" value="Molossers"/>
                             <option label="Mountain dog" value="Mountain dog"/>
@@ -340,7 +341,7 @@
                     <td><span class="required" ng-show="mainForm.{{'dogType'+$index}}.$error.required">**</span></td>
                     <td>
 
-                        <button type="button" class="btn btn-xs"
+                        <button type="button" class="btn btn-xs" tooltip="Remove the dog"
                                 ng-click="removeDog($index)">
                             <i class="glyphicon glyphicon-remove-sign"></i> Remove
                         </button>
@@ -353,7 +354,7 @@
                     <td></td>
                     <td></td>
                     <td>
-                        <button type="button" class="btn btn-xs" ng-click="addDogs('add')">
+                        <button type="button" class="btn btn-xs" ng-click="addDogs('add')" tooltip="Add a Dog">
                             <i class="glyphicon glyphicon-plus-sign"></i>Add another Dog
                         </button>
                     </td>

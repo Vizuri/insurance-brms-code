@@ -29,9 +29,13 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import org.drools.core.ClassObjectFilter;
 import org.drools.core.common.DefaultFactHandle;
 import org.jboss.logging.Logger;
+import org.kie.api.runtime.KieSession;
+import org.kie.api.runtime.rule.FactHandle;
 
+import com.vizuri.insurance.MyScoreCardOutput;
 import com.vizuri.insurance.domain.Address;
 import com.vizuri.insurance.domain.Applicant;
 import com.vizuri.insurance.domain.Claim;
@@ -80,31 +84,24 @@ public class QuotingResourceService {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getTransferData() {
 		log.info("inside getTransferData");
-		TransferWrapper wrap = new TransferWrapper();
-		wrap.setApplicant(new Applicant());
-		wrap.setProperty(new Property());
-		wrap.getProperty().setAddress(new Address());
-		wrap.getProperty().setClaims(new ArrayList<Claim>());
+		TransferWrapper wrapper = new TransferWrapper();
+		wrapper.setApplicant(new Applicant());
+		wrapper.setProperty(new Property());
+		wrapper.getProperty().setAddress(new Address());
+		wrapper.getProperty().setClaims(new ArrayList<Claim>());
 
 		RuleProcessor process = new RuleProcessor();
 		List<Question> questionLst = process.getAllQuestions();
 
-		wrap.setQuestions(questionLst);
+		wrapper.setQuestions(questionLst);
 
 
 		Map<String, Question> applicantQuestMap = new HashMap<String, Question>();
 		applicantQuestMap = buildQuestionByGroup(questionLst, null);
 
 
-		wrap.setApplicantQuestMap(applicantQuestMap);
-
-
-
-		return Response.status(200).header("Access-Control-Allow-Origin", "*")
-				.header("Access-Control-Allow-Headers", "origin, content-type, accept, authorization")
-				.header("Access-Control-Allow-Credentials", "true")
-				.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS, HEAD")
-				.header("Access-Control-Max-Age", "1209601").entity(wrap).build();
+		wrapper.setApplicantQuestMap(applicantQuestMap);
+		return sendResponse(200, wrapper);
 
 	}
 
@@ -150,13 +147,10 @@ public class QuotingResourceService {
 		applicantQuestMap = buildQuestionByGroup(questionLst, null);
 		wrapper.setApplicantQuestMap(applicantQuestMap);
 
-		log.info("return parameter property: " + wrapper.getProperty());
-		log.infov("retured wrapper : ", wrapper);
-		return Response.status(200).header("Access-Control-Allow-Origin", "*")
-				.header("Access-Control-Allow-Headers", "origin, content-type, accept, authorization")
-				.header("Access-Control-Allow-Credentials", "true")
-				.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS, HEAD")
-				.header("Access-Control-Max-Age", "1209601").entity(wrapper).build();
+		//log.info("return parameter property: " + wrapper.getProperty());
+		log.info("retured updated wrapper");
+		return sendResponse(200, wrapper);
+		
 	}
 
 
@@ -171,15 +165,15 @@ public class QuotingResourceService {
 		sendList.add(wrapper.getApplicant());
 		sendList.add(wrapper.getProperty());
 		sendList.add(wrapper.getProperty().getAddress());
+		
+		// we need a quote to calculate the status and risk
+		//quoteSession.insert(new Quote(1234));
 
 		RuleProcessor rp = new RuleProcessor();
 		/* Collection coll = */rp.fireRules(RuleProcessor.AGENDA_ELIGIBLITY, sendList.toArray());
 
-		return Response.status(200).header("Access-Control-Allow-Origin", "*")
-				.header("Access-Control-Allow-Headers", "origin, content-type, accept, authorization")
-				.header("Access-Control-Allow-Credentials", "true")
-				.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS, HEAD")
-				.header("Access-Control-Max-Age", "1209601").entity(wrapper).build();
+		return sendResponse(200, wrapper);
+		
 	}
 
 
@@ -187,53 +181,182 @@ public class QuotingResourceService {
 	@POST
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response docalculation(TransferWrapper wrapper) {
-		log.info("Inside docalculation");
-
-		List sendList = new ArrayList(wrapper.getQuestions());
-		sendList.add(wrapper.getApplicant());
-		sendList.add(wrapper.getProperty());
-		sendList.add(wrapper.getProperty().getAddress());
-		RuleProcessor rp = new RuleProcessor();
-
-		wrapper.getQuoteMessages().clear();
-		Collection collError = rp.fireRules(RuleProcessor.AGENDA_QUOTE_ERROR_CHECK, sendList.toArray());
-
-		for (Object object : collError) {
-			DefaultFactHandle fact = (DefaultFactHandle) object;
-
-
-			if (fact.getObject() instanceof QuoteMessage) {
-				QuoteMessage msg = (QuoteMessage) fact.getObject();
-				wrapper.getQuoteMessages().add(msg);
-
+	public Response doCalculation(TransferWrapper wrapper) {
+		log.info("Inside doCalculation");
+			
+		RuleProcessor rp 		= new RuleProcessor();
+		KieSession quoteSession = null;
+		
+		try {
+			quoteSession = rp.createNewQuoteSession(true);
+			
+			// Insert Questions intu rule engine
+//			if (wrapper.getQuestions() != null) {
+//				for (Question q : wrapper.getQuestions()) {
+//					quoteSession.insert(q);
+//				}
+//			}
+			
+			quoteSession.insert(wrapper.getApplicant());
+			quoteSession.insert(wrapper.getProperty());
+			quoteSession.insert(wrapper.getProperty().getAddress());
+			
+			wrapper.getQuoteMessages().clear();
+			
+			log.info("Fire AGENDA_QUOTE_ERROR_CHECK");
+			quoteSession.getAgenda().getAgendaGroup(RuleProcessor.AGENDA_QUOTE_ERROR_CHECK).setFocus();
+			quoteSession.fireAllRules();
+			
+			Collection<?> errMsgs = quoteSession.getObjects(new ClassObjectFilter(QuoteMessage.class));
+			
+			for (Object msg : errMsgs) {				
+				wrapper.getQuoteMessages().add((QuoteMessage) msg);					
 			}
-		}
-		if (wrapper.getQuoteMessages().isEmpty()) {
-			wrapper.getProperty().setRiskRate(0);
-			rp.fireRules(RuleProcessor.AGENDA_RISK_RULE_GROUP, sendList.toArray());
-
-			rp.fireRules(RuleProcessor.AGENDA_ELIGIBLITY, sendList.toArray());
-
-			Collection coll = rp.fireRules(RuleProcessor.AGENDA_CALCULATION, sendList.toArray());
-
-			for (Object object : coll) {
-				DefaultFactHandle fact = (DefaultFactHandle) object;
-				if (fact.getObject() instanceof Quote) {
-					wrapper.setQuote((Quote) fact.getObject());
+			
+			// now if we have no more error messages we can go ahead and do a rating on the quote
+			if (errMsgs.isEmpty()) {
+				
+				log.info("No more errors so calculate elegibility");
+				
+				// we need a quote to calculate the status and risk
+				quoteSession.insert(new Quote(1234));
+				
+				// now lets test the score card
+				//quoteSession.insert(new Quote());
+				log.info("Fire AGENDA_MAIN");
+				quoteSession.getAgenda().getAgendaGroup(RuleProcessor.AGENDA_MAIN).setFocus();
+				quoteSession.fireAllRules();
+				
+				Collection<?> riskResult = quoteSession.getObjects(new ClassObjectFilter(Quote.class));
+				
+				for (Object risk : riskResult) {
+					log.info("Have risk results");
+					wrapper.setQuote((Quote) risk);
+					
+					log.info("Quote risk rate: " +  wrapper.getQuote().getRiskRate());
+				}
+				
+				log.info("Fire AGENDA_ELIGIBLITY");
+				quoteSession.getAgenda().getAgendaGroup(RuleProcessor.AGENDA_ELIGIBLITY).setFocus();
+				quoteSession.fireAllRules();
+				
+				// now calculate the quote amount based on the risk rate
+				
+				log.info("Fire AGENDA_CALCULATION");
+				quoteSession.getAgenda().getAgendaGroup(RuleProcessor.AGENDA_CALCULATION).setFocus();
+				quoteSession.fireAllRules();
+		
+				Collection<?> finalQuote = quoteSession.getObjects(new ClassObjectFilter(Quote.class));
+				
+				for (Object quote : finalQuote) {
+					log.info("Have a final quote");
+					wrapper.setQuote((Quote) quote);
 
 				}
+			}	
+			
+//			Collection<?> scoreCardResult = quoteSession.getObjects(new ClassObjectFilter(MyScoreCardOutput.class));
+//			
+//			for (Object risk : scoreCardResult) {
+//				log.info("Have score card results: " + ((MyScoreCardOutput) risk).getRiskRate());
+//				//wrapper.setRisk((RateCalculationResult) risk);
+//			}
+					
 
-
+		} catch (Exception e) {
+			log.error("doCalculation, exception",e);
+			return Response.serverError().entity("Exception unable to doCalculation").build();
+		} finally {
+			try {
+				quoteSession.dispose();
+			} catch (Exception e) {
+				log.error("doCalculation:close kiesession, exception",e);
+				return Response.serverError().entity("Exception closing kie session").build();
 			}
 		}
+		
+		return sendResponse(200, wrapper);
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+//		log.info("Fire AGENDA_MAIN");
+//		collError = rp.fireRules(RuleProcessor.AGENDA_MAIN, sendList.toArray());
+//		
+//		for (Object object : collError) {
+//			DefaultFactHandle fact = (DefaultFactHandle) object;
+//			
+//			if (fact.getObject() instanceof RateCalculationResult) {
+//				log.info("****** RISK ********* 2");
+//				RateCalculationResult risk = (RateCalculationResult) fact.getObject();
+//				wrapper.setRisk(risk);
+//			}
+//			else{
+//				wrapper.setRisk(null);
+//			}
+//		}
 
-
-		return Response.status(200).header("Access-Control-Allow-Origin", "*")
-				.header("Access-Control-Allow-Headers", "origin, content-type, accept, authorization")
-				.header("Access-Control-Allow-Credentials", "true")
-				.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS, HEAD")
-				.header("Access-Control-Max-Age", "1209601").entity(wrapper).build();
+//		List sendList = new ArrayList(wrapper.getQuestions());
+//		sendList.add(wrapper.getApplicant());
+//		sendList.add(wrapper.getProperty());
+//		sendList.add(new RateCalculationResult());	// need this to set the risk rate
+//		sendList.add(wrapper.getProperty().getAddress());
+//		
+//
+//		wrapper.getQuoteMessages().clear();
+//		log.info("Fire AGENDA_QUOTE_ERROR_CHECK");
+//		Collection collError = rp.fireRules(RuleProcessor.AGENDA_QUOTE_ERROR_CHECK, sendList.toArray());
+//
+//		for (Object object : collError) {
+//			DefaultFactHandle fact = (DefaultFactHandle) object;
+//
+//			if (fact.getObject() instanceof QuoteMessage) {
+//				QuoteMessage msg = (QuoteMessage) fact.getObject();
+//				wrapper.getQuoteMessages().add(msg);
+//			}
+//			
+//		}
+//		
+//
+//		
+//		if (wrapper.getQuoteMessages().isEmpty()) {
+//			
+//			wrapper.getProperty().setRiskRate(0);
+//			
+//			// old way getting risk rate
+//			//rp.fireRules(RuleProcessor.AGENDA_RISK_RULE_GROUP, sendList.toArray());
+//
+//			log.info("Fire AGENDA_ELIGIBLITY");
+//			rp.fireRules(RuleProcessor.AGENDA_ELIGIBLITY, sendList.toArray());
+//
+//			log.info("Fire AGENDA_CALCULATION");
+//			Collection coll = rp.fireRules(RuleProcessor.AGENDA_CALCULATION, sendList.toArray());
+//
+//			for (Object object : coll) {
+//				DefaultFactHandle fact = (DefaultFactHandle) object;
+//				if (fact.getObject() instanceof Quote) {
+//					wrapper.setQuote((Quote) fact.getObject());
+//
+//				}
+//
+//			}
+//		}
+//
+//		return Response.status(200).header("Access-Control-Allow-Origin", "*")
+//				.header("Access-Control-Allow-Headers", "origin, content-type, accept, authorization")
+//				.header("Access-Control-Allow-Credentials", "true")
+//				.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS, HEAD")
+//				.header("Access-Control-Max-Age", "1209601").entity(wrapper).build();
 
 	}
 
@@ -251,6 +374,15 @@ public class QuotingResourceService {
 				.header("Access-Control-Allow-Credentials", "true")
 				.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS, HEAD")
 				.header("Access-Control-Max-Age", "1209601").entity(devSettings).build();
+	}
+	
+	private Response sendResponse(int status, Object result){
+	
+		return Response.status(status).header("Access-Control-Allow-Origin", "*")
+				.header("Access-Control-Allow-Headers", "origin, content-type, accept, authorization")
+				.header("Access-Control-Allow-Credentials", "true")
+				.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS, HEAD")
+				.header("Access-Control-Max-Age", "1209601").entity(result).build();
 	}
 
 }

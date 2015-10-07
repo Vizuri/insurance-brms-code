@@ -31,7 +31,9 @@
 
             <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix">
                 <div class="well">
-                    <div class="row group-heading"><div class="col-md-12">Available Tasks</div></div>
+                    <div class="row group-heading">
+                        <div class="col-md-12">Available Tasks</div>
+                    </div>
 
                     <div class="row group-body">
 
@@ -47,30 +49,42 @@
                         <div class="col-md-6">
 
                             <input type="button" id="quote" class="btn btn-success"
-                                   ng-show="quoteStatus != QuoteStatus.FORM_INCOMPLETE && wrapper.quoteMessages.length < 1"
+                                   ng-show="quoteStatus != QuoteStatus.FORM_INCOMPLETE"
                                    value="Calculate Quote"
                                    ng-click="quoteCalculate()"/>
 
 
                         </div>
                     </div>
-                    <div class="row">
 
+                    <div class="row" ng-if="newQuote && newQuote.id != null && newQuote.amount > 0 ">
                         <div class="col-md-12">
 
-                            <div ng-show="quoteStatus == QuoteStatus.FORM_INCOMPLETE">
-                                <p class="text-danger text-left" style="width: 380px;">
-                                    Some fields are still required.<br>
-                                    Please complete all required fields to complete the quote.
-                                </p>
+                            <div class="row group-heading">
+                                <div class="col-md-12">QUOTE</div>
                             </div>
 
+                            <div class="row group-body">
+
+                                <div class="col-md-12">
+
+                                    <div >
+                                        Quote Id : {{newQuote.id}}<br>
+                                        Quote Amount : {{newQuote.amount}}<br>
+                                        Quote Risk : {{newQuote.riskRate}}<br>
+                                        Quote Status : {{newQuote.status}}
+                                    </div>
+
+                                </div>
+
+                            </div>
                         </div>
+
                     </div>
                 </div>
 
                 <div class="panel panel-default">
-                    <div class="panel-heading">Quote Messages</div>
+                    <div class="group-heading">Validation Messages</div>
 
                     <div class="panel-body">
 
@@ -82,7 +96,6 @@
 
                                     <li class="list-group-item" ng-repeat="qu in warningQuoteMessages ">
                                         {{qu.message}}
-
                                     </li>
                                 </ul>
                             </div>
@@ -105,18 +118,22 @@
                             <div class="group-heading">Errors</div>
                             <div class="group-body">
                                 <ul class="list-group">
-                                    <li class="list-group-item" ng-repeat="qu in errorQuoteMessages | orderBy:'-message' ">{{qu.message}}
+                                    <li class="list-group-item" ng-repeat="qu in errorQuoteMessages | orderBy:'message' ">{{qu.message}}
                                         <span style="display:none">{{qu}}</span>
                                     </li>
                                 </ul>
                             </div>
                         </div>
 
+                        <div class="row">
+                            <div class="col-md-12" ng-show="quoteStatus == QuoteStatus.FORM_INCOMPLETE">
 
-                        <div>Quote Status : {{newProperty.status}}</div>
-                        <div ng-show="newProperty.status == undefined || newProperty.status.isEmpty() && wrapper.quote!= undefined && wrapper.quote.id != null && wrapper.quote.amount > 0 ">
-                            Quote Amount : {{wrapper.quote.amount}}
-                            Quote Id : {{wrapper.quote.id}}
+                                <p class="text-danger text-left" style="width: 380px;">
+                                    Some fields are still required.<br>
+                                    Please complete all required fields to complete the quote.
+                                </p>
+                            </div>
+
                         </div>
 
                     </div>
