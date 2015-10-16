@@ -14,21 +14,13 @@
 
 package com.vizuri.insurance.domain;
 
-import java.util.Calendar;
+import java.util.Date;
 
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
-
-import com.vizuri.insurance.domain.xmladapter.CalendarXmlAdapter;
-
-
-@SuppressWarnings("restriction")
-@XmlRootElement
 public class Claim {
 
   private Integer id;
-  @XmlJavaTypeAdapter(value = CalendarXmlAdapter.class)
-  private Calendar claimDate;
+  
+  private Date claimDate;
   private double claimAmount;
 
 
@@ -40,11 +32,11 @@ public class Claim {
     this.id = id;
   }
 
-  public Calendar getClaimDate() {
+  public Date getClaimDate() {
     return claimDate;
   }
 
-  public void setClaimDate(Calendar claimDate) {
+  public void setClaimDate(Date claimDate) {
     this.claimDate = claimDate;
   }
 

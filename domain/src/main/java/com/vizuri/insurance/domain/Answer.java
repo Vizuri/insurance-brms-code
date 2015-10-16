@@ -1,12 +1,12 @@
 package com.vizuri.insurance.domain;
 
 import java.io.Serializable;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
+import org.kie.api.definition.type.PropertyReactive;
+
+@PropertyReactive	//to use modify() in the brms rules more effectively - not recommended at this time due to issues
 public class Answer implements Serializable {
 	private static final long serialVersionUID = -2811773784154293610L;
 	
@@ -94,31 +94,31 @@ public class Answer implements Serializable {
 	public void setBoolValue(boolean boolValue) {
 		setStrValue(Boolean.toString(boolValue));
 	}
-	
-	public Date getDateValue() {
-		if (strValue != null && strValue.length() == dateFormat.length()){
-			
-			try{
-				return new SimpleDateFormat(dateFormat).parse(strValue);
-			}
-			catch(Exception e){
-				return null;
-			}
-			
-		}
-		return null;
-	}
-	
-	// use date format "2015-08-18":yyyy-MM-dd
-	public void setDateValue(Date date) {
-		
-		if (date != null){
-			setStrValue(new SimpleDateFormat(dateFormat).format(date));
-		}
-		else{
-			setStrValue("");
-		}
-	}
+//	
+//	public Date getDateValue() {
+//		if (strValue != null && strValue.length() == dateFormat.length()){
+//			
+//			try{
+//				return new SimpleDateFormat(dateFormat).parse(strValue);
+//			}
+//			catch(Exception e){
+//				return null;
+//			}
+//			
+//		}
+//		return null;
+//	}
+//	
+//	// use date format "2015-08-18":yyyy-MM-dd
+//	public void setDateValue(Date date) {
+//		
+//		if (date != null){
+//			setStrValue(new SimpleDateFormat(dateFormat).format(date));
+//		}
+//		else{
+//			setStrValue("");
+//		}
+//	}
 
 	public boolean isUpdatedValue() {
 		return updatedValue;
@@ -128,27 +128,27 @@ public class Answer implements Serializable {
 		this.updatedValue = updatedValue;
 	}
 	
-	public List<String> getMultipleValues(){
-		if (strValue != null){
-			return new ArrayList<String>(Arrays.asList(strValue.split(",")));
-		} else{
-			return new ArrayList<String>();
-		}
-	}
-	
-	public void setAddMultipleValue(String valueList) {
-		List<String> options = getMultipleValues();
-		
-		if (options != null && valueList != null) {
-			for (String possibleValue : valueList.split(",")) {
-				if (!options.contains(possibleValue)){
-					options.add(possibleValue);
-				}
-			}
-			setStrValue(convertToString(options, ","));
-		}
-			
-	}
+//	public List<String> getMultipleValues(){
+//		if (strValue != null){
+//			return new ArrayList<String>(Arrays.asList(strValue.split(",")));
+//		} else{
+//			return new ArrayList<String>();
+//		}
+//	}
+//	
+//	public void setAddMultipleValue(String valueList) {
+//		List<String> options = getMultipleValues();
+//		
+//		if (options != null && valueList != null) {
+//			for (String possibleValue : valueList.split(",")) {
+//				if (!options.contains(possibleValue)){
+//					options.add(possibleValue);
+//				}
+//			}
+//			setStrValue(convertToString(options, ","));
+//		}
+//			
+//	}
 	
 	private String convertToString(List<String> list, String delim) {
 	    StringBuilder sb = new StringBuilder();
@@ -164,33 +164,33 @@ public class Answer implements Serializable {
 	}
 	
 	// check if any of the input values are found
-	public boolean getIncludesAnyValues(String valueList) {
-		List<String> options = getMultipleValues();
-		
-		if (options != null && valueList != null) {
-			for (String possibleValue : valueList.split(",")) {
-				if (options.contains(possibleValue)){
-					return true;
-				}
-			}
-		}
-		
-		return false;		
-	}
+//	public boolean getIncludesAnyValues(String valueList) {
+//		List<String> options = getMultipleValues();
+//		
+//		if (options != null && valueList != null) {
+//			for (String possibleValue : valueList.split(",")) {
+//				if (options.contains(possibleValue)){
+//					return true;
+//				}
+//			}
+//		}
+//		
+//		return false;		
+//	}
 	
 	// need to check that none of the input values are found in the list
-	public boolean getExcludeAllValues(String valueList) {
-		List<String> options = getMultipleValues();
-			
-		if (options != null && valueList != null) {
-			for (String possibleValue : valueList.split(",")) {
-				if (options.contains(possibleValue)){
-					return false;
-				}
-			}
-		}
-		return true;		
-	}
+//	public boolean getExcludeAllValues(String valueList) {
+//		List<String> options = getMultipleValues();
+//			
+//		if (options != null && valueList != null) {
+//			for (String possibleValue : valueList.split(",")) {
+//				if (options.contains(possibleValue)){
+//					return false;
+//				}
+//			}
+//		}
+//		return true;		
+//	}
 
 	@Override
 	public String toString() {

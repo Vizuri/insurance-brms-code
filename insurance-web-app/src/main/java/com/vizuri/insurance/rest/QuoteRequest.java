@@ -23,26 +23,21 @@ import java.util.Map;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import com.vizuri.insurance.domain.Applicant;
-import com.vizuri.insurance.domain.Property;
+import com.vizuri.insurance.domain.Answer;
+//import com.vizuri.insurance.domain.Applicant;
+//import com.vizuri.insurance.domain.Property;
 import com.vizuri.insurance.domain.Question;
 import com.vizuri.insurance.domain.Quote;
 import com.vizuri.insurance.domain.QuoteMessage;
 
 
-public class TransferWrapper {
-
-	private Applicant applicant;
-
-	private List<Question> questions = new ArrayList<Question>();
-
-	private Map<String, Question> applicantQuestMap = new HashMap();
-
-	private List<QuoteMessage> quoteMessages = new ArrayList<QuoteMessage>();
-
-	private Property property;
+public class QuoteRequest {
 
 	private Quote quote;
+	private Map<String, Question> questionMap = new HashMap<String, Question>();
+	private Map<String, Answer> answerMap = new HashMap<String, Answer>();
+
+	private List<QuoteMessage> quoteMessages = new ArrayList<QuoteMessage>();
 
 	public Quote getQuote() {
 		return quote;
@@ -52,43 +47,45 @@ public class TransferWrapper {
 		this.quote = quote;
 	}
 
-	/*
-	 * public Map<String, Question> getPropertyQuestMap() { return propertyQuestMap; } public void
-	 * setPropertyQuestMap(Map<String, Question> propertyQuestMap) { this.propertyQuestMap =
-	 * propertyQuestMap; }
-	 */
-	public Map<String, Question> getApplicantQuestMap() {
-		return applicantQuestMap;
+	public Map<String, Question> getQuestionMap() {
+		return questionMap;
 	}
 
-	public void setApplicantQuestMap(Map<String, Question> applicantQuestMap) {
-		this.applicantQuestMap = applicantQuestMap;
+	public void setQuestionMap(Map<String, Question> questionMap) {
+		this.questionMap = questionMap;
 	}
 
-
-	public Applicant getApplicant() {
-		return applicant;
+	public Map<String, Answer> getAnswerMap() {
+		return answerMap;
 	}
 
-	public void setApplicant(Applicant applicant) {
-		this.applicant = applicant;
+	public void setAnswerMap(Map<String, Answer> answerMap) {
+		this.answerMap = answerMap;
 	}
 
-	public List<Question> getQuestions() {
-		return questions;
-	}
+//	public Applicant getApplicant() {
+//		return applicant;
+//	}
+//
+//	public void setApplicant(Applicant applicant) {
+//		this.applicant = applicant;
+//	}
 
-	public void setQuestions(List<Question> questions) {
-		this.questions = questions;
-	}
+//	public List<Question> getQuestions() {
+//		return questions;
+//	}
+//
+//	public void setQuestions(List<Question> questions) {
+//		this.questions = questions;
+//	}
 
-	public Property getProperty() {
-		return property;
-	}
-
-	public void setProperty(Property property) {
-		this.property = property;
-	}
+//	public Property getProperty() {
+//		return property;
+//	}
+//
+//	public void setProperty(Property property) {
+//		this.property = property;
+//	}
 
 	public List<QuoteMessage> getQuoteMessages() {
 		return quoteMessages;
@@ -100,9 +97,8 @@ public class TransferWrapper {
 
 	@Override
 	public String toString() {
-		return "TransferWrapper [applicant=" + applicant + ", questions="
-				+ questions + ", applicantQuestMap=" + applicantQuestMap
-				+ ", quoteMessages=" + quoteMessages + ", property=" + property
+		return "QuoteRequest [questionMap=" + questionMap + ", answerMap="
+				+ answerMap + ", quoteMessages=" + quoteMessages
 				+ ", quote=" + quote + "]";
 	}
 

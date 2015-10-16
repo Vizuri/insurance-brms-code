@@ -12,23 +12,14 @@
  * the License.
  */
 
-
 package com.vizuri.insurance.domain;
 
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
-
-import com.vizuri.insurance.domain.xmladapter.BooleanXmlAdapter;
-
-@SuppressWarnings("restriction")
-@XmlRootElement
 public class Address {
   private String street;
   private String city;
   private String state;
   private String zip;
 
-  @XmlJavaTypeAdapter(value = BooleanXmlAdapter.class)
   private Boolean verified;
 
   public String getStreet() {

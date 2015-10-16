@@ -21,11 +21,13 @@ import org.kie.api.builder.Results;
 import org.kie.api.io.ResourceType;
 import org.kie.api.runtime.KieSession;
 
-import com.vizuri.insurance.domain.Applicant;
+
+import com.vizuri.insurance.domain.Answer;
+//import com.vizuri.insurance.domain.Applicant;
 import com.vizuri.insurance.domain.Property;
 import com.vizuri.insurance.domain.Question;
 import com.vizuri.insurance.domain.Quote;
-import com.vizuri.insurance.rest.TransferWrapper;
+import com.vizuri.insurance.rest.QuoteRequest;
 import com.vizuri.insurance.rest.brms.AgendaListener;
 import com.vizuri.insurance.rest.brms.RuleListener;
 import com.vizuri.insurance.rest.brms.RuleProcessor;
@@ -38,24 +40,24 @@ public class RiskRate10 {
 		Property p = new Property();
 		p.setYearBuilt(1971);
 
-		Applicant app = new Applicant();
-		app.setFraud(false);
+		Answer a = new Answer();
+		a.setQuestionId("a.anyPreviousInsuranceDenials");
+		a.setStrValue("false");
 
 		Question q = new Question();
-		q.setId(18);
+		q.setQuestionId("a.anyPreviousInsuranceDenials");
 
-		TransferWrapper wrapper = (TransferWrapper) TestUtils.fromJson(
-				"/test.js", TransferWrapper.class);
+		QuoteRequest wrapper = (QuoteRequest) TestUtils.fromJson(
+				"/test.js", QuoteRequest.class);
 
-		List<Object> sendList = new ArrayList<Object>(wrapper.getQuestions());
-		sendList.add(wrapper.getApplicant());
-		wrapper.getProperty().setAge(31);
-		sendList.add(wrapper.getProperty());
-		sendList.add(wrapper.getProperty().getAddress());
+		List<Object> sendList = new ArrayList<Object>();
+		//sendList.add(wrapper.getApplicant());
+		p.setAge(31);
+		sendList.add(p);
+		sendList.add(p.getAddress());
 
 		rp.fireRules(null, sendList.toArray());
-		System.out.println("wrapper.getProperty() : "
-				+ wrapper.getProperty());
+		System.out.println("Property: " + p);
 
 	}
 

@@ -1,246 +1,216 @@
 var module = angular.module('quoteService', [ 'ngResource' ])
-.factory('AnotherWrapper', function() {
+    .factory('GUIConstants', function() {
 
         var ConstantFields = {};
         ConstantFields.states = [ {
             "name" : "Alabama",
-            "abbreviation" : "AL"
+            "value" : "AL"
         }, {
             "name" : "Alaska",
-            "abbreviation" : "AK"
+            "value" : "AK"
         }, {
             "name" : "American Samoa",
-            "abbreviation" : "AS"
+            "value" : "AS"
         }, {
             "name" : "Arizona",
-            "abbreviation" : "AZ"
+            "value" : "AZ"
         }, {
             "name" : "Arkansas",
-            "abbreviation" : "AR"
+            "value" : "AR"
         }, {
             "name" : "California",
-            "abbreviation" : "CA"
+            "value" : "CA"
         }, {
             "name" : "Colorado",
-            "abbreviation" : "CO"
+            "value" : "CO"
         }, {
             "name" : "Connecticut",
-            "abbreviation" : "CT"
+            "value" : "CT"
         }, {
             "name" : "Delaware",
-            "abbreviation" : "DE"
+            "value" : "DE"
         }, {
             "name" : "District Of Columbia",
-            "abbreviation" : "DC"
+            "value" : "DC"
         }, {
             "name" : "Federated States Of Micronesia",
-            "abbreviation" : "FM"
+            "value" : "FM"
         }, {
             "name" : "Florida",
-            "abbreviation" : "FL"
+            "value" : "FL"
         }, {
             "name" : "Georgia",
-            "abbreviation" : "GA"
+            "value" : "GA"
         }, {
             "name" : "Guam",
-            "abbreviation" : "GU"
+            "value" : "GU"
         }, {
             "name" : "Hawaii",
-            "abbreviation" : "HI"
+            "value" : "HI"
         }, {
             "name" : "Idaho",
-            "abbreviation" : "ID"
+            "value" : "ID"
         }, {
             "name" : "Illinois",
-            "abbreviation" : "IL"
+            "value" : "IL"
         }, {
             "name" : "Indiana",
-            "abbreviation" : "IN"
+            "value" : "IN"
         }, {
             "name" : "Iowa",
-            "abbreviation" : "IA"
+            "value" : "IA"
         }, {
             "name" : "Kansas",
-            "abbreviation" : "KS"
+            "value" : "KS"
         }, {
             "name" : "Kentucky",
-            "abbreviation" : "KY"
+            "value" : "KY"
         }, {
             "name" : "Louisiana",
-            "abbreviation" : "LA"
+            "value" : "LA"
         }, {
             "name" : "Maine",
-            "abbreviation" : "ME"
+            "value" : "ME"
         }, {
             "name" : "Marshall Islands",
-            "abbreviation" : "MH"
+            "value" : "MH"
         }, {
             "name" : "Maryland",
-            "abbreviation" : "MD"
+            "value" : "MD"
         }, {
             "name" : "Massachusetts",
-            "abbreviation" : "MA"
+            "value" : "MA"
         }, {
             "name" : "Michigan",
-            "abbreviation" : "MI"
+            "value" : "MI"
         }, {
             "name" : "Minnesota",
-            "abbreviation" : "MN"
+            "value" : "MN"
         }, {
             "name" : "Mississippi",
-            "abbreviation" : "MS"
+            "value" : "MS"
         }, {
             "name" : "Missouri",
-            "abbreviation" : "MO"
+            "value" : "MO"
         }, {
             "name" : "Montana",
-            "abbreviation" : "MT"
+            "value" : "MT"
         }, {
             "name" : "Nebraska",
-            "abbreviation" : "NE"
+            "value" : "NE"
         }, {
             "name" : "Nevada",
-            "abbreviation" : "NV"
+            "value" : "NV"
         }, {
             "name" : "New Hampshire",
-            "abbreviation" : "NH"
+            "value" : "NH"
         }, {
             "name" : "New Jersey",
-            "abbreviation" : "NJ"
+            "value" : "NJ"
         }, {
             "name" : "New Mexico",
-            "abbreviation" : "NM"
+            "value" : "NM"
         }, {
             "name" : "New York",
-            "abbreviation" : "NY"
+            "value" : "NY"
         }, {
             "name" : "North Carolina",
-            "abbreviation" : "NC"
+            "value" : "NC"
         }, {
             "name" : "North Dakota",
-            "abbreviation" : "ND"
+            "value" : "ND"
         }, {
             "name" : "Northern Mariana Islands",
-            "abbreviation" : "MP"
+            "value" : "MP"
         }, {
             "name" : "Ohio",
-            "abbreviation" : "OH"
+            "value" : "OH"
         }, {
             "name" : "Oklahoma",
-            "abbreviation" : "OK"
+            "value" : "OK"
         }, {
             "name" : "Oregon",
-            "abbreviation" : "OR"
+            "value" : "OR"
         }, {
             "name" : "Palau",
-            "abbreviation" : "PW"
+            "value" : "PW"
         }, {
             "name" : "Pennsylvania",
-            "abbreviation" : "PA"
+            "value" : "PA"
         }, {
             "name" : "Puerto Rico",
-            "abbreviation" : "PR"
+            "value" : "PR"
         }, {
             "name" : "Rhode Island",
-            "abbreviation" : "RI"
+            "value" : "RI"
         }, {
             "name" : "South Carolina",
-            "abbreviation" : "SC"
+            "value" : "SC"
         }, {
             "name" : "South Dakota",
-            "abbreviation" : "SD"
+            "value" : "SD"
         }, {
             "name" : "Tennessee",
-            "abbreviation" : "TN"
+            "value" : "TN"
         }, {
             "name" : "Texas",
-            "abbreviation" : "TX"
+            "value" : "TX"
         }, {
             "name" : "Utah",
-            "abbreviation" : "UT"
+            "value" : "UT"
         }, {
             "name" : "Vermont",
-            "abbreviation" : "VT"
+            "value" : "VT"
         }, {
             "name" : "Virgin Islands",
-            "abbreviation" : "VI"
+            "value" : "VI"
         }, {
             "name" : "Virginia",
-            "abbreviation" : "VA"
+            "value" : "VA"
         }, {
             "name" : "Washington",
-            "abbreviation" : "WA"
+            "value" : "WA"
         }, {
             "name" : "West Virginia",
-            "abbreviation" : "WV"
+            "value" : "WV"
         }, {
             "name" : "Wisconsin",
-            "abbreviation" : "WI"
+            "value" : "WI"
         }, {
             "name" : "Wyoming",
-            "abbreviation" : "WY"
+            "value" : "WY"
         } ];
 
-	return {
-		"getStates" : function (){
-			
-			return ConstantFields.states;
-		}
+	    return {
+            "getStates": function (){
+
+                return ConstantFields.states;
+            }
+
+        };
 	
-		
-	};
-	
-})
-.factory('QuoteWrapper', function($resource) {
+    })
+    .factory('QuoteInit', function ($resource) {
+        return $resource('http://localhost:8080/insurance-web-app/rest/quoteService/init', {});
 
-	// return
-	// $resource("http://localhost:8080/insurance-web-app/rest/quoteService",{});
+    })
+    //.factory('QuoteUpdate', function ($resource) {
+    //    return $resource('http://localhost:8080/insurance-web-app/rest/quoteService/update', {});
+    //
+    //})
+    .factory('QuoteUpdate', function($resource) {
+        return $resource('http://localhost:8080/insurance-web-app/rest/quoteService/update', null,
+        {
+            'update': { method:'POST' }
+        });
+    })
+    .factory('QuoteCalculate', function ($resource) {
+        return $resource('http://localhost:8080/insurance-web-app/rest/quoteService/rate', {});
 
-	// during development using http server as front server for faster
-	// develpment speed
-	// doing this requires a actual rest server host, which is the jboss eap
-	// http location to be added
-	var resourceUri = "rest/quoteService/:controller";
-	if (window.location.origin.match(/http\:\/\/insurance:8000/)) {
-		resourceUri = "http://localhost:8080/insurance-web-app/" + resourceUri;
-	}
-	var questRes = $resource(resourceUri, {
-		controller : "@controller"
-	}, {
-		query : {
-			method : "GET",
-			isArray : false
-		},
-		save : {
+    });
 
-			method : "POST",
-			isArray : false
-		},
-		checkEligibility : {
-			method : "POST",
-			isArray : false,
-			params : {
-				controller : "eligibility"
-			}
 
-		},
-		quoteCalculate : {
-			method : "POST",
-			isArray : false,
-			params : {
-				controller : "quoteCalculate"
-			}
 
-		}
-	});
-
-	return questRes;
-
-})
-.factory('QuoteCalculate', function ($resource) {
-    return $resource('http://localhost:8080/insurance-web-app/rest/quoteService/quoteCalculate', {});
-
-});
 
 
 

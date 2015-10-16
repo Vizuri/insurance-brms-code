@@ -13,7 +13,7 @@ import org.junit.Test;
 import com.google.gson.Gson;
 import com.google.gson.stream.JsonReader;
 import com.vizuri.insurance.domain.Property;
-import com.vizuri.insurance.rest.TransferWrapper;
+import com.vizuri.insurance.rest.QuoteRequest;
 import com.vizuri.insurance.rest.brms.RuleProcessor;
 
 public class RoofAgeTest {
@@ -29,16 +29,16 @@ public class RoofAgeTest {
     JsonReader reader = new JsonReader(fread);
 
     Gson gson = new Gson();
-    TransferWrapper wrapper =
-        (TransferWrapper) TestUtils.fromJson("/test.js", TransferWrapper.class);// gson.fromJson(reader,
+    QuoteRequest wrapper =
+        (QuoteRequest) TestUtils.fromJson("/test.js", QuoteRequest.class);// gson.fromJson(reader,
                                                                                 // TransferWrapper.class);
     Property prop = new Property();
     prop.setAgeOfRoof(100);
 
-    List sendList = new ArrayList(wrapper.getQuestions());
-    sendList.add(wrapper.getApplicant());
-    sendList.add(wrapper.getProperty());
-    sendList.add(wrapper.getProperty().getAddress());
+    List sendList = new ArrayList();
+    //sendList.add(wrapper.getApplicant());
+    //sendList.add(wrapper.getProperty());
+   // sendList.add(wrapper.getProperty().getAddress());
 
     logger.info("wrapper : " + wrapper);
     Collection coll = rp.fireRules(RuleProcessor.AGENDA_ELIGIBLITY, sendList.toArray());

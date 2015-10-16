@@ -7,14 +7,14 @@
   	background-size: contain;
   	max-width: none!important;
   	max-height: none!important;
-font-size:27px;
-color:#fff;
-text-align:left;
-padding-top:23px;
-padding-right:50px;
-font-weight:200;
-text-transform:uppercase;
-letter-spacing: 5px;
+    font-size:27px;
+    color:#fff;
+    text-align:left;
+    padding-top:23px;
+    padding-right:50px;
+
+    text-transform:uppercase;
+    letter-spacing: 5px;
 }
 
 .logo{

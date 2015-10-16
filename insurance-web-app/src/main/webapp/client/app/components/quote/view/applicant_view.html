@@ -7,7 +7,10 @@
 	<div class="row" ng-if="qmap['a.firstName'].enabled">
 		<label class="col-md-2 control-label">{{qmap['a.firstName'].description}}</label>
 		<div class="col-md-6" >
-			<input placeholder="Enter First Name" name="firstName" ng-required="qmap['a.firstName'].required" type="text" ng-blur="changeHandle()" ng-model="newApplicant.firstName" class="form-control">
+			<input placeholder="Enter First Name" name="firstName"
+                   ng-required="qmap['a.firstName'].required" type="text"
+                   ng-change="changeHandle('a.firstName', true)" ng-blur="changeHandle('a.firstName')"
+                   ng-model="qmap['a.firstName'].strValue" class="form-control">
 
 		</div>
         <div class="col-md-1">
@@ -17,7 +20,9 @@
 	 <div class="row" ng-if="qmap['a.lastName'].enabled">
 		<label class="col-md-2 control-label">{{qmap['a.lastName'].description}}</label>
 		<div class="col-md-6">
-			<input placeholder="Enter Last Name" name="lastName" ng-required="qmap['a.lastName'].required" type="text" ng-blur="changeHandle()" ng-model="newApplicant.lastName" class="form-control">
+			<input placeholder="Enter Last Name" name="lastName" ng-required="qmap['a.lastName'].required" type="text"
+                   ng-blur="changeHandle('a.lastName')" ng-change="changeHandle('a.lastName', true)"
+                   ng-model="qmap['a.lastName'].strValue" class="form-control">
 
 		</div>
          <div class="col-md-1">
@@ -28,18 +33,24 @@
 	<div class="row" ng-if="qmap['a.email'].enabled">
 		<label class="col-md-2 control-label">{{qmap['a.email'].description}}</label>
 		<div class="col-md-6">
-			<input placeholder="user@domain.com" name="email" ng-required="qmap['a.email'].required" type="email" ng-model="newApplicant.email" ng-blur="changeHandle()" class="form-control">
+			<input placeholder="user@domain.com" name="email" ng-required="qmap['a.email'].required" type="email"
+                   ng-model="qmap['a.email'].strValue"
+                   ng-blur="changeHandle('a.email')" ng-change="changeHandle('a.email', true)" class="form-control">
 
 		</div>
         <div class="col-md-1">
             <span class="required" ng-show="mainForm.email.$error.required">**</span>
         </div>
 	</div>
-	
+
+        <!-- placeholder="(999) 999-9999" ng-pattern="/^\(?\d{3}\)?\s*\d{3}\s*-?\s*\d{4}$/"-->
 	<div class="row" ng-if="qmap['a.phone'].enabled">
 		<label class="col-md-2 control-label">{{qmap['a.phone'].description}}</label>
 		<div class="col-md-6">
-			<input placeholder="123-123-1234" name="phone" ng-required="qmap['a.phone'].required" ng-pattern="/^\(?\d{3}\)?\s*\d{3}\s*-?\s*\d{4}$/" ng-blur="changeHandle()" type="text" ng-model="newApplicant.phone" class="form-control">
+			<input type="text" name="phone" ng-required="qmap['a.phone'].required"
+                   ui-mask="(999) 999-9999"
+                   ng-blur="changeHandle('a.phone')"  ng-change="changeHandle('a.phone', true)"
+                   ng-model="qmap['a.phone'].strValue" class="form-control">
 
 		</div>
         <div class="col-md-1">
@@ -50,13 +61,13 @@
 	<div class="row" ng-if="qmap['a.filedForBankruptcy'].enabled">
 
 		<label class="col-md-6 control-label">{{qmap['a.filedForBankruptcy'].description}}</label>
-		<div class="col-md-2">
+		<div class="col-md-3">
 
-            <select name="filedForBankruptcy"   ng-change="changeHandle()" type="checkbox" class="form-control"
-                    ng-model="newApplicant.filedForBankruptcy" ng-required="qmap['a.filedForBankruptcy'].required">
-                <option value=""></option>
-                <option  value="true">Yes</option>
-                <option  value="false">No</option>
+            <select name="filedForBankruptcy" ng-blur="changeHandle('a.filedForBankruptcy')" class="form-control"
+                    ng-model="qmap['a.filedForBankruptcy'].strValue" ng-required="qmap['a.filedForBankruptcy'].required">
+                <option value="">Select One</option>
+                <option value="true">Yes</option>
+                <option value="false">No</option>
             </select>
 
 		</div>
@@ -67,13 +78,13 @@
 
 	<div class="row" ng-if="qmap['a.fraud'].enabled">
 		<label class="col-md-6 control-label">{{qmap['a.fraud'].description}}</label>
-		<div class="col-md-2">
+		<div class="col-md-3">
 			
-		<select name="fraud" ng-change="changeHandle()" type="checkbox" class="form-control"
-                ng-model="newApplicant.fraud" ng-required="qmap['a.fraud'].required">
-			<option value=""></option>
-			<option  value=true>Yes</option>
-			<option  value=false>No</option>
+		<select name="fraud" ng-change="changeHandle('a.fraud')" type="checkbox" class="form-control"
+                ng-model="qmap['a.fraud'].strValue" ng-required="qmap['a.fraud'].required">
+            <option value="">Select One</option>
+			<option value=true>Yes</option>
+			<option value=false>No</option>
 		</select>
 
 		</div>
@@ -82,15 +93,16 @@
         </div>
 	</div>
 
-	<div class="row" ng-if="qmap['p.anyPreviousInsuranceDenials'].enabled" >
-		<label class="col-md-6 control-label">{{qmap['p.anyPreviousInsuranceDenials'].description}}</label>
-		<div class="col-md-2">
+	<div class="row" ng-if="qmap['a.anyPreviousInsuranceDenials'].enabled" >
+		<label class="col-md-6 control-label">{{qmap['a.anyPreviousInsuranceDenials'].description}}</label>
+		<div class="col-md-3">
 			
-			<select name="anyPreviousInsuranceDenials" ng-change="changeHandle()" type="checkbox" class="form-control"
-                    ng-model="newApplicant.anyPreviousInsuranceDenials" ng-required="qmap['a.anyPreviousInsuranceDenials'].required">
-			<option value=""></option>
-			<option  value="true">Yes</option>
-			<option  value="false">No</option>
+			<select name="anyPreviousInsuranceDenials" ng-change="changeHandle('a.anyPreviousInsuranceDenials')" type="checkbox" class="form-control"
+                    ng-model="qmap['a.anyPreviousInsuranceDenials'].strValue"
+                    ng-required="qmap['a.anyPreviousInsuranceDenials'].required">
+			<option value="">Select One</option>
+			<option value="true">Yes</option>
+			<option value="false">No</option>
 			</select>			
 
 		</div>

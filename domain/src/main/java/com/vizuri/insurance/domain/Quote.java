@@ -19,7 +19,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public class Quote {
-	private Integer id;
+	private Long id;
 	private double amount;
 	private double riskRate;
 	private String status;
@@ -29,15 +29,15 @@ public class Quote {
 		
 	}
 
-	public Quote(Integer id){
+	public Quote(Long id){
 		setId(id);
 	}
 	
-	public Integer getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 

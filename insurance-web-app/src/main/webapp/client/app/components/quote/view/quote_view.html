@@ -8,7 +8,7 @@
             </div>
 
         </div>
-        <div class="col-md-3">
+        <div class="col-md-4">
             <div class="firstRow">Insurance Demo</div>
         </div>
 
@@ -49,15 +49,16 @@
                         <div class="col-md-6">
 
                             <input type="button" id="quote" class="btn btn-success"
-                                   ng-show="quoteStatus != QuoteStatus.FORM_INCOMPLETE"
-                                   value="Calculate Quote"
-                                   ng-click="quoteCalculate()"/>
+                                    ng-show="quoteStatus != QuoteStatus.FORM_INCOMPLETE"
+                                    ng-disabled="errorQuoteMessages.length > 0"
+                                    value="Calculate Quote"
+                                    ng-click="quoteCalculate()"/>
 
 
                         </div>
                     </div>
 
-                    <div class="row" ng-if="newQuote && newQuote.id != null && newQuote.amount > 0 ">
+                    <div class="row" ng-if="newQuote && newQuote.id != null && newQuote.status != undefined ">
                         <div class="col-md-12">
 
                             <div class="row group-heading">
@@ -128,7 +129,7 @@
                         <div class="row">
                             <div class="col-md-12" ng-show="quoteStatus == QuoteStatus.FORM_INCOMPLETE">
 
-                                <p class="text-danger text-left" style="width: 380px;">
+                                <p class="text-danger text-left" tooltip="{{requiredFieldList}}" style="width: 380px;">
                                     Some fields are still required.<br>
                                     Please complete all required fields to complete the quote.
                                 </p>

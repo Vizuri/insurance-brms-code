@@ -17,54 +17,35 @@ package com.vizuri.insurance.domain;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
-
-import com.vizuri.insurance.domain.xmladapter.BooleanXmlAdapter;
-import com.vizuri.insurance.domain.xmladapter.CalendarXmlAdapter;
-
-@SuppressWarnings("restriction")
-@XmlRootElement
 public class Property {
 
 	private Address address;
-
-	// @XmlJavaTypeAdapter(value = CalendarXmlAdapter.class)
 	private Date policyBeginDate;
-
-	// @XmlJavaTypeAdapter(value = CalendarXmlAdapter.class)
 	private Date purchaseDate;
 
 	private int yearBuilt;
 	private int livingArea;
 	private int ageOfRoof;
-	//@XmlJavaTypeAdapter(value = BooleanXmlAdapter.class)
+	
 	private Boolean electrictSystemRenovated;
 
-	//@XmlJavaTypeAdapter(value = BooleanXmlAdapter.class)
 	private Boolean homeSafetyDeviceInstalled;
 
 	private List<String> homeSafetyDevices;
 
-	@XmlJavaTypeAdapter(value = BooleanXmlAdapter.class)
 	private Boolean previousClaims;
 
 	private List<Claim> claims;
 
-	@XmlJavaTypeAdapter(value = BooleanXmlAdapter.class)
 	private Boolean dogExists;
 
-	private Map<Integer, String> dogs;
+	private List<Dog> dogs;
 
-	@XmlJavaTypeAdapter(value = BooleanXmlAdapter.class)
 	private Boolean childCareBusinessExists;
 
-	@XmlJavaTypeAdapter(value = BooleanXmlAdapter.class)
 	private Boolean childCareLiabilityCoverageRequired;
 
-	@XmlJavaTypeAdapter(value = BooleanXmlAdapter.class)
 	private Boolean childCareLiabilityAlreadyExists;
 
 	private Integer applicantId;
@@ -171,11 +152,11 @@ public class Property {
 		this.dogExists = dogExists;
 	}
 
-	public Map<Integer, String> getDogs() {
+	public List<Dog> getDogs() {
 		return dogs;
 	}
 
-	public void setDogs(Map<Integer, String> dogs) {
+	public void setDogs(List<Dog> dogs) {
 		this.dogs = dogs;
 	}
 

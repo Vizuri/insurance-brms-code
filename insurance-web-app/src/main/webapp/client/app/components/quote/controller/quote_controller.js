@@ -1,12 +1,28 @@
 angular.module('quoteController', ['quoteService'])
 .controller('QuoteEntryController',
-    function ($scope, $http, $location, QuoteWrapper, QuoteCalculate, AnotherWrapper){
+    function ($scope, $http, $location, QuoteInit, QuoteUpdate, QuoteCalculate, GUIConstants){
 
         console.log("Inside QuoteEntryController");
 
         function initScopeVars ($scope){
 
             console.log("Inside initScopeVars");
+
+            $scope.yesNoOptions = [
+                {value: null, label: 'Select One'},
+                {value: 'true', name: 'Yes'},
+                {value: 'false', name: 'No'}
+            ];
+
+            $scope.newDog = {
+                "count": 1,
+                "type": ""
+            };
+
+            $scope.newClaim = {
+                "claimDate": new Date(),
+                "claimAmount": 0.0
+            };
 
             $scope.QuoteStatus  = {
                 "FORM_INCOMPLETE": "FORM_INCOMPLETE",
@@ -16,80 +32,9 @@ angular.module('quoteController', ['quoteService'])
 
             };
 
-            $scope.IndividualEvents = {
-
-                "updateQuoteStatus": function ($scope){
-                    console.log("Inside updateQuoteStatus");
-                    if ($scope.mainForm.$valid) {
-                        $scope.quoteStatus = $scope.QuoteStatus.NEED_ELIGIBILITY_CHECK;
-                    }
-                    else {
-
-                        $scope.quoteStatus = $scope.QuoteStatus.FORM_INCOMPLETE;
-                    }
-                },
-                "childCareBusinessExists": function ($scope){
-                    if (false == $scope.newProperty.childCareBusinessExists) {
-                        $scope.newProperty.childCareLiabilityCoverageRequired = "false";
-                        $scope.newProperty.childCareLiabilityAlreadyExists = "false";
-
-                    }
-
-                },
-                "childCareLiabilityCoverageRequired": function ($scope){
-                    if (false == $scope.newProperty.childCareLiabilityCoverageRequired) {
-
-                        $scope.newProperty.childCareLiabilityAlreadyExists = "false";
-
-                    }
-                },
-                "childCareLiabilityAlreadyExists": function ($scope){
-
-                },
-                "previousClaims": function ($scope){
-                    $scope.showDeleteClaimAlert = false;
-                    if ($scope.newProperty.previousClaims == "true") {
-                        $scope.quoteStatus = $scope.QuoteStatus.FORM_INCOMPLETE;
-
-                    }
-                },
-                //"dogExists": function ($scope){
-                //    $scope.showDogDeleteAlert = false;
-                //    if ($scope.newProperty.dogExists == "true") {
-                //        $scope.quoteStatus = $scope.QuoteStatus.FORM_INCOMPLETE;
-                //    }
-                //},
-                "handleEvent": function ($scope){
-                    console.log("Inside IndividualEvents handleEvent");
-                    try {
-                        var source = window.event.srcElement.id;
-                        console.log('source id ', source);
-                        if (source != undefined && source.isEmpty()) {
-                            source = window.event.srcElement.name;
-                            console.log('source name  ', source);
-                        }
-
-                        if (source == undefined || source.isEmpty()) {
-                            source = $scope.currentSource;
-                            console.log('resorting to curent source field');
-                        }
-
-                        var func = this[source];
-
-                        if (func) {
-                            func($scope);
-                        }
-                    } catch (err) {
-                        console.error("Inside IndividualEvents handleEvent", err);
-                    }
-
-                }
-
-            };
-
-            //$scope.QuoteStatus = QuoteStatus;
+            $scope.requiredFieldList = "";
             $scope.wrapper = {};
-            $scope.newApplicant = {};
+            //$scope.newApplicant = {};
             $scope.qmap = {};
             $scope.templates = 'partials/applicant.html';
             // $scope.propertyMap = {};
@@ -140,27 +85,32 @@ angular.module('quoteController', ['quoteService'])
 
         initScopeVars($scope);
 
-        function doQuoteMessages ($scope){
+        function doQuoteMessages (){
 
             var haveErrors = false;
             var messages = $scope.wrapper.quoteMessages;
             $scope.errorQuoteMessages = [];
             $scope.infoQuoteMessages = [];
             $scope.warningQuoteMessages = [];
-            for (var i = 0; i < messages.length; i++) {
-                var msg = messages[i];
-                if ("ERROR" == msg.messageStatus) {
-                    $scope.errorQuoteMessages.push(msg);
-                    haveErrors = true;
-                }
-                if ("INFO" == msg.messageStatus) {
-                    $scope.infoQuoteMessages.push(msg);
-                }
-                if ("WARNING" == msg.messageStatus) {
-                    $scope.warningQuoteMessages.push(msg);
-                }
 
+            if (messages && messages.length > 0){
+
+                for (var i = 0; i < messages.length; i++) {
+                    var msg = messages[i];
+                    if ("ERROR" == msg.messageStatus) {
+                        $scope.errorQuoteMessages.push(msg);
+                        haveErrors = true;
+                    }
+                    if ("INFO" == msg.messageStatus) {
+                        $scope.infoQuoteMessages.push(msg);
+                    }
+                    if ("WARNING" == msg.messageStatus) {
+                        $scope.warningQuoteMessages.push(msg);
+                    }
+
+                }
             }
+
 
             return haveErrors;
 
@@ -172,69 +122,80 @@ angular.module('quoteController', ['quoteService'])
 
             console.log("Inside convertToDate: ", strDate);
 
-
             if (!strDate || strDate.length == 0) {
                 return;
             }
-            return new Date(strDate);   // format: yyyy-MM-dd
+            return new Date(strDate);   // format: yyyy-MM-dd or 123456789
 
 
         }
 
-        function copyQuoteDataToScope ($scope, data){
+        function copyQuoteDataToScope (data){
 
-            console.log('inside copyQuoteDataToScope', data.applicantQuestMap);
+            console.log('inside copyQuoteDataToScope, questionMap: ', data.questionMap);
             $scope.wrapper = data;
 
             // check to see if we got any error messages back
-            var haveErrors = doQuoteMessages($scope);
+            var haveErrors = doQuoteMessages();
 
             if (haveErrors){
                 console.log("got some errors back after validation");
                 $scope.QuoteStatus.FORM_INCOMPLETE;
             }
 
-            $scope.newApplicant = data.applicant;
-            $scope.newProperty = data.property;
+            //$scope.newApplicant = data.applicant;
+            //$scope.newProperty = data.property;
             $scope.newQuote = data.quote;
-            $scope.qmap = data.applicantQuestMap;
-            // $scope.propertyMap = data.propertyQuestMap;
-            console.log('newApplicant: ', $scope.newApplicant);
-            console.log('qMap: ', $scope.qMap);
-            console.log('newProperty: ', $scope.newProperty);
+            $scope.qmap = data.questionMap;
 
-            Try.these(function (){
+            //console.log('newApplicant: ', $scope.newApplicant);
+            console.log('qmap: ', $scope.qmap);
+            //console.log('newProperty: ', $scope.newProperty);
 
-                console.log("try to convert policyBeginDate: ", $scope.newProperty.policyBeginDate);
+            for (questionId in $scope.qmap){
 
-                $scope.newProperty.policyBeginDate = convertToDate($scope.newProperty.policyBeginDate); // input format is yyyy-MM-dd
-            });
-            Try.these(function (){
+                //console.log("check question: "+ questionId);
 
-                console.log("try to convert purchaseDate: ", $scope.newProperty.purchaseDate);
+                if ($scope.qmap[questionId].answerType === "Date" && $scope.qmap[questionId].strValue != undefined){
+                    console.log("convert value["+$scope.qmap[questionId].strValue+"] for questionId["+questionId+"] to date: ");
+                    $scope.qmap[questionId].strValue = convertToDate($scope.qmap[questionId].strValue); // input format is yyyy-MM-dd or 12345678
+                }
+            }
 
-                $scope.newProperty.purchaseDate = convertToDate($scope.newProperty.purchaseDate);
-            });
+            //if ($scope.newProperty.policyBeginDate) {
+            //
+            //    console.log("try to convert policyBeginDate: ", $scope.newProperty.policyBeginDate);
+            //
+            //    $scope.newProperty.policyBeginDate = convertToDate($scope.newProperty.policyBeginDate); // input format is yyyy-MM-dd
+            //}
+            //
+            //if($scope.newProperty.purchaseDate){
+            //
+            //    console.log("try to convert purchaseDate: ", $scope.newProperty.purchaseDate);
+            //
+            //    // need to convert the integer number into a string representation of the date
+            //    $scope.newProperty.purchaseDate = convertToDate($scope.newProperty.purchaseDate);
+            //}
 
             //converting to correct date format
-            try {
-                for (var idx = 0; idx < $scope.newProperty.claims.length; idx++) {
-                    var cl = $scope.newProperty.claims[idx];
-
-                    try {
-                        cl.claimDate = convertToDate(cl.claimDate);
-                    } catch (err) {
-                        console.error(err);
-                    }
-
-                }
-            } catch (err) {
-                console.log("error date ", err);
-            }
+            //try {
+            //    for (var idx = 0; idx < $scope.newProperty.claims.length; idx++) {
+            //        var cl = $scope.newProperty.claims[idx];
+            //
+            //        try {
+            //            cl.claimDate = convertToDate(cl.claimDate);
+            //        } catch (err) {
+            //            console.error(err);
+            //        }
+            //
+            //    }
+            //} catch (err) {
+            //    console.log("error date ", err);
+            //}
 
             var f = function (map){
                 angular.forEach(map, function (val, key){
-                    //	var it = iter;
+
                     //console.log('key,value',key+","+val);
 
                     if ("0" == val || 0 == val) {
@@ -260,280 +221,267 @@ angular.module('quoteController', ['quoteService'])
 
             };
 
-            f($scope.newProperty);
-
-            f($scope.newApplicant);
+            //f($scope.newProperty);
 
         }
 
-            $scope.stateList = AnotherWrapper.getStates();
+        $scope.stateList = GUIConstants.getStates();
 
-            QuoteWrapper.query(function (data){
-                console.log("after QuoteWrapper.query, data: ", data);
+        $scope.changeHandle = function (questionId, skipRuleEngine, cb){
 
-                copyQuoteDataToScope($scope, data);
-                $scope.addClaimRow();
+            console.log("Inside changeHandle, skipRuleEngine["+skipRuleEngine+"]", questionId);
 
+
+            if (questionId != undefined){
+
+                console.log(questionId + " was changed");
+
+                if ($scope.wrapper.answerMap == undefined){
+                    $scope.wrapper.answerMap = {};
+                }
+
+                // we need to create an answer and add it to the answer list
+                $scope.wrapper.answerMap[questionId] = {questionId: questionId,  strValue: $scope.qmap[questionId].strValue};
+            }
+
+            //some change don't require server call
+            if (skipRuleEngine === true) {
+                updateQuoteStatus();
+                return;
+            }
+
+            console.log("sending data to rule engine : ", $scope.wrapper.answerMap);
+
+            QuoteUpdate.update($scope.wrapper, function (data){
+
+                    console.log("Done saving in QuoteWrapper.update, data: ", data);
+
+                    copyQuoteDataToScope(data);
+
+                    //console.log('newApplicant', $scope.newApplicant);
+                    //console.log('newProperty', $scope.newProperty);
+                    console.log('qmap', $scope.qmap);
+
+
+                    //$scope.wrapper.quote = {};
+                    //$scope.wrapper.quote.status = "";
+
+                    updateQuoteStatus();
+                    if(cb){cb();}
+
+
+                },
+                function (err){
+                    console.error('save:received an error: ', err);
+                    if (err.data) {
+                        //alert("Internal error: " + err.data.message);
+                        $scope.errorMessages = err.data.message;
+                    }
+                    else {
+                        $scope.errorMessages = ['Unknown  server error'];
+                    }
+                    if(cb){cb();}
+                });
+
+        };
+
+        $scope.resetQuote = function (){
+            $scope.mainForm.$setPristine();
+
+            initQuote();
+
+            updateQuoteStatus();
+
+        };
+
+        $scope.goToPropery = function (){
+
+            // $location.path('/property');
+            $scope.templates = 'partials/property.html';
+        };
+        $scope.goToApplication = function (){
+
+            // $location.path('/applicant');
+            $scope.templates = 'partials/applicant.html';
+        };
+
+
+        $scope.quoteCalculate = function (){
+
+            console.log("Inside quoteCalculate");
+
+            QuoteCalculate.save($scope.wrapper,
+                function (success){
+
+                    copyQuoteDataToScope(success);
+                    console.log("Calculated Quote: ", $scope.wrapper.quote);
+                },
+                function (error){
+
+                    console.log("Error calling QuoteCalculate, err: ", error);
+                    if ((error.status == 409) || (error.status == 400)) {
+                        $scope.errors = error.data;
+                    }
+                    else {
+                        $scope.errorMessages = ['Unknown  server error'];
+                    }
+                });
+
+        };
+
+
+        $scope.claimsExists = function (){
+
+            console.log("Inside claimsExists: " + $scope.qmap['p.previousClaims'].strValue);
+
+            if ($scope.qmap['p.previousClaims'].strValue == "false"){
+                $scope.deleteAllClaims();
+            }
+            $scope.changeHandle('p.previousClaims');
+        };
+
+        $scope.deleteAllClaims = function (){
+            $scope.newProperty.claims = undefined;
+        };
+
+        // qmap['p.previousClaims'].enabled == true
+        $scope.addClaim = function (){
+
+            console.log('Inside addClaim: ', $scope.newProperty.claims);
+
+            if ($scope.qmap['p.previousClaims'].strValue == "false") {
+                $scope.newProperty.claims = [];
+                return;
+            }
+
+            //first time  no claims initial claim
+            if ($scope.newProperty.claims == undefined) {
+                $scope.newProperty.claims = [];
+            }
+
+            //cl.claimDate = convertToDate(cl.claimDate);
+            $scope.newProperty.claims.push($scope.newClaim);
+
+            $scope.changeHandle(null, false, function(){
+                $scope.newClaim.claimAmount = 100;
             });
 
-            $scope.hideField = function (){
-                console.log("hideField");
-                $scope.newApplicant.filedForBankruptcy = false;
-                $scope.qmap.filedForBankruptcy.enabled = false;
-                console.log("$scope.qmap.filedForBankruptcy.enabled  : " + $scope.qmap.filedForBankruptcy.enabled);
+        };
 
-            };
-            $scope.changeHandle = function (serverCall){
-                console.log('Inside changeHandle');
+        $scope.removeClaim = function ($index){
 
-                //$scope.quoteStatus = $scope.QuoteStatus.FORM_INCOMPLETE;
+            console.log('inside : removeClaim');
 
-                Try.these(function (){
-                    $scope.currentSource = window.event.srcElement.id;
-                    $scope.currentSource = ($scope.currentSource == undefined || $scope.currentSource.isEmpty() ) ? window.event.srcElement.name : $scope.currentSource;
-                });
+            if ($scope.newProperty.claims.length == 0) {
+                $scope.showDeleteClaimAlert = true;
+                return;
+            }
 
-                //empty value not calling server
-                /*try{
-                 if(window.event.srcElement != undefined){
-                 var val = window.event.srcElement.value;
-                 var strVal = val.toString();
-                 if(strVal.isEmpty()){
-                 console.log('change event not happening empty value');
-                 return;
-                 }
-                 }
-                 }catch(err){
+            if ($scope.newProperty.claims.length > 0) {
+                $scope.newProperty.claims.splice($index, 1);
+                $scope.changeHandle();
+            }
+        };
 
-                 }*/
+        $scope.hideClaimAlert = function (){
+            $scope.showDeleteClaimAlert = false;
 
-                console.log("field name : " + $scope.currentSource);
+        };
 
-                //some change don't require server call
-                if ('noserver-call' === serverCall) {
-                    $scope.IndividualEvents.updateQuoteStatus($scope);
-                    $scope.currentSource = undefined;
-                    return;
+        $scope.dogsExists = function (){
+
+            console.log("Inside dogsExists: " + $scope.newProperty.dogExists);
+
+            if ($scope.qmap['p.dogExists'].strValue == "false"){
+                $scope.deleteAllDogs();
+            }
+            $scope.changeHandle('p.dogExists');
+        };
+
+        $scope.deleteAllDogs = function (){
+            $scope.newProperty.dogs = undefined;
+        };
+
+        $scope.addDogs = function (){
+
+            console.log('Inside addDogs');
+
+            if ($scope.qmap['p.dogExists'].strValue == "false") {
+                console.log('did not add the dog');
+                return;
+            }
+
+            if ($scope.newProperty.dogs == undefined){
+                $scope.newProperty.dogs = [];
+            }
+
+            $scope.newProperty.dogs.push($scope.newDog);
+
+            $scope.changeHandle(null, false, function(){
+                $scope.newDog.type = "";
+            });
+
+        };
+
+        $scope.removeDog = function ($index){
+            $scope.showDogDeleteAlert = false;
+
+            if ($scope.newProperty.dogs.length == 0) {
+                $scope.showDogDeleteAlert = true;
+                return;
+            }
+
+            if ($scope.newProperty.dogs.length > 0) {
+                $scope.newProperty.dogs.splice($index, 1);
+                $scope.changeHandle();
+            }
+        };
+
+        $scope.hideDogAlert = function (){
+            $scope.showDogDeleteAlert = false;
+
+        };
+
+        function updateQuoteStatus (){
+            console.log("Inside updateQuoteStatus, before: " + $scope.mainForm.$valid);
+
+            if ($scope.mainForm.$valid) {
+
+                $scope.quoteStatus = $scope.QuoteStatus.NEED_ELIGIBILITY_CHECK;
+            }
+            else {
+
+                $scope.quoteStatus = $scope.QuoteStatus.FORM_INCOMPLETE;
+            }
+
+            //console.log("status after: " + $scope.quoteStatus, $scope.mainForm.$error);
+
+            if ($scope.mainForm.$error && $scope.mainForm.$error.required){
+
+                $scope.requiredFieldList = "The following fields are required:\n";
+
+                for(index in $scope.mainForm.$error.required){
+                    console.log("required field: " + $scope.mainForm.$error.required[index].$name);
+                    $scope.requiredFieldList += $scope.mainForm.$error.required[index].$name + "\n";
                 }
+            }
+        }
 
-                console.log("sending data to rule engine : ", $scope.wrapper);
+        function initQuote(){
+            console.log("Inside initQuote");
 
-                QuoteWrapper.save($scope.wrapper, function (data){
+            //$scope.newApplicant = {};
+            $scope.newProperty = {};
 
-                        console.log("Done saving in QuoteWrapper.save");
+            QuoteInit.get(function (response){
+                console.log("after QuoteInit.get, response: ", response);
 
-                        copyQuoteDataToScope($scope, data);
-
-                        console.log('newApplicant', $scope.newApplicant);
-                        console.log('newProperty', $scope.newProperty);
-                        console.log('qmap', $scope.qmap);
-
-
-                        $scope.wrapper.quote = {};
-                        $scope.wrapper.quote.status = "";
-
-                        console.log("add dummy claim and dummy dog");
-                        $scope.addClaimRow();
-                        $scope.addDogs();
-
-                        $scope.IndividualEvents.updateQuoteStatus($scope);
-                        $scope.IndividualEvents.handleEvent($scope);
-
-                        $scope.currentSource = undefined;
-                    },
-                    function (err){
-                        console.error('save:received an error: ', err);
-                        if ((err.status == 409) || (err.status == 400)) {
-                            $scope.errors = err.data;
-                        }
-                        else {
-                            $scope.errorMessages = ['Unknown  server error'];
-                        }
-                    });
-
-            };
-
-            $scope.resetQuote = function (){
-                $scope.mainForm.$setPristine();
-                $scope.newApplicant = {};
-                $scope.newProperty = {};
-                $scope.IndividualEvents.updateQuoteStatus($scope);
-
-            };
-
-            $scope.goToPropery = function (){
-
-                // $location.path('/property');
-                $scope.templates = 'partials/property.html';
-            };
-            $scope.goToApplication = function (){
-
-                // $location.path('/applicant');
-                $scope.templates = 'partials/applicant.html';
-            };
-
-            $scope.getEligibility = function (){
-                console.log("Inside getEligibility");
-
-                //$scope.wrapper.quote.status = "";
-                QuoteWrapper
-                    .checkEligibility($scope.wrapper,
-                    function (data){
-                        copyQuoteDataToScope($scope, data);
-
-                        console.log("Quote status[" + $scope.newQuote.status + "]");
-                        if ($scope.mainForm.$valid && $scope.newQuote.status.isEmpty()) {
-                            $scope.quoteStatus = $scope.QuoteStatus.ELIBIBILITY_COMPLETE;
-                        }
-                    },
-                    function (err){
-                        console.error('checkEligibility:received an error: ', err);
-                        if ((err.status == 409)
-                            || (err.status == 400)) {
-                            $scope.errors = err.data;
-                        }
-                        else {
-                            $scope.errorMessages = ['Unknown  server error'];
-                        }
-                    });
-            };
+                copyQuoteDataToScope(response);
 
 
-            $scope.quoteCalculate = function (){
+            });
+        }
 
-                console.log("Inside quoteCalculate");
-
-                QuoteCalculate.save($scope.wrapper,
-                    function (success){
-
-                        copyQuoteDataToScope($scope, success);
-                        console.log("Calculated Quote: ", $scope.wrapper.quote);
-                    },
-                    function (error){
-
-                        console.log("Error calling QuoteCalculate, err: ", error);
-                        if ((error.status == 409) || (error.status == 400)) {
-                            $scope.errors = error.data;
-                        }
-                        else {
-                            $scope.errorMessages = ['Unknown  server error'];
-                        }
-                    });
-
-            };
-
-            // qmap['p.previousClaims'].enabled == true
-            $scope.addClaimRow = function (source){
-
-                console.log('$scope.newProperty.claims', $scope.newProperty.claims);
-
-                var claimRowRequired = $scope.newProperty.previousClaims == "true"
-                    && $scope.qmap['p.claimDate'].enabled === true
-                    && $scope.qmap['p.claimAmount'].enabled === true;
-
-                if (!claimRowRequired) {
-                    $scope.newProperty.claims = [];
-                    return;
-                }
-
-                //first time  no claims initial claim
-                if ($scope.newProperty.claims == undefined || $scope.newProperty.claims.length == 0) {
-                    $scope.newProperty.claims = [];
-
-                    $scope.newProperty.claims.push({
-                        "claimDate": null,
-                        "claimAmount": null
-                    });
-                }
-                else {
-
-                    //add caim button
-                    if ('add' == source) {
-                        //var claim = $scope.newProperty.claims[$scope.newProperty.claims.length - 1];
-                        $scope.newProperty.claims.push({
-                            "claimDate": "",
-                            "claimAmount": ""
-                        });
-                        //$scope.quoteStatus = $scope.QuoteStatus.FORM_INCOMPLETE;
-                    }
-
-                }
-
-                //converting to correct date format
-                for (var idx = 0; idx < $scope.newProperty.claims.length; idx++) {
-                    var cl = $scope.newProperty.claims[idx];
-                    try {
-                        cl.claimDate = convertToDate(cl.claimDate);
-                    } catch (err) {
-                        console.error(err);
-                    }
-
-                }
-
-            };
-
-            $scope.deleteClaimRow = function ($index){
-
-                console.log('inside : deleteClaimRow');
-
-                if ($scope.newProperty.claims.length > 1) {
-                    $scope.newProperty.claims.splice($index, 1);
-                }
-                else {
-                    $scope.showDeleteClaimAlert = true;
-                }
-                console.log('showDeleteClaimAlert : ' + $scope.showDeleteClaimAlert);
-
-            };
-
-            $scope.hideClaimAlert = function (){
-                $scope.showDeleteClaimAlert = false;
-
-            };
-
-            $scope.dogList = [];
-
-            $scope.addDogs = function (source){
-
-                console.log('Inside addDogs');
-                console.log('$scope.currentSource : ', $scope.currentSource);
-                console.log('source: ', source);
-                if (false == ('dogExists' == $scope.currentSource || 'add' == source )) {
-                    return;
-                }
-                if ($scope.qmap['p.dogs'].enabled === false) {
-                    $scope.dogList = [];
-                    return;
-
-                }
-
-                $scope.dogList.push({
-                    "dogCount": undefined,
-                    "dogType": ""
-                });
-
-            };
-
-            $scope.deleteDogs = function (){
-
-                $scope.dogList = [];
-
-            };
-
-            $scope.removeDog = function ($index){
-                $scope.showDogDeleteAlert = false;
-                if ($scope.dogList.length == 1) {
-                    $scope.showDogDeleteAlert = true;
-                    return;
-                }
-
-                if ($scope.dogList.length > 0) {
-                    $scope.dogList.splice($index, 1);
-                }
-            };
-            $scope.hideDogAlert = function (){
-                $scope.showDogDeleteAlert = false;
-
-            };
+        initQuote();
 
     });
