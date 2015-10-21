@@ -1,6 +1,7 @@
 package com.vizuri.insurance.domain;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -12,10 +13,12 @@ public class Answer implements Serializable {
 	
 	
 	private String questionId;
+	private String groupId;
 	private String strValue;
 	private boolean updatedValue;
 	private Date lastUpdated;
 	private final String dateFormat = "yyyy-MM-dd";
+	private boolean delete;
 	
 	public Answer() {
 	}
@@ -94,31 +97,31 @@ public class Answer implements Serializable {
 	public void setBoolValue(boolean boolValue) {
 		setStrValue(Boolean.toString(boolValue));
 	}
-//	
-//	public Date getDateValue() {
-//		if (strValue != null && strValue.length() == dateFormat.length()){
-//			
-//			try{
-//				return new SimpleDateFormat(dateFormat).parse(strValue);
-//			}
-//			catch(Exception e){
-//				return null;
-//			}
-//			
-//		}
-//		return null;
-//	}
-//	
-//	// use date format "2015-08-18":yyyy-MM-dd
-//	public void setDateValue(Date date) {
-//		
-//		if (date != null){
-//			setStrValue(new SimpleDateFormat(dateFormat).format(date));
-//		}
-//		else{
-//			setStrValue("");
-//		}
-//	}
+	
+	public Date getDateValue() {
+		if (strValue != null && strValue.length() == dateFormat.length()){
+			
+			try{
+				return new SimpleDateFormat(dateFormat).parse(strValue);
+			}
+			catch(Exception e){
+				return null;
+			}
+			
+		}
+		return null;
+	}
+	
+	// use date format "2015-08-18":yyyy-MM-dd
+	public void setDateValue(Date date) {
+		
+		if (date != null){
+			setStrValue(new SimpleDateFormat(dateFormat).format(date));
+		}
+		else{
+			setStrValue("");
+		}
+	}
 
 	public boolean isUpdatedValue() {
 		return updatedValue;
@@ -127,6 +130,24 @@ public class Answer implements Serializable {
 	public void setUpdatedValue(boolean updatedValue) {
 		this.updatedValue = updatedValue;
 	}
+	
+	public String getGroupId() {
+		return groupId;
+	}
+
+	public void setGroupId(String groupId) {
+		this.groupId = groupId;
+	}
+
+	public boolean isDelete() {
+		return delete;
+	}
+
+	public void setDelete(boolean delete) {
+		this.delete = delete;
+	}
+	
+	
 	
 //	public List<String> getMultipleValues(){
 //		if (strValue != null){
@@ -149,7 +170,7 @@ public class Answer implements Serializable {
 //		}
 //			
 //	}
-	
+
 	private String convertToString(List<String> list, String delim) {
 	    StringBuilder sb = new StringBuilder();
 	    String loopDelim = "";
@@ -191,12 +212,15 @@ public class Answer implements Serializable {
 //		}
 //		return true;		
 //	}
-
+	
 	@Override
 	public String toString() {
-		return "Answer [questionId=" + questionId + ", strValue=" + strValue
-				+ ", updatedValue=" + updatedValue + ", lastUpdated="
-				+ lastUpdated + ", dateFormat=" + dateFormat + "]";
+		return "Answer [questionId=" + questionId + ", groupId=" + groupId
+				+ ", strValue=" + strValue + ", updatedValue=" + updatedValue
+				+ ", lastUpdated=" + lastUpdated + ", dateFormat=" + dateFormat
+				+ ", delete=" + delete + "]";
 	}
+
+	
 	
 }

@@ -21,7 +21,7 @@ angular.module('quoteController', ['quoteService'])
 
             $scope.newClaim = {
                 "claimDate": new Date(),
-                "claimAmount": 0.0
+                "claimAmount": 100
             };
 
             $scope.QuoteStatus  = {
@@ -44,8 +44,6 @@ angular.module('quoteController', ['quoteService'])
             $scope.quoteStatus = $scope.QuoteStatus.FORM_INCOMPLETE;
             // html input elements that fired
             $scope.currentSource = undefined;
-            $scope.showDeleteClaimAlert = false;
-            $scope.showDogDeleteAlert = false;
             $scope.errorQuoteMessages = [];
             $scope.warningQuoteMessages = [];
             $scope.infoQuoteMessages = [];
@@ -146,7 +144,11 @@ angular.module('quoteController', ['quoteService'])
             //$scope.newApplicant = data.applicant;
             //$scope.newProperty = data.property;
             $scope.newQuote = data.quote;
-            $scope.qmap = data.questionMap;
+
+            if (data.questionMap){
+                $scope.qmap = data.questionMap;
+            }
+
 
             //console.log('newApplicant: ', $scope.newApplicant);
             console.log('qmap: ', $scope.qmap);
@@ -241,7 +243,13 @@ angular.module('quoteController', ['quoteService'])
                 }
 
                 // we need to create an answer and add it to the answer list
-                $scope.wrapper.answerMap[questionId] = {questionId: questionId,  strValue: $scope.qmap[questionId].strValue};
+                $scope.wrapper.answerMap[questionId] = {questionId: questionId, groupId: "" + $scope.qmap[questionId].groupId, strValue: $scope.qmap[questionId].strValue};
+
+                if ($scope.qmap[questionId].delete == "true"){
+
+                    console.log("delete answer for question[" + questionId + "]");
+                    $scope.wrapper.answerMap[questionId].delete = "true";
+                }
             }
 
             //some change don't require server call
@@ -251,6 +259,8 @@ angular.module('quoteController', ['quoteService'])
             }
 
             console.log("sending data to rule engine : ", $scope.wrapper.answerMap);
+
+            $scope.wrapper.questionMap = null;  // we do not send questions down only answers
 
             QuoteUpdate.update($scope.wrapper, function (data){
 
@@ -293,18 +303,6 @@ angular.module('quoteController', ['quoteService'])
             updateQuoteStatus();
 
         };
-
-        $scope.goToPropery = function (){
-
-            // $location.path('/property');
-            $scope.templates = 'partials/property.html';
-        };
-        $scope.goToApplication = function (){
-
-            // $location.path('/applicant');
-            $scope.templates = 'partials/applicant.html';
-        };
-
 
         $scope.quoteCalculate = function (){
 
@@ -362,7 +360,11 @@ angular.module('quoteController', ['quoteService'])
             //cl.claimDate = convertToDate(cl.claimDate);
             $scope.newProperty.claims.push($scope.newClaim);
 
-            $scope.changeHandle(null, false, function(){
+            // now add the answer for the claim
+            $scope.qmap["c.claimAmount"].strValue = $scope.newClaim.claimAmount;
+            $scope.qmap["c.claimAmount"].groupId = $scope.newProperty.claims.length;
+
+            $scope.changeHandle("c.claimAmount", false, function(){
                 $scope.newClaim.claimAmount = 100;
             });
 
@@ -370,22 +372,19 @@ angular.module('quoteController', ['quoteService'])
 
         $scope.removeClaim = function ($index){
 
-            console.log('inside : removeClaim');
-
-            if ($scope.newProperty.claims.length == 0) {
-                $scope.showDeleteClaimAlert = true;
-                return;
-            }
+            console.log('inside removeClaim');
 
             if ($scope.newProperty.claims.length > 0) {
                 $scope.newProperty.claims.splice($index, 1);
-                $scope.changeHandle();
+
+                if ($scope.newProperty.claims.length == 0){
+
+                    $scope.qmap['c.claimAmount'].delete = "true";
+                    $scope.changeHandle("c.claimAmount", false, function(){
+                        $scope.newClaim.claimAmount = 100;
+                    });
+                }
             }
-        };
-
-        $scope.hideClaimAlert = function (){
-            $scope.showDeleteClaimAlert = false;
-
         };
 
         $scope.dogsExists = function (){
@@ -417,30 +416,34 @@ angular.module('quoteController', ['quoteService'])
 
             $scope.newProperty.dogs.push($scope.newDog);
 
-            $scope.changeHandle(null, false, function(){
+            // now add the answer for the claim
+            $scope.qmap["p.dogCount"].strValue = $scope.newDog.count;
+            $scope.qmap["c.claimAmount"].groupId = $scope.newProperty.dogs.length;
+
+            $scope.changeHandle("p.dogCount", false, function(){
                 $scope.newDog.type = "";
             });
 
         };
 
         $scope.removeDog = function ($index){
-            $scope.showDogDeleteAlert = false;
 
-            if ($scope.newProperty.dogs.length == 0) {
-                $scope.showDogDeleteAlert = true;
-                return;
-            }
+            console.log('Inside removeDog');
 
             if ($scope.newProperty.dogs.length > 0) {
                 $scope.newProperty.dogs.splice($index, 1);
-                $scope.changeHandle();
+
+                if ($scope.newProperty.dogs.length == 0){
+
+                    $scope.qmap['p.dogCount'].delete = "true";
+                    $scope.changeHandle("p.dogCount", false, function(){
+                        $scope.newDog.type = "";
+                    });
+                }
+
             }
         };
 
-        $scope.hideDogAlert = function (){
-            $scope.showDogDeleteAlert = false;
-
-        };
 
         function updateQuoteStatus (){
             console.log("Inside updateQuoteStatus, before: " + $scope.mainForm.$valid);

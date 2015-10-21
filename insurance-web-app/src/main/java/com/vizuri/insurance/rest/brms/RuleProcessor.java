@@ -78,7 +78,7 @@ public class RuleProcessor {
 
 				// Start the KieScanner polling the maven repository every 10 seconds
 
-				kScanner.start(100000L);
+				kScanner.start(10000L);
 				
 				
 			} catch (Exception e) {
@@ -309,6 +309,7 @@ public class RuleProcessor {
 			
 			List<Object> returnedFacts = getExistingQuoteFact(quoteSession, Quote.class);
 			if (returnedFacts != null && returnedFacts.size() == 0){
+				log.info("insert Quote: " + quote);
 				// we need a quote to calculate the status and risk
 				quoteSession.insert(quote);
 			}
@@ -323,9 +324,9 @@ public class RuleProcessor {
 			quoteSession.fireAllRules();
 			
 			// have to do this to force the scorecard to calculate
-			log.info("Fire AGENDA_MAIN");
-			quoteSession.getAgenda().getAgendaGroup(RuleProcessor.AGENDA_MAIN).setFocus();
-			quoteSession.fireAllRules();
+//			log.info("Fire AGENDA_MAIN");
+//			quoteSession.getAgenda().getAgendaGroup(RuleProcessor.AGENDA_MAIN).setFocus();
+//			quoteSession.fireAllRules();
 			
 			returnedFacts = getExistingQuoteFact(quoteSession, Quote.class);			
 			request.setQuote((Quote) returnedFacts.get(0));

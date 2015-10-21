@@ -18,6 +18,7 @@ public class Question {
 
 	//private int id;
 	private String questionId;
+	private String groupId;
 	private String description;
 	private String answerType;
 	private String group;
@@ -43,6 +44,14 @@ public class Question {
 
 	public void setQuestionId(String questionId) {
 		this.questionId = questionId;
+	}
+
+	public String getGroupId() {
+		return groupId;
+	}
+
+	public void setGroupId(String groupId) {
+		this.groupId = groupId;
 	}
 
 	public String getDescription() {
@@ -127,12 +136,12 @@ public class Question {
 
 	@Override
 	public String toString() {
-		return "Question [questionId=" + questionId + ", description=" + description
-				+ ", answerType=" + answerType + ", group=" + group
-				+ ", mappedObject=" + mappedObject + ", mappedProperty="
-				+ mappedProperty + ", required=" + required + ", enabled="
-				+ enabled + ", parentId=" + parentId + ", strValue="
-				+ strValue + ", order=" + order + "]";
+		return "Question [questionId=" + questionId + ", groupId=" + groupId
+				+ ", description=" + description + ", answerType=" + answerType
+				+ ", group=" + group + ", mappedObject=" + mappedObject
+				+ ", mappedProperty=" + mappedProperty + ", required="
+				+ required + ", enabled=" + enabled + ", parentId=" + parentId
+				+ ", strValue=" + strValue + ", order=" + order + "]";
 	}
 
 	@Override

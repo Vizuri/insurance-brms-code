@@ -241,11 +241,6 @@
         </div>
         <div class="row" ng-show="qmap['p.previousClaims'].strValue == 'true'">
 
-            <div ng-show="showDeleteClaimAlert" class="col-md-2 alert alert-danger">
-                <span class="close" ng-click="hideClaimAlert()">X</span>
-                <strong>Error! </strong>At least one claim is required.
-            </div>
-
             <div class="well col-md-10">
                 <div class="row">
                     <div class="col-md-5">
@@ -323,10 +318,6 @@
         </div>
         <div class="row" ng-if="qmap['p.dogExists'].strValue == 'true'">
 
-            <div ng-show="showDogDeleteAlert" class="col-md-2 alert alert-danger">
-                <span class="close" ng-click="hideDogAlert()">X</span> <strong>Error! </strong>At least One Dog is
-                required.
-            </div>
             <div class="well col-md-10">
 
                 <div class="row">
