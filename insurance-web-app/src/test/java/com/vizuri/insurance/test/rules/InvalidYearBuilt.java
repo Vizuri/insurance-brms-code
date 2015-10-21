@@ -8,7 +8,7 @@ import org.jboss.logging.Logger;
 import org.junit.Test;
 
 import com.vizuri.insurance.domain.Property;
-import com.vizuri.insurance.rest.TransferWrapper;
+import com.vizuri.insurance.rest.QuoteRequest;
 import com.vizuri.insurance.rest.brms.RuleProcessor;
 
 public class InvalidYearBuilt {
@@ -30,7 +30,7 @@ public class InvalidYearBuilt {
 
     Collection coll = rp.fireRules(RuleProcessor.AGENDA_QUOTE_ERROR_CHECK, sendList.toArray());
 
-    TransferWrapper wrapper = TestUtils.getWrapperValuesFromFacgts(coll);
+    QuoteRequest wrapper = TestUtils.getWrapperValuesFromFacgts(coll);
     logger.info(wrapper.getQuoteMessages());
   }
 }

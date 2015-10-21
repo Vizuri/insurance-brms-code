@@ -4,4 +4,17 @@
   <artifactId>domain</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   <name>insurance-domain</name>
+  <properties>
+  	<drools-version>6.2.0.Final</drools-version>
+		
+  </properties>
+    
+  <dependencies>
+  	<dependency>
+		<groupId>org.drools</groupId>
+		<artifactId>knowledge-api</artifactId>
+		<version>${drools-version}</version>
+		<scope>provided</scope>
+	</dependency>
+  </dependencies>
 </project>

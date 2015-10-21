@@ -1,0 +1,89 @@
+@charset "UTF-8";
+/* CSS Document */
+
+.firstRow{
+	height: 80px;
+	background-color:#888b94;
+  	background-size: contain;
+  	max-width: none!important;
+  	max-height: none!important;
+    font-size:27px;
+    color:#fff;
+    text-align:left;
+    padding-top:23px;
+    padding-right:50px;
+
+    text-transform:uppercase;
+    letter-spacing: 5px;
+}
+
+.logo{
+	height: 60px;
+	margin-top:15px;
+	background-repeat: no-repeat;
+  	background-size: contain;
+	min-height:90px;
+
+
+}
+
+.header{
+	height: 80px;
+	background-color:#888b94;
+  	background-size: contain;
+  	max-width: none!important;
+  	max-height: none!important;
+	margin-bottom:40px;
+	border-bottom: 2px solid #c6c6c6;
+	
+
+}
+
+input:focus{
+    background-color: #f9fabd;
+}
+
+input:active{
+    background-color: #fff;
+}
+
+
+div.form-group>label.control-label {
+	/*font-family: 'Roboto Slab', serif;*/
+	font-size: 13px!important;
+	color:#686b73;
+	font-weight:300!important;
+}
+
+body{
+background-color:#f2f2f2;
+}
+
+.insurance-form .panel-heading {
+	background-color:#f2f2f2;
+	color:#435159;
+	text-transform:uppercase;
+}
+	
+.panel-heading{
+    font-size: 18px!important;
+      padding: 10px 15px;
+      border-bottom: 2px solid #cb2026!important;
+      letter-spacing: 2px;
+      border-top:none!important;
+      border-left:none!important;
+      border-right:none!important;
+    }
+
+.panel-body{
+    background-color:#f2f2f2;
+
+}
+
+.btn-primary{
+	background-color:#a20c11;
+	border-color:#84070b;
+	}
+		.panel-default{
+		border:none!important;}
+	

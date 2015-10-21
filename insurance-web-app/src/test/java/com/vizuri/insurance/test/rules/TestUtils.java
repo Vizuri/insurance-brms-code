@@ -13,7 +13,7 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.stream.JsonReader;
 import com.vizuri.insurance.domain.Quote;
 import com.vizuri.insurance.domain.QuoteMessage;
-import com.vizuri.insurance.rest.TransferWrapper;
+import com.vizuri.insurance.rest.QuoteRequest;
 import com.vizuri.insurance.rest.brms.RuleProcessor;
 
 public class TestUtils {
@@ -25,8 +25,8 @@ public class TestUtils {
         "/Users/ashakya/insurance/m2repo/mac-settings.xml");
   }
 
-  public static TransferWrapper getWrapperValuesFromFacgts(Collection coll) {
-    TransferWrapper wrapper = new TransferWrapper();
+  public static QuoteRequest getWrapperValuesFromFacgts(Collection coll) {
+    QuoteRequest wrapper = new QuoteRequest();
     for (Object object : coll) {
       DefaultFactHandle fact = (DefaultFactHandle) object;
       if (fact.getObject() instanceof Quote) {

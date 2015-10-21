@@ -15,267 +15,231 @@
 package com.vizuri.insurance.domain;
 
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
-
-import com.vizuri.insurance.domain.xmladapter.BooleanXmlAdapter;
-import com.vizuri.insurance.domain.xmladapter.CalendarXmlAdapter;
-
-@SuppressWarnings("restriction")
-@XmlRootElement
 public class Property {
 
+	private Address address;
+	private Date policyBeginDate;
+	private Date purchaseDate;
 
-  private Address address;
+	private int yearBuilt;
+	private int livingArea;
+	private int ageOfRoof;
+	
+	private Boolean electrictSystemRenovated;
 
-  @XmlJavaTypeAdapter(value = CalendarXmlAdapter.class)
-  private Calendar policyBeginDate;
+	private Boolean homeSafetyDeviceInstalled;
 
-  @XmlJavaTypeAdapter(value = CalendarXmlAdapter.class)
-  private Calendar purchaseDate;
+	private List<String> homeSafetyDevices;
 
-  private int yearBuilt;
-  private int livingArea;
-  private int ageOfRoof;
-  @XmlJavaTypeAdapter(value = BooleanXmlAdapter.class)
-  private Boolean electrictSystemRenovated;
+	private Boolean previousClaims;
 
-  @XmlJavaTypeAdapter(value = BooleanXmlAdapter.class)
-  private Boolean homeSafetyDeviceInstalled;
+	private List<Claim> claims;
 
-  private List<String> homeSafetyDevices;
+	private Boolean dogExists;
 
-  @XmlJavaTypeAdapter(value = BooleanXmlAdapter.class)
-  private Boolean previousClaims;
+	private List<Dog> dogs;
 
-  private List<Claim> claims;
+	private Boolean childCareBusinessExists;
 
-  @XmlJavaTypeAdapter(value = BooleanXmlAdapter.class)
-  private Boolean dogExists;
+	private Boolean childCareLiabilityCoverageRequired;
 
-  private Map<Integer, String> dogs;
+	private Boolean childCareLiabilityAlreadyExists;
 
-  @XmlJavaTypeAdapter(value = BooleanXmlAdapter.class)
-  private Boolean childCareBusinessExists;
+	private Integer applicantId;
+	private Integer policyId;
+	private Integer quoteId;
+	
+	private double age;
 
-  @XmlJavaTypeAdapter(value = BooleanXmlAdapter.class)
-  private Boolean childCareLiabilityCoverageRequired;
+	public Address getAddress() {
+		return address;
+	}
 
-  @XmlJavaTypeAdapter(value = BooleanXmlAdapter.class)
-  private Boolean childCareLiabilityAlreadyExists;
+	public void setAddress(Address address) {
+		this.address = address;
+	}
 
-  private Integer applicantId;
-  private Integer policyId;
-  private Integer quoteId;
-  private String status;
-  private double age;
-  private double riskRate;
+	public Date getPolicyBeginDate() {
+		return policyBeginDate;
+	}
 
-  public Address getAddress() {
-    return address;
-  }
+	public void setPolicyBeginDate(Date policyBeginDate) {
+		this.policyBeginDate = policyBeginDate;
+	}
 
-  public void setAddress(Address address) {
-    this.address = address;
-  }
+	public Date getPurchaseDate() {
+		return purchaseDate;
+	}
 
-  public Calendar getPolicyBeginDate() {
-    return policyBeginDate;
-  }
+	public void setPurchaseDate(Date purchaseDate) {
+		this.purchaseDate = purchaseDate;
+	}
 
-  public void setPolicyBeginDate(Calendar policyBeginDate) {
-    this.policyBeginDate = policyBeginDate;
-  }
+	public int getYearBuilt() {
+		return yearBuilt;
+	}
 
-  public Calendar getPurchaseDate() {
-    return purchaseDate;
-  }
+	public void setYearBuilt(int yearBuilt) {
+		if (this.yearBuilt != yearBuilt) {
+			this.yearBuilt = yearBuilt;
+		}
+	}
 
-  public void setPurchaseDate(Calendar purchaseDate) {
-    this.purchaseDate = purchaseDate;
-  }
+	public int getLivingArea() {
+		return livingArea;
+	}
 
-  public int getYearBuilt() {
-    return yearBuilt;
-  }
+	public void setLivingArea(int livingArea) {
+		this.livingArea = livingArea;
+	}
 
-  public void setYearBuilt(int yearBuilt) {
-    if (this.yearBuilt != yearBuilt) {
-      this.yearBuilt = yearBuilt;
-      setRiskRate(0);
-    }
+	public int getAgeOfRoof() {
+		return ageOfRoof;
+	}
 
-  }
+	public void setAgeOfRoof(int ageOfRoof) {
+		this.ageOfRoof = ageOfRoof;
+	}
 
-  public int getLivingArea() {
-    return livingArea;
-  }
+	public Boolean getElectrictSystemRenovated() {
+		return electrictSystemRenovated;
+	}
 
-  public void setLivingArea(int livingArea) {
-    this.livingArea = livingArea;
-  }
+	public void setElectrictSystemRenovated(Boolean electrictSystemRenovated) {
+		this.electrictSystemRenovated = electrictSystemRenovated;
+	}
 
-  public int getAgeOfRoof() {
-    return ageOfRoof;
-  }
+	public Boolean getHomeSafetyDeviceInstalled() {
+		return homeSafetyDeviceInstalled;
+	}
 
-  public void setAgeOfRoof(int ageOfRoof) {
-    this.ageOfRoof = ageOfRoof;
-  }
+	public void setHomeSafetyDeviceInstalled(Boolean homeSafetyDeviceInstalled) {
+		this.homeSafetyDeviceInstalled = homeSafetyDeviceInstalled;
+	}
 
-  public Boolean getElectrictSystemRenovated() {
-    return electrictSystemRenovated;
-  }
-
-  public void setElectrictSystemRenovated(Boolean electrictSystemRenovated) {
-    this.electrictSystemRenovated = electrictSystemRenovated;
-  }
-
-  public Boolean getHomeSafetyDeviceInstalled() {
-    return homeSafetyDeviceInstalled;
-  }
-
-  public void setHomeSafetyDeviceInstalled(Boolean homeSafetyDeviceInstalled) {
-    this.homeSafetyDeviceInstalled = homeSafetyDeviceInstalled;
-  }
-
-  public List<String> getHomeSafetyDevices() {
-    return homeSafetyDevices;
-  }
-
-  public void setHomeSafetyDevices(List<String> homeSafetyDevices) {
-    this.homeSafetyDevices = homeSafetyDevices;
-  }
-
-  public Boolean getPreviousClaims() {
-    return previousClaims;
-  }
-
-  public void setPreviousClaims(Boolean previousClaims) {
-    this.previousClaims = previousClaims;
-  }
-
-  public List<Claim> getClaims() {
-    return claims;
-  }
-
-  public void setClaims(List<Claim> claims) {
-    this.claims = claims;
-  }
-
-  public Boolean getDogExists() {
-    return dogExists;
-  }
-
-  public void setDogExists(Boolean dogExists) {
-    this.dogExists = dogExists;
-  }
-
-  public Map<Integer, String> getDogs() {
-    return dogs;
-  }
-
-  public void setDogs(Map<Integer, String> dogs) {
-    this.dogs = dogs;
-  }
-
-  public Boolean getChildCareBusinessExists() {
-    return childCareBusinessExists;
-  }
-
-  public void setChildCareBusinessExists(Boolean childCareBusinessExists) {
-    this.childCareBusinessExists = childCareBusinessExists;
-  }
-
-  public Boolean getChildCareLiabilityCoverageRequired() {
-    return childCareLiabilityCoverageRequired;
-  }
-
-  public void setChildCareLiabilityCoverageRequired(Boolean childCareLiabilityCoverageRequired) {
-    this.childCareLiabilityCoverageRequired = childCareLiabilityCoverageRequired;
-  }
-
-  public Boolean getChildCareLiabilityAlreadyExists() {
-    return childCareLiabilityAlreadyExists;
-  }
-
-  public void setChildCareLiabilityAlreadyExists(Boolean childCareLiabilityAlreadyExists) {
-    this.childCareLiabilityAlreadyExists = childCareLiabilityAlreadyExists;
-  }
-
-  public Integer getApplicantId() {
-    return applicantId;
-  }
-
-  public void setApplicantId(Integer applicantId) {
-    this.applicantId = applicantId;
-  }
-
-  public Integer getPolicyId() {
-    return policyId;
-  }
-
-  public void setPolicyId(Integer policyId) {
-    this.policyId = policyId;
-  }
-
-  public Integer getQuoteId() {
-    return quoteId;
-  }
-
-  public void setQuoteId(Integer quoteId) {
-    this.quoteId = quoteId;
-  }
-
-  public String getStatus() {
-    return status;
-  }
-
-  public void setStatus(String status) {
-    this.status = status;
-  }
-
-  public double getAge() {
-    if (getYearBuilt() != 0) {
-      Calendar calendar = Calendar.getInstance();
-      age = calendar.get(Calendar.YEAR) - getYearBuilt();
-      return age;
-    }
-    return 0;
-  }
-
-  public void setAge(double age) {
-    this.age = age;
-  }
-
-
-  public double getRiskRate() {
-    return riskRate;
-  }
-
-  public void setRiskRate(double riskRate) {
-    this.riskRate = riskRate;
-  }
-
-  @Override
-  public String toString() {
-
-    return "Property [address=" + address + ", policyBeginDate=" + policyBeginDate
-        + ", purchaseDate=" + purchaseDate + ", yearBuilt=" + yearBuilt + ", livingArea="
-        + livingArea + ", ageOfRoof=" + ageOfRoof + ", electrictSystemRenovated="
-        + electrictSystemRenovated + ", homeSafetyDeviceInstalled=" + homeSafetyDeviceInstalled
-        + ", homeSafetyDevices=" + homeSafetyDevices + ", previousClaims=" + previousClaims
-        + ", claims=" + claims + ", dogExists=" + dogExists + ", dogs=" + dogs
-        + ", childCareBusinessExists=" + childCareBusinessExists
-        + ", childCareLiabilityCoverageRequired=" + childCareLiabilityCoverageRequired
-        + ", childCareLiabilityAlreadyExists=" + childCareLiabilityAlreadyExists + ", applicantId="
-        + applicantId + ", policyId=" + policyId + ", quoteId=" + quoteId + ", status=" + status
-        + ", age=" + age + ", riskRate=" + riskRate + "]";
-  }
-
-
+	public List<String> getHomeSafetyDevices() {
+		return homeSafetyDevices;
+	}
+
+	public void setHomeSafetyDevices(List<String> homeSafetyDevices) {
+		this.homeSafetyDevices = homeSafetyDevices;
+	}
+
+	public Boolean getPreviousClaims() {
+		return previousClaims;
+	}
+
+	public void setPreviousClaims(Boolean previousClaims) {
+		this.previousClaims = previousClaims;
+	}
+
+	public List<Claim> getClaims() {
+		return claims;
+	}
+
+	public void setClaims(List<Claim> claims) {
+		this.claims = claims;
+	}
+
+	public Boolean getDogExists() {
+		return dogExists;
+	}
+
+	public void setDogExists(Boolean dogExists) {
+		this.dogExists = dogExists;
+	}
+
+	public List<Dog> getDogs() {
+		return dogs;
+	}
+
+	public void setDogs(List<Dog> dogs) {
+		this.dogs = dogs;
+	}
+
+	public Boolean getChildCareBusinessExists() {
+		return childCareBusinessExists;
+	}
+
+	public void setChildCareBusinessExists(Boolean childCareBusinessExists) {
+		this.childCareBusinessExists = childCareBusinessExists;
+	}
+
+	public Boolean getChildCareLiabilityCoverageRequired() {
+		return childCareLiabilityCoverageRequired;
+	}
+
+	public void setChildCareLiabilityCoverageRequired(
+			Boolean childCareLiabilityCoverageRequired) {
+		this.childCareLiabilityCoverageRequired = childCareLiabilityCoverageRequired;
+	}
+
+	public Boolean getChildCareLiabilityAlreadyExists() {
+		return childCareLiabilityAlreadyExists;
+	}
+
+	public void setChildCareLiabilityAlreadyExists(
+			Boolean childCareLiabilityAlreadyExists) {
+		this.childCareLiabilityAlreadyExists = childCareLiabilityAlreadyExists;
+	}
+
+	public Integer getApplicantId() {
+		return applicantId;
+	}
+
+	public void setApplicantId(Integer applicantId) {
+		this.applicantId = applicantId;
+	}
+
+	public Integer getPolicyId() {
+		return policyId;
+	}
+
+	public void setPolicyId(Integer policyId) {
+		this.policyId = policyId;
+	}
+
+	public Integer getQuoteId() {
+		return quoteId;
+	}
+
+	public void setQuoteId(Integer quoteId) {
+		this.quoteId = quoteId;
+	}
+
+	public double getAge() {
+		if (getYearBuilt() != 0) {
+			Calendar calendar = Calendar.getInstance();
+			age = calendar.get(Calendar.YEAR) - getYearBuilt();
+			return age;
+		}
+		return 0;
+	}
+
+	public void setAge(double age) {
+		this.age = age;
+	}
+
+	@Override
+	public String toString() {
+		return "Property [address=" + address + ", policyBeginDate="
+				+ policyBeginDate + ", purchaseDate=" + purchaseDate
+				+ ", yearBuilt=" + yearBuilt + ", livingArea=" + livingArea
+				+ ", ageOfRoof=" + ageOfRoof + ", electrictSystemRenovated="
+				+ electrictSystemRenovated + ", homeSafetyDeviceInstalled="
+				+ homeSafetyDeviceInstalled + ", homeSafetyDevices="
+				+ homeSafetyDevices + ", previousClaims=" + previousClaims
+				+ ", claims=" + claims + ", dogExists=" + dogExists + ", dogs="
+				+ dogs + ", childCareBusinessExists=" + childCareBusinessExists
+				+ ", childCareLiabilityCoverageRequired="
+				+ childCareLiabilityCoverageRequired
+				+ ", childCareLiabilityAlreadyExists="
+				+ childCareLiabilityAlreadyExists + ", applicantId="
+				+ applicantId + ", policyId=" + policyId + ", quoteId="
+				+ quoteId + ", age=" + age + "]";
+	}
 
 }

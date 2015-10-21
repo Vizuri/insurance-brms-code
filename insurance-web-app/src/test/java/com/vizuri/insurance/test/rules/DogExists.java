@@ -19,9 +19,9 @@ public class DogExists {
       Property prop = new Property();
       // prop.setDogExists(true);
       Question q23 = new Question();
-      q23.setId(23);
+      q23.setQuestionId("p.dogCount");
       Question q24 = new Question();
-      q24.setId(24);
+      q24.setQuestionId("p.dogType");
 
       Collection coll = rp.fireRules(RuleProcessor.AGENDA_QUESTION_DISPLAY, prop, q23, q24);
 
