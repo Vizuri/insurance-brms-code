@@ -245,10 +245,16 @@ angular.module('quoteController', ['quoteService'])
                 // we need to create an answer and add it to the answer list
                 $scope.wrapper.answerMap[questionId] = {questionId: questionId, groupId: "" + $scope.qmap[questionId].groupId, strValue: $scope.qmap[questionId].strValue};
 
-                if ($scope.qmap[questionId].delete == "true"){
+                if ($scope.qmap[questionId].groupId){
+
+                    console.log("set answer groupId for question[" + questionId + "]");
+                    $scope.wrapper.answerMap[questionId].groupId = $scope.qmap[questionId].groupId;
+                }
+
+                if ($scope.qmap[questionId].delete){
 
                     console.log("delete answer for question[" + questionId + "]");
-                    $scope.wrapper.answerMap[questionId].delete = "true";
+                    $scope.wrapper.answerMap[questionId].delete = $scope.qmap[questionId].delete;
                 }
             }
 
@@ -357,12 +363,11 @@ angular.module('quoteController', ['quoteService'])
                 $scope.newProperty.claims = [];
             }
 
-            //cl.claimDate = convertToDate(cl.claimDate);
-            $scope.newProperty.claims.push($scope.newClaim);
-
             // now add the answer for the claim
             $scope.qmap["c.claimAmount"].strValue = $scope.newClaim.claimAmount;
             $scope.qmap["c.claimAmount"].groupId = $scope.newProperty.claims.length;
+
+            $scope.newProperty.claims.push($scope.newClaim);
 
             $scope.changeHandle("c.claimAmount", false, function(){
                 $scope.newClaim.claimAmount = 100;
@@ -379,7 +384,8 @@ angular.module('quoteController', ['quoteService'])
 
                 if ($scope.newProperty.claims.length == 0){
 
-                    $scope.qmap['c.claimAmount'].delete = "true";
+                    $scope.qmap["c.claimAmount"].delete = "true";
+                    $scope.qmap["c.claimAmount"].groupId = $index;
                     $scope.changeHandle("c.claimAmount", false, function(){
                         $scope.newClaim.claimAmount = 100;
                     });
@@ -414,11 +420,11 @@ angular.module('quoteController', ['quoteService'])
                 $scope.newProperty.dogs = [];
             }
 
-            $scope.newProperty.dogs.push($scope.newDog);
-
             // now add the answer for the claim
             $scope.qmap["p.dogCount"].strValue = $scope.newDog.count;
-            $scope.qmap["c.claimAmount"].groupId = $scope.newProperty.dogs.length;
+            $scope.qmap["p.dogCount"].groupId = $scope.newProperty.dogs.length;
+
+            $scope.newProperty.dogs.push($scope.newDog);
 
             $scope.changeHandle("p.dogCount", false, function(){
                 $scope.newDog.type = "";
@@ -436,6 +442,7 @@ angular.module('quoteController', ['quoteService'])
                 if ($scope.newProperty.dogs.length == 0){
 
                     $scope.qmap['p.dogCount'].delete = "true";
+                    $scope.qmap["p.dogCount"].groupId = $index;
                     $scope.changeHandle("p.dogCount", false, function(){
                         $scope.newDog.type = "";
                     });
