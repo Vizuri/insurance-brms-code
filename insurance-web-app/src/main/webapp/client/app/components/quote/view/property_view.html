@@ -247,7 +247,6 @@
                         <input type="date" name="claimDate" class="form-control"
                                ng-model="newClaim.claimDate" ng-required="true">
 
-                        <span class="required" ng-show="newProperty.claims.length == 0">**</span>
                     </div>
                     <div class="col-md-3">
                         <div class="input-group input-group-sm">
@@ -258,12 +257,16 @@
                             <!--ng-pattern="/^[0-9]+(\.[0-9]{1,2})?$/" step="0.01"-->
                         </div>
 
-                        <span class="required" ng-show="newProperty.claims.length == 0">**</span>
+
                     </div>
                     <div class="col-md-2">
                         <button type="button" class="btn btn-xs" ng-click="addClaim()" tooltip="Add Claim">
                             <i class="glyphicon glyphicon-check"></i> Add Claim
                         </button>
+                    </div>
+                    <div class="col-md-1">
+                        <span class="required" ng-show="newProperty.claims == undefined || newProperty.claims.length == 0">**</span>
+
                     </div>
                 </div>
                 <div class="row">
@@ -326,9 +329,8 @@
                         <input ng-model="newDog.count"
                                name="newDog.count" type="number" min="1" class="form-control"
                                ng-required="true">
-                        <span class="required" ng-show="newProperty.dogs.length == 0">**</span>
                     </div>
-                    <div class="col-md-8">
+                    <div class="col-md-6">
 
                         <select name="newDog.type"
                                 ng-model="newDog.type" ng-required="true" class="form-control"
@@ -340,12 +342,16 @@
                             <option label="Molossers" value="Molossers"/>
                             <option label="Mountain dog" value="Mountain dog"/>
                         </select>
-                        <span class="required" ng-show="newProperty.dogs.length == 0">**</span>
                     </div>
+
                     <div class="col-md-2">
                         <button type="button" class="btn btn-xs" ng-click="addDogs()" tooltip="Add a Dog">
                             <i class="glyphicon glyphicon-check"></i> Add Dog
                         </button>
+                    </div>
+                    <div class="col-md-1">
+                        <span class="required" ng-show="newProperty.dogs == undefined || newProperty.dogs.length == 0">**</span>
+
                     </div>
                 </div>
                 <div class="row">

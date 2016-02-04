@@ -363,11 +363,23 @@ angular.module('quoteController', ['quoteService'])
                 $scope.newProperty.claims = [];
             }
 
+            if ($scope.newClaim.claimAmount == undefined || $scope.newClaim.claimAmount <= 0){
+
+                alert ("Invalid claim amount");
+                return;
+            }
+
+            if ($scope.newClaim.claimDate == undefined){
+
+                alert ("Invalid claim date");
+                return;
+            }
+
             // now add the answer for the claim
             $scope.qmap["c.claimAmount"].strValue = $scope.newClaim.claimAmount;
             $scope.qmap["c.claimAmount"].groupId = $scope.newProperty.claims.length;
 
-            $scope.newProperty.claims.push($scope.newClaim);
+            $scope.newProperty.claims.push(angular.copy($scope.newClaim));
 
             $scope.changeHandle("c.claimAmount", false, function(){
                 $scope.newClaim.claimAmount = 100;
@@ -420,11 +432,23 @@ angular.module('quoteController', ['quoteService'])
                 $scope.newProperty.dogs = [];
             }
 
+            if ($scope.newDog.count == undefined || $scope.newDog.count <= 0){
+
+                alert ("Invalid dog count");
+                return;
+            }
+
+            if ($scope.newDog.type == undefined || $scope.newDog.type == ""){
+
+                alert ("Invalid dog type");
+                return;
+            }
+
             // now add the answer for the claim
             $scope.qmap["p.dogCount"].strValue = $scope.newDog.count;
             $scope.qmap["p.dogCount"].groupId = $scope.newProperty.dogs.length;
 
-            $scope.newProperty.dogs.push($scope.newDog);
+            $scope.newProperty.dogs.push(angular.copy($scope.newDog));
 
             $scope.changeHandle("p.dogCount", false, function(){
                 $scope.newDog.type = "";
